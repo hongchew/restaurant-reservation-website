@@ -4,12 +4,33 @@ CREATE SCHEMA RESTAURANT;
 
 CREATE TABLE RESTAURANT.Users
 (
-    email varchar(50) PRIMARY KEY,
+    userId SERIAL PRIMARY KEY,
+    email varchar(50) UNIQUE NOT NULL,
     name varchar(50) NOT NULL,
+<<<<<<< HEAD
     password varchar(50) NOT NULL,
     accountType varchar(50) NOT null,
     Check(accountType = 'Customer' OR accountType = 'Admin' OR accountType = 'Manager')
+=======
+    password varchar(50) NOT NULL
+
+>>>>>>> 061e7c7cc7cce9bd3ee93310eb54c7bd1e5fd2c8
 );
+
+-- CREATE TABLE RESTAURANT.Manager (
+--     email varchar(50) PRIMARY KEY references RESTAURANT.Users on delete cascade,
+--     restaurantName varchar(50),
+--     location varchar(50),
+--     foreign key (restaurantName, location) references RESTAURANT.Restaurant
+-- );
+
+-- CREATE TABLE RESTAURANT.Admin (
+--     email varchar(50) PRIMARY KEY references RESTAURANT.Users on delete cascade
+-- );
+
+-- CREATE TABLE RESTAURANT.Customer (
+--     email varchar(50) PRIMARY KEY references RESTAURANT.Users on delete cascade,
+-- );
 
 CREATE TABLE RESTAURANT.Restaurant
 (
@@ -20,6 +41,7 @@ CREATE TABLE RESTAURANT.Branch
 (
     restaurantName varchar(50) references RESTAURANT.Restaurant (restaurantName),
     location varchar(50),
+    managerId integer references RESTAURANT.users(userId),
     openingHour time,
     closingHour time,
     capacity integer,
@@ -45,9 +67,10 @@ CREATE TABLE RESTAURANT.Reservation
     numDiner integer NOT NULL,
     restaurantName varchar(50) NOT NULL,
     location varchar(50) NOT NULL,
+    status integer NOT NULL,
     check(mealType = 'Breakfast' OR mealType = 'Lunch' OR mealType = 'Dinner'),
-    foreign key(email) references RESTAURANT.Users(email),
-    foreign key(restaurantName, location) references RESTAURANT.Branch(restaurantName, location)
+    foreign key(email) references RESTAURANT.Users(email) ON DELETE CASCADE,
+    foreign key(restaurantName, location) references RESTAURANT.Branch(restaurantName, location) ON DELETE CASCADE
 );
 
 
@@ -58,6 +81,7 @@ CREATE TABLE RESTAURANT.Reward
     cost numeric(4,0) NOT NULL,
     check(cost > 0)
 );
+
 CREATE TABLE RESTAURANT.UserReward
 (
     userRewardID SERIAL PRIMARY KEY,
