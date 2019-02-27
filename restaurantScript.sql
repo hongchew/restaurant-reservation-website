@@ -17,9 +17,7 @@ CREATE TABLE RESTAURANT.Reservation(
     email varchar(50) PRIMARY KEY
 );
 
-CREATE TABLE RESTAURANT.Feedback(
-    email varchar(50) PRIMARY KEY
-);
+
 CREATE TABLE RESTAURANT.Reward(
     email varchar(50) PRIMARY KEY
 );
@@ -30,12 +28,21 @@ CREATE TABLE RESTAURANT.Restaurant(
     restaurantName varchar(50) PRIMARY KEY,
     cuisineType varchar(50)
 );
+CREATE TABLE RESTAURANT.Feedback(
+    email varchar(50),
+    restaurantName varchar(50),
+    rating NUMERIC(2,1) default 0,
+    primary key(email, restaurantName),
+    foreign key(restaurantName) REFERENCES RESTAURANT.Restaurant ON DELETE CASCADE,
+    foreign key(email) REFERENCES RESTAURANT.Users,
+    CHECK(rating >= 0.0 and rating <= 5.0)
+);
 CREATE TABLE RESTAURANT.Menu(
     restaurantName varchar(50),
     foodName varchar(50),
     price NUMERIC(7,2) NOT NULL,
     primary key(restaurantName, foodName),
-    foreign key(restaurantName) REFERENCES RESTAURANT.Restaurant
+    foreign key(restaurantName) REFERENCES RESTAURANT.Restaurant ON DELETE CASCADE
 );
 CREATE TABLE RESTAURANT.Branch(
     email varchar(50) PRIMARY KEY
