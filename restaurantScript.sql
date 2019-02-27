@@ -28,17 +28,17 @@ CREATE TABLE RESTAURANT.Branch
 
 CREATE TABLE RESTAURANT.Bookmark
 (
-    username varchar(50),
+    email varchar(50),
     restaurantName varchar(50),
     location varchar(50),
-    primary key (username, restaurantName, location),
-    foreign key (username) references RESTAURANT.Users,
+    primary key (email, restaurantName, location),
+    foreign key (email) references RESTAURANT.Users,
     foreign key (restaurantName, location) references RESTAURANT.Branch (restaurantName, location)
 );
 
 CREATE TABLE RESTAURANT.Reservation
 (
-    reservationId integer PRIMARY KEY,
+    reservationId SERIAL PRIMARY KEY,
     name varchar(50) NOT NULL,
     date date NOT NULL,
     mealType varchar(50) NOT NULL,
@@ -72,7 +72,7 @@ CREATE TABLE RESTAURANT.Feedback
     restaurantName varchar(50),
     rating NUMERIC(2,1) default 0,
     primary key(email, restaurantName),
-    foreign key(restaurantName) REFERENCES RESTAURANT.Restaurant ON DELETE CASCADE,
+    foreign key(restaurantName) REFERENCES RESTAURANT.Restaurant(restaurantName) ON DELETE CASCADE,
     foreign key(email) REFERENCES RESTAURANT.Users,
     CHECK(rating >= 0.0 and rating <= 5.0)
 );
@@ -82,21 +82,17 @@ CREATE TABLE RESTAURANT.Menu
     foodName varchar(50),
     price NUMERIC(7,2) NOT NULL,
     primary key(restaurantName, foodName),
-    foreign key(restaurantName) REFERENCES RESTAURANT.Restaurant ON DELETE CASCADE
+    foreign key(restaurantName) REFERENCES RESTAURANT.Restaurant(restaurantName) ON DELETE CASCADE
 );
 
 CREATE TABLE RESTAURANT.Vacancy
 (
-    rname varchar(50),
-location varchar(50),
+    restaurantName varchar(50),
+    location varchar(50),
     date date,
     mealType varchar(50),
     vacancy integer NOT NULL,
-    check(mealType = 'Breakfast' OR mealType = 'Lunch' OR mealType = 'Dinner')
-    primary key
-    (rname, location, date, mealType),
-    foreign key
-    (rname, location) references RESTAURANT.Branch
-    (rname, location) ON
-    DELETE CASCADE,
+    check(mealType = 'Breakfast' OR mealType = 'Lunch' OR mealType = 'Dinner'),
+    primary key (restaurantName, location, date, mealType),
+    foreign key (restaurantName, location) references RESTAURANT.Branch(restaurantName, location) ON DELETE CASCADE
 );
