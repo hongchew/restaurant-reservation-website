@@ -14,7 +14,16 @@ CREATE TABLE RESTAURANT.Bookmark(
 );
 
 CREATE TABLE RESTAURANT.Reservation(
-    email varchar(50) PRIMARY KEY
+    reservationId   integer     PRIMARY KEY IDENTITY,
+    username        varchar(50) NOT NULL,
+    date            date        NOT NULL,
+    mealType        varchar(50) NOT NULL,
+    numDiner        integer     NOT NULL,
+    rname           varchar(50) NOT NULL,
+    location        varchar(50) NOT NULL,  
+    check(mealType = 'Breakfast' OR mealType = 'Lunch' OR mealType = 'Dinner'),
+    foreign key(username) references RESTAURANT.Users(username),
+    foreign key(rname, location) references RESTAURANT.Branch(rname, location)    
 );
 
 CREATE TABLE RESTAURANT.Feedback(
@@ -36,5 +45,12 @@ CREATE TABLE RESTAURANT.Branch(
     email varchar(50) PRIMARY KEY
 );
 CREATE TABLE RESTAURANT.Vacancy(
-    email varchar(50) PRIMARY KEY
+    rname           varchar(50),
+    location        varchar(50),
+    date            date,
+    mealType        varchar(50),
+    vacancy         integer NOT NULL,
+    check(mealType = 'Breakfast' OR mealType = 'Lunch' OR mealType = 'Dinner')
+    primary key(rname, location, date, mealType),
+    foreign key(rname, location) references RESTAURANT.Branch(rname, location),
 );
