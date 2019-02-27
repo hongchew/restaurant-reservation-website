@@ -46,8 +46,8 @@ CREATE TABLE RESTAURANT.Reservation
     restaurantName varchar(50) NOT NULL,
     location varchar(50) NOT NULL,
     check(mealType = 'Breakfast' OR mealType = 'Lunch' OR mealType = 'Dinner'),
-    foreign key(email) references RESTAURANT.Users(email),
-    foreign key(restaurantName, location) references RESTAURANT.Branch(restaurantName, location)
+    foreign key(email) references RESTAURANT.Users(email) ON DELETE CASCADE,
+    foreign key(restaurantName, location) references RESTAURANT.Branch(restaurantName, location) ON DELETE CASCADE
 );
 
 
@@ -58,6 +58,7 @@ CREATE TABLE RESTAURANT.Reward
     cost numeric(4,0) NOT NULL,
     check(cost > 0)
 );
+
 CREATE TABLE RESTAURANT.UserReward
 (
     userRewardID SERIAL PRIMARY KEY,
