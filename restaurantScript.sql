@@ -8,7 +8,7 @@ CREATE TABLE RESTAURANT.Users
     name varchar(50) NOT NULL,
     password varchar(50) NOT NULL,
     accountType varchar(50) NOT null,
-    Check(accountType = 'Customer' OR accountType = 'Admin')
+    Check(accountType = 'Customer' OR accountType = 'Admin' OR accountType = 'Manager')
 );
 
 CREATE TABLE RESTAURANT.Restaurant
