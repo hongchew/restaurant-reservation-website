@@ -10,7 +10,13 @@ CREATE TABLE RESTAURANT.User(
 );
 
 CREATE TABLE RESTAURANT.Bookmark(
-    email varchar(50) PRIMARY KEY,
+    username varchar(50),
+    rname varchar(50),
+    location varchar(50),
+    primary key (username, rname, location),
+    foreign key (username) references RESTAURANT.User,
+    foreign key (rname) references RESTAURANT.Restaurant,
+    foreign key (location) references RESTAURANT.Restaurant (location)
 );
 
 CREATE TABLE RESTAURANT.Reservation(
@@ -33,7 +39,12 @@ CREATE TABLE RESTAURANT.Menu(
     email varchar(50) PRIMARY KEY,
 );
 CREATE TABLE RESTAURANT.Branch(
-    email varchar(50) PRIMARY KEY,
+    rname varchar(50) references RESTAURANT.Restaurant (rname),
+    location varchar(50),
+    openingHour time,
+    closingHour time,
+    capacity integer,
+    primary key(rname, location),
 );
 CREATE TABLE RESTAURANT.Vacancy(
     email varchar(50) PRIMARY KEY,
