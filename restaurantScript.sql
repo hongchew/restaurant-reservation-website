@@ -39,14 +39,14 @@ CREATE TABLE RESTAURANT.Bookmark
 CREATE TABLE RESTAURANT.Reservation
 (
     reservationId SERIAL PRIMARY KEY,
-    name varchar(50) NOT NULL,
+    email varchar(50) NOT NULL,
     date date NOT NULL,
     mealType varchar(50) NOT NULL,
     numDiner integer NOT NULL,
     restaurantName varchar(50) NOT NULL,
     location varchar(50) NOT NULL,
     check(mealType = 'Breakfast' OR mealType = 'Lunch' OR mealType = 'Dinner'),
-    foreign key(name) references RESTAURANT.Users(name),
+    foreign key(email) references RESTAURANT.Users(email),
     foreign key(restaurantName, location) references RESTAURANT.Branch(restaurantName, location)
 );
 
