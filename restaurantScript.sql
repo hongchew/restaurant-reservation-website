@@ -81,5 +81,5 @@ CREATE TABLE RESTAURANT.Vacancy(
     vacancy         integer NOT NULL,
     check(mealType = 'Breakfast' OR mealType = 'Lunch' OR mealType = 'Dinner')
     primary key(rname, location, date, mealType),
-    foreign key(rname, location) references RESTAURANT.Branch(rname, location),
+    foreign key(rname, location) references RESTAURANT.Branch(rname, location) ON DELETE CASCADE,
 );
