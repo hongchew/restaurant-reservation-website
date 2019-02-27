@@ -32,8 +32,8 @@ CREATE TABLE RESTAURANT.Bookmark
     restaurantName varchar(50),
     location varchar(50),
     primary key (email, restaurantName, location),
-    foreign key (email) references RESTAURANT.Users,
-    foreign key (restaurantName, location) references RESTAURANT.Branch (restaurantName, location)
+    foreign key (email) references RESTAURANT.Users ON DELETE CASCADE,
+    foreign key (restaurantName, location) references RESTAURANT.Branch (restaurantName, location) ON DELETE CASCADE
 );
 
 CREATE TABLE RESTAURANT.Reservation
