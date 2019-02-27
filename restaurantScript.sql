@@ -14,13 +14,13 @@ CREATE TABLE RESTAURANT.Bookmark(
     rname varchar(50),
     location varchar(50),
     primary key (username, rname, location),
-    foreign key (username) references RESTAURANT.User,
+    foreign key (username) references RESTAURANT.Users,
     foreign key (rname) references RESTAURANT.Restaurant,
     foreign key (location) references RESTAURANT.Restaurant (location)
 );
 
 CREATE TABLE RESTAURANT.Reservation(
-    reservationId   integer     PRIMARY KEY IDENTITY,
+    reservationId   integer  SERIAL PRIMARY KEY ,
     username        varchar(50) NOT NULL,
     date            date        NOT NULL,
     mealType        varchar(50) NOT NULL,
@@ -36,9 +36,10 @@ CREATE TABLE RESTAURANT.Reservation(
 CREATE TABLE RESTAURANT.Reward(
     rewardName varchar(50) PRIMARY KEY,
     description varchar(60),
-    cost int(4) NOT NULL,
+    cost numeric(4,0) NOT NULL,
     check(cost > 0)
 );
+
 CREATE TABLE RESTAURANT.UserReward(
     userRewardID SERIAL PRIMARY KEY,
     rewardName varchar(50) references RESTAURANT.Reward(rewardName),
