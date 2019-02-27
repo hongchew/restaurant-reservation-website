@@ -10,11 +10,26 @@ CREATE TABLE RESTAURANT.Users(
 );
 
 CREATE TABLE RESTAURANT.Bookmark(
-    email varchar(50) PRIMARY KEY
+    username varchar(50),
+    rname varchar(50),
+    location varchar(50),
+    primary key (username, rname, location),
+    foreign key (username) references RESTAURANT.User,
+    foreign key (rname) references RESTAURANT.Restaurant,
+    foreign key (location) references RESTAURANT.Restaurant (location)
 );
 
 CREATE TABLE RESTAURANT.Reservation(
-    email varchar(50) PRIMARY KEY
+    reservationId   integer     PRIMARY KEY IDENTITY,
+    username        varchar(50) NOT NULL,
+    date            date        NOT NULL,
+    mealType        varchar(50) NOT NULL,
+    numDiner        integer     NOT NULL,
+    rname           varchar(50) NOT NULL,
+    location        varchar(50) NOT NULL,  
+    check(mealType = 'Breakfast' OR mealType = 'Lunch' OR mealType = 'Dinner'),
+    foreign key(username) references RESTAURANT.Users(username),
+    foreign key(rname, location) references RESTAURANT.Branch(rname, location)    
 );
 
 
@@ -45,8 +60,20 @@ CREATE TABLE RESTAURANT.Menu(
     foreign key(restaurantName) REFERENCES RESTAURANT.Restaurant ON DELETE CASCADE
 );
 CREATE TABLE RESTAURANT.Branch(
-    email varchar(50) PRIMARY KEY
+    rname varchar(50) references RESTAURANT.Restaurant (rname),
+    location varchar(50),
+    openingHour time,
+    closingHour time,
+    capacity integer,
+    primary key(rname, location),
 );
 CREATE TABLE RESTAURANT.Vacancy(
-    email varchar(50) PRIMARY KEY
+    rname           varchar(50),
+    location        varchar(50),
+    date            date,
+    mealType        varchar(50),
+    vacancy         integer NOT NULL,
+    check(mealType = 'Breakfast' OR mealType = 'Lunch' OR mealType = 'Dinner')
+    primary key(rname, location, date, mealType),
+    foreign key(rname, location) references RESTAURANT.Branch(rname, location),
 );
