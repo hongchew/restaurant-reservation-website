@@ -53,16 +53,12 @@ CREATE TABLE RESTAURANT.Menu(
     foreign key(restaurantName) REFERENCES RESTAURANT.Restaurant
 );
 CREATE TABLE RESTAURANT.Branch(
-<<<<<<< HEAD
     rname varchar(50) references RESTAURANT.Restaurant (rname),
     location varchar(50),
     openingHour time,
     closingHour time,
     capacity integer,
     primary key(rname, location),
-=======
-    email varchar(50) PRIMARY KEY
->>>>>>> 122965917999ab5237e0f6f638f3cb2f020e286e
 );
 CREATE TABLE RESTAURANT.Vacancy(
     rname           varchar(50),
