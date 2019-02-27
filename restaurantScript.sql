@@ -7,8 +7,21 @@ CREATE TABLE RESTAURANT.Users
     email varchar(50) PRIMARY KEY,
     name varchar(50) NOT NULL,
     password varchar(50) NOT NULL,
-    accountType varchar(50) NOT null,
-    Check(accountType = 'Customer' OR accountType = 'Admin')
+);
+
+CREATE TABLE RESTAURANT.Manager (
+    email varchar(50) PRIMARY KEY references RESTAURANT.Users on delete cascade,
+    restaurantName varchar(50),
+    location varchar(50),
+    foreign key (restaurantName, location) references RESTAURANT.Restaurant
+);
+
+CREATE TABLE RESTAURANT.Admin (
+    email varchar(50) PRIMARY KEY references RESTAURANT.Users on delete cascade
+);
+
+CREATE TABLE RESTAURANT.Customer (
+    email varchar(50) PRIMARY KEY references RESTAURANT.Users on delete cascade,
 );
 
 CREATE TABLE RESTAURANT.Restaurant
