@@ -7,8 +7,8 @@ CREATE TABLE RESTAURANT.Users
     userId SERIAL PRIMARY KEY,
     email varchar(50) UNIQUE NOT NULL,
     name varchar(50) NOT NULL,
-    password varchar(50) NOT NULL
-
+    password varchar(50) NOT NULL,
+    accountType integer NOT NULL
 );
 
 -- CREATE TABLE RESTAURANT.Manager (
@@ -48,7 +48,7 @@ CREATE TABLE RESTAURANT.Bookmark
     restaurantName varchar(50),
     location varchar(50),
     primary key (email, restaurantName, location),
-    foreign key (email) references RESTAURANT.Users ON DELETE CASCADE,
+    foreign key (email) references RESTAURANT.Users(email) ON DELETE CASCADE,
     foreign key (restaurantName, location) references RESTAURANT.Branch (restaurantName, location) ON DELETE CASCADE
 );
 
@@ -91,7 +91,7 @@ CREATE TABLE RESTAURANT.Feedback
     rating NUMERIC(2,1) default 0,
     primary key(email, restaurantName),
     foreign key(restaurantName) REFERENCES RESTAURANT.Restaurant(restaurantName) ON DELETE CASCADE,
-    foreign key(email) REFERENCES RESTAURANT.Users,
+    foreign key(email) REFERENCES RESTAURANT.Users(email),
     CHECK(rating >= 0.0 and rating <= 5.0)
 );
 CREATE TABLE RESTAURANT.Menu
