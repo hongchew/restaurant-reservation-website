@@ -92,7 +92,7 @@ CREATE TABLE RESTAURANT.Vacancy
     date date,
     mealType varchar(50),
     vacancy integer NOT NULL,
-    check(mealType = 'Breakfast' OR mealType = 'Lunch' OR mealType = 'Dinner')
+    check(mealType = 'Breakfast' OR mealType = 'Lunch' OR mealType = 'Dinner'),
     primary key (restaurantName, location, date, mealType),
-    foreign key (restaurntName, location) references RESTAURANT.Branch(restaurantName, location) ON DELETE CASCADE,
+    foreign key (restaurantName, location) references RESTAURANT.Branch(restaurantName, location) ON DELETE CASCADE
 );
