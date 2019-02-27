@@ -88,7 +88,7 @@ CREATE TABLE RESTAURANT.Menu
 CREATE TABLE RESTAURANT.Vacancy
 (
     rname varchar(50),
-    location varchar(50),
+location varchar(50),
     date date,
     mealType varchar(50),
     vacancy integer NOT NULL,
