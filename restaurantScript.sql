@@ -13,8 +13,12 @@ CREATE TABLE RESTAURANT.Users
 
 CREATE TABLE RESTAURANT.Manager (
     userId varchar(50) PRIMARY KEY references RESTAURANT.Users(userId) on delete cascade,
-
 );
+
+CREATE TABLE RESTAURANT.GeneralManager{
+    userId varchar(50) PRIMARY KEY REFERENCES RESTAURANT.Users(userId) ON DELETE CASCADE
+}
+
 CREATE TABLE RESTAURANT.Manages(
     userId varchar(50)
     restaurantName varchar(50),
