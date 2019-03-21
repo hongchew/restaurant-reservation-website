@@ -32,6 +32,8 @@ var insertRouter = require('./routes/insert');
 /* ---------------------------- */
 var loginRouter = require('./routes/login');
 
+var customerSignupRouter = require('./routes/customersignup');
+
 var app = express();
 
 // view engine setup
@@ -71,6 +73,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/insert', insertRouter);
 /* ---------------------------- */
+
+app.use('/customersignup', customerSignupRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
