@@ -36,9 +36,24 @@ CREATE TABLE RESTAURANT.Customer (
 
 CREATE TABLE RESTAURANT.Restaurant
 (
-    restaurantName varchar(50) PRIMARY KEY,
-    cuisineType varchar(50)
+    restaurantId SERIAL PRIMARY KEY,
+    restaurantName varchar(50)
 );
+CREATE TABLE RESTAURANT.Menu
+(
+    restaurantId integer,
+    menuName varchar(50),
+    price NUMERIC(7,2) NOT NULL,
+    cuisineId integer,
+    primary key(restaurantName, menuName),
+    foreign key(restaurantId) REFERENCES RESTAURANT.Restaurant(restaurantId) ON DELETE CASCADE,
+    foreign key(cuisineId) REFERENCES RESTAURANT.Cuisine(cuisineId)
+);
+CREATE TABLE RESTAURANT.Cuisine
+(
+    cuisineId SERIAL PRIMARY KEY,
+    cuisineName VARCHAR(50)
+)
 
 CREATE TABLE RESTAURANT.Area(
     areaId SERIAL PRIMARY KEY,
@@ -120,14 +135,7 @@ CREATE TABLE RESTAURANT.Feedback
     CHECK(rating >= 0.0 and rating <= 5.0)
 );
 
-CREATE TABLE RESTAURANT.Menu
-(
-    restaurantName varchar(50),
-    foodName varchar(50),
-    price NUMERIC(7,2) NOT NULL,
-    primary key(restaurantName, foodName),
-    foreign key(restaurantName) REFERENCES RESTAURANT.Restaurant(restaurantName) ON DELETE CASCADE
-);
+
 
 CREATE TABLE RESTAURANT.Vacancy
 (
