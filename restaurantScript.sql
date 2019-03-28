@@ -20,15 +20,7 @@ CREATE TABLE RESTAURANT.GeneralManager(
     restaurantId integer
 );
 
-CREATE TABLE RESTAURANT.Manages(
-    userId integer references RESTAURANT.Manager(managerId),
-    restaurantId integer,
-    branchArea varchar(50),
-    regionId integer,
-    PRIMARY KEY(managerId, restaurantId, branchArea, regionId),
-    FOREIGN KEY (restaurantId, branchArea, regionId) references RESTAURANT.Branch(restaurantId, branchArea, regionId) on DELETE CASCADE,
-    FOREIGN KEY (managerId) references RESTAURANT.Manager(managerId) on DELETE CASCADE
-);
+
 
 CREATE TABLE RESTAURANT.Admin (
     userId integer PRIMARY KEY references RESTAURANT.Users(userId) on delete cascade
@@ -79,6 +71,16 @@ CREATE TABLE RESTAURANT.Branch
     PRIMARY KEY(restaurantId, branchArea),
     FOREIGN KEY(restaurantId) references RESTAURANT.Restaurant(restaurantId) ON DELETE CASCADE,
     FOREIGN KEY(regionId) references RESTAURANT.region(regionId) ON DELETE CASCADE
+);
+
+CREATE TABLE RESTAURANT.Manages(
+    managerId integer references RESTAURANT.Manager(managerId),
+    restaurantId integer,
+    branchArea varchar(50),
+    regionId integer,
+    PRIMARY KEY(managerId, restaurantId, branchArea, regionId),
+    FOREIGN KEY (restaurantId, branchArea, regionId) references RESTAURANT.Branch(restaurantId, branchArea, regionId) on DELETE CASCADE,
+    FOREIGN KEY (managerId) references RESTAURANT.Manager(managerId) on DELETE CASCADE
 );
 
 CREATE TABLE RESTAURANT.Bookmark
