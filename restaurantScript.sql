@@ -12,16 +12,16 @@ CREATE TABLE RESTAURANT.Users
 );
 
 CREATE TABLE RESTAURANT.Manager (
-    userId integer PRIMARY KEY references RESTAURANT.Users(userId) on delete cascade
+    managerId integer PRIMARY KEY references RESTAURANT.Users(userId) on delete cascade
 );
 
 CREATE TABLE RESTAURANT.GeneralManager(
-    userId integer PRIMARY KEY REFERENCES RESTAURANT.Users(userId) ON DELETE CASCADE,
-    restaurantId integer FOREIGN KEY REFERENCES RESTAURANT.Restaurant(restaurantId) ON DELETE CASCADE
+    generalManagerId integer PRIMARY KEY REFERENCES RESTAURANT.Users(userId) ON DELETE CASCADE,
+    restaurantId integer
 )
 
 CREATE TABLE RESTAURANT.Manages(
-    userId integer references RESTAURANT.Manager(userId),
+    userId integer references RESTAURANT.Manager(managerId),
     restaurantId integer,
     branchArea varchar(50),
     regionId integer,
