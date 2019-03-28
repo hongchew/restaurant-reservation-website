@@ -43,6 +43,7 @@ CREATE TABLE RESTAURANT.Restaurant
     restaurantId SERIAL PRIMARY KEY,
     restaurantName varchar(50)
 );
+
 CREATE TABLE RESTAURANT.MenuItem
 (
     restaurantId integer,
@@ -81,11 +82,10 @@ CREATE TABLE RESTAURANT.Branch
 CREATE TABLE RESTAURANT.Bookmark
 (
     bookmarkId SERIAL PRIMARY KEY,
-    userId integer,    
+    userId integer,
     resutaurantId integer,
     branchArea varchar(50),
-    regionId integer,
-    foreign key (branchArea,restaurantId, regionId) references RESTAURANT.Branch(branchArea, restaurantId, regionId) ON DELETE CASCADE,    
+    foreign key (branchArea,restaurantId) references RESTAURANT.Branch(branchArea, restaurantId) ON DELETE CASCADE,    
     foreign key (userId) references RESTAURANT.Customer(userId) ON DELETE CASCADE,
 );
 
@@ -126,14 +126,13 @@ CREATE TABLE RESTAURANT.Vacancy
 (
     restaurantId integer,
     branchArea varchar(50),
-    regionId integer,
     mealTypId integer,
     vacancyDate date,
     mealTypeId integer,
     vacancy integer,
-    PRIMARY KEY(restaurantId,branchArea,regionId, mealTypeId, vacancyDate),
+    PRIMARY KEY(restaurantId,branchArea, mealTypeId, vacancyDate),
     foreign key(mealTypeId) REFERENCES RESTAURANT.MealType(mealTypeId) on delete cascade,
-    FOREIGN KEY(restaurantId, branchArea, regionId) REFERENCES RESTAURANT.branch(restaurantId, branchArea, regionId)
+    FOREIGN KEY(restaurantId, branchArea) REFERENCES RESTAURANT.branch(restaurantId, branchArea)
 );
 
 CREATE TABLE RESTAURANT.Promotion
