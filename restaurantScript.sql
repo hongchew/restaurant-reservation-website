@@ -27,7 +27,7 @@ CREATE TABLE RESTAURANT.Manages(
     regionId integer,
     PRIMARY KEY(managerId, restaurantId, branchArea, regionId),
     FOREIGN KEY (restaurantId, branchArea, regionId) references RESTAURANT.Branch(restaurantId, branchArea, regionId) on DELETE CASCADE,
-    FOREIGN KEY (managerId) references RESTAURANT.Manager(userId) on DELETE CASCADE
+    FOREIGN KEY (managerId) references RESTAURANT.Manager(managerId) on DELETE CASCADE
 );
 
 CREATE TABLE RESTAURANT.Admin (
