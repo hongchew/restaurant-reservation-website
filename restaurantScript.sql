@@ -96,6 +96,20 @@ CREATE TABLE RESTAURANT.MealType(
     mealTypeName varchar(50)
 ); 
 
+CREATE TABLE RESTAURANT.Vacancy
+(
+    restaurantId integer,
+    branchArea varchar(50),
+
+    mealTypId integer,
+    vacancyDate date,
+    mealTypeId integer,
+    vacancy integer,
+    PRIMARY KEY(restaurantId,branchArea, mealTypeId, vacancyDate),
+    foreign key(mealTypeId) REFERENCES RESTAURANT.MealType(mealTypeId) on delete cascade,
+    FOREIGN KEY(restaurantId, branchArea) REFERENCES RESTAURANT.branch(restaurantId, branchArea)
+);
+
 CREATE TABLE RESTAURANT.Reservation
 (
     reservationId SERIAL PRIMARY KEY,
@@ -126,19 +140,7 @@ CREATE TABLE RESTAURANT.Feedback
 );
 
 
-CREATE TABLE RESTAURANT.Vacancy
-(
-    restaurantId integer,
-    branchArea varchar(50),
 
-    mealTypId integer,
-    vacancyDate date,
-    mealTypeId integer,
-    vacancy integer,
-    PRIMARY KEY(restaurantId,branchArea, mealTypeId, vacancyDate),
-    foreign key(mealTypeId) REFERENCES RESTAURANT.MealType(mealTypeId) on delete cascade,
-    FOREIGN KEY(restaurantId, branchArea) REFERENCES RESTAURANT.branch(restaurantId, branchArea)
-);
 
 
 
