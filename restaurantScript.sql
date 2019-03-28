@@ -8,7 +8,6 @@ CREATE TABLE RESTAURANT.Users
     email varchar(50) UNIQUE NOT NULL,
     name varchar(50) NOT NULL,
     password varchar(50) NOT NULL,
-    
 );
 
 CREATE TABLE RESTAURANT.Manager (
@@ -74,6 +73,7 @@ CREATE TABLE RESTAURANT.Branch
     openingHour integer,
     closingHour integer,
     capacity integer,
+    rating numeric(2,1),
     PRIMARY KEY(restaurantId, branchArea, regiondId),
     FOREIGN KEY(restaurantId) references RESTAURANT.Restaurant(restaurantId) ON DELETE CASCADE,
     FOREIGN KEY(regionId) references RESTAURANT.region(regionId) ON DELETE CASCADE
