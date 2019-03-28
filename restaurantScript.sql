@@ -15,10 +15,10 @@ CREATE TABLE RESTAURANT.Manager (
     userId integer PRIMARY KEY references RESTAURANT.Users(userId) on delete cascade
 );
 
-CREATE TABLE RESTAURANT.GeneralManager{
+CREATE TABLE RESTAURANT.GeneralManager(
     userId integer PRIMARY KEY REFERENCES RESTAURANT.Users(userId) ON DELETE CASCADE,
     restaurantId integer FOREIGN KEY REFERENCES RESTAURANT.Restaurant(restaurantId) ON DELETE CASCADE
-}
+)
 
 CREATE TABLE RESTAURANT.Manages(
     userId integer references RESTAURANT.Manager(userId),
@@ -35,14 +35,14 @@ CREATE TABLE RESTAURANT.Admin (
 );
 
 CREATE TABLE RESTAURANT.Customer (
-    userId integer PRIMARY KEY references RESTAURANT.Users(userId) on delete cascade,
+    userId integer PRIMARY KEY references RESTAURANT.Users(userId) on delete cascade
 );
 
 CREATE TABLE RESTAURANT.Restaurant
 (
     restaurantId SERIAL PRIMARY KEY,
     restaurantName varchar(50),
-    generalManagerId
+    generalManagerId INTEGER REFERENCES RESTAURANT.GeneralManager(generalManagerId) 
 );
 
 CREATE TABLE RESTAURANT.MenuItem
@@ -83,16 +83,16 @@ CREATE TABLE RESTAURANT.Branch
 CREATE TABLE RESTAURANT.Bookmark
 (
     bookmarkId SERIAL PRIMARY KEY,
-    userId integer,
+    userId integer,    
     resutaurantId integer,
     branchArea varchar(50),
     foreign key (branchArea,restaurantId) references RESTAURANT.Branch(branchArea, restaurantId) ON DELETE CASCADE,    
-    foreign key (userId) references RESTAURANT.Customer(userId) ON DELETE CASCADE,
+    foreign key (userId) references RESTAURANT.Customer(userId) ON DELETE CASCADE
 );
 
 CREATE TABLE RESTAURANT.MealType(
     mealTypeId SERIAL PRIMARY KEY,
-    mealTypeName varchar(50),
+    mealTypeName varchar(50)
 ); 
 
 CREATE TABLE RESTAURANT.Reservation
@@ -120,7 +120,7 @@ CREATE TABLE RESTAURANT.Feedback
     reservationId integer,
     rating NUMERIC(2,1) default 0,
     comments varchar(50),
-    foreign key(reservationId) references RESTAURANT.Reservation(reservationId) ON DELETE CASCADE
+    foreign key(reservationId) references RESTAURANT.Reservation(reservationId) ON DELETE CASCADE,
     CHECK(rating >= 0.0 and rating <= 5.0)
 );
 
@@ -129,6 +129,7 @@ CREATE TABLE RESTAURANT.Vacancy
 (
     restaurantId integer,
     branchArea varchar(50),
+
     mealTypId integer,
     vacancyDate date,
     mealTypeId integer,
