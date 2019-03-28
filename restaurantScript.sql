@@ -15,7 +15,8 @@ CREATE TABLE RESTAURANT.Manager (
 );
 
 CREATE TABLE RESTAURANT.GeneralManager{
-    userId integer PRIMARY KEY REFERENCES RESTAURANT.Users(userId) ON DELETE CASCADE
+    userId integer PRIMARY KEY REFERENCES RESTAURANT.Users(userId) ON DELETE CASCADE,
+    restaurantId integer FOREIGN KEY REFERENCES RESTAURANT.Restaurant(restaurantId) ON DELETE CASCADE
 }
 
 CREATE TABLE RESTAURANT.Manages(
@@ -34,13 +35,13 @@ CREATE TABLE RESTAURANT.Admin (
 
 CREATE TABLE RESTAURANT.Customer (
     userId integer PRIMARY KEY references RESTAURANT.Users(userId) on delete cascade,
-    rewardpoints integer
 );
 
 CREATE TABLE RESTAURANT.Restaurant
 (
     restaurantId SERIAL PRIMARY KEY,
-    restaurantName varchar(50)
+    restaurantName varchar(50),
+    generalManagerId
 );
 
 CREATE TABLE RESTAURANT.MenuItem
@@ -73,8 +74,7 @@ CREATE TABLE RESTAURANT.Branch
     openingHour integer,
     closingHour integer,
     capacity integer,
-    rating numeric(2,1),
-    PRIMARY KEY(restaurantId, branchArea, regiondId),
+    PRIMARY KEY(restaurantId, branchArea),
     FOREIGN KEY(restaurantId) references RESTAURANT.Restaurant(restaurantId) ON DELETE CASCADE,
     FOREIGN KEY(regionId) references RESTAURANT.region(regionId) ON DELETE CASCADE
 );
@@ -99,16 +99,18 @@ CREATE TABLE RESTAURANT.Reservation
     reservationId SERIAL PRIMARY KEY,
     restaurantId integer,
     branchArea varchar(50),
-    regionId integer,
     mealtypeId integer,
     vacancyDate date,
     userId integer NOT NULL,
     name varchar(50),
+    feedbackId integer,
     numDiner integer NOT NULL,
     status boolean,
+    check(numDiner > 0),
     -- check(mealType = 'Breakfast' OR mealType = 'Lunch' OR mealType = 'Dinner'),
-    foreign key(userId, name) references RESTAURANT.Customer(userId, name) ON DELETE CASCADE,
-    FOREIGN KEY(restaurantId, branchArea, regionId, mealtypeId, vacancyDate) references RESTAURANT.Vacancy(restaurantId, branchArea, regionId, mealtypeId, vacancyDate),
+    foreign key(userId) references RESTAURANT.Customer(userId) ON DELETE CASCADE,
+    FOREIGN KEY(restaurantId, branchArea, mealtypeId, vacancyDate) references RESTAURANT.Vacancy(restaurantId, branchArea, mealtypeId, vacancyDate),
+    FOREIGN KEY(feedbackId) references RESTAURANT.Feedback(feedbackId)
 );
 
 CREATE TABLE RESTAURANT.Feedback
@@ -133,30 +135,6 @@ CREATE TABLE RESTAURANT.Vacancy
     PRIMARY KEY(restaurantId,branchArea, mealTypeId, vacancyDate),
     foreign key(mealTypeId) REFERENCES RESTAURANT.MealType(mealTypeId) on delete cascade,
     FOREIGN KEY(restaurantId, branchArea) REFERENCES RESTAURANT.branch(restaurantId, branchArea)
-);
-
-CREATE TABLE RESTAURANT.Promotion
-(
-    promotionName varchar(50),
-    restaurantName varchar(50),
-    promoDetails varchar(50),
-    foreign key (restaurantName, location) references RESTAURANT.Branch(restaurantName, location) ON DELETE CASCADE
-);
-
-CREATE TABLE RESTAURANT.Reward
-(
-    rewardName varchar(50) PRIMARY KEY,
-    description varchar(60),
-    cost numeric(4,0) NOT NULL,
-    check(cost > 0)
-);
-
-CREATE TABLE RESTAURANT.Redeem
-(
-    userRewardID SERIAL PRIMARY KEY,
-    rewardName varchar(50) references RESTAURANT.Reward(rewardName),
-    userId integer references RESTAURANT.Customer(userId),
-    check(rewardName is NOT NULL and userId is NOT NULL)
 );
 
 
