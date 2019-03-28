@@ -114,12 +114,10 @@ CREATE TABLE RESTAURANT.Reservation
 CREATE TABLE RESTAURANT.Feedback
 (
     feedbackId SERIAL PRIMARY KEY,
-    userId integer,
-    branchId integer,
+    reservationId integer,
     rating NUMERIC(2,1) default 0,
     comments varchar(50),
-    foreign key(branchId) references RESTAURANT.Branch(branchId) ON DELETE CASCADE
-    foreign key(userId) REFERENCES RESTAURANT.Users(userId),
+    foreign key(reservationId) references RESTAURANT.Reservation(reservationId) ON DELETE CASCADE
     CHECK(rating >= 0.0 and rating <= 5.0)
 );
 
