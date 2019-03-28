@@ -18,7 +18,7 @@ CREATE TABLE RESTAURANT.Manager (
 CREATE TABLE RESTAURANT.GeneralManager(
     generalManagerId integer PRIMARY KEY REFERENCES RESTAURANT.Users(userId) ON DELETE CASCADE,
     restaurantId integer
-)
+);
 
 CREATE TABLE RESTAURANT.Manages(
     userId integer references RESTAURANT.Manager(managerId),
@@ -45,6 +45,12 @@ CREATE TABLE RESTAURANT.Restaurant
     generalManagerId INTEGER REFERENCES RESTAURANT.GeneralManager(generalManagerId) 
 );
 
+CREATE TABLE RESTAURANT.Cuisine
+(
+    cuisineId SERIAL PRIMARY KEY,
+    cuisineName VARCHAR(50)
+);
+
 CREATE TABLE RESTAURANT.MenuItem
 (
     restaurantId integer,
@@ -55,15 +61,10 @@ CREATE TABLE RESTAURANT.MenuItem
     foreign key(restaurantId) REFERENCES RESTAURANT.Restaurant(restaurantId) ON DELETE CASCADE,
     foreign key(cuisineId) REFERENCES RESTAURANT.Cuisine(cuisineId)
 );
-CREATE TABLE RESTAURANT.Cuisine
-(
-    cuisineId SERIAL PRIMARY KEY,
-    cuisineName VARCHAR(50)
-)
 
 CREATE TABLE RESTAURANT.Region(
     regionId SERIAL PRIMARY KEY,
-    regionName varchar(50),
+    regionName varchar(50)
 );  
 
 CREATE TABLE RESTAURANT.Branch
