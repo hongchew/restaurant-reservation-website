@@ -119,14 +119,12 @@ CREATE TABLE RESTAURANT.Reservation
     vacancyDate date,
     userId integer NOT NULL,
     name varchar(50),
-    feedbackId integer,
     numDiner integer NOT NULL,
     status boolean,
     check(numDiner > 0),
     -- check(mealType = 'Breakfast' OR mealType = 'Lunch' OR mealType = 'Dinner'),
     foreign key(userId) references RESTAURANT.Customer(userId) ON DELETE CASCADE,
-    FOREIGN KEY(restaurantId, branchArea, mealtypeId, vacancyDate) references RESTAURANT.Vacancy(restaurantId, branchArea, mealtypeId, vacancyDate),
-    FOREIGN KEY(feedbackId) references RESTAURANT.Feedback(feedbackId)
+    FOREIGN KEY(restaurantId, branchArea, mealtypeId, vacancyDate) references RESTAURANT.Vacancy(restaurantId, branchArea, mealtypeId, vacancyDate)
 );
 
 CREATE TABLE RESTAURANT.Feedback
