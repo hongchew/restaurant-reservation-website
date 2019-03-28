@@ -8,10 +8,11 @@ CREATE TABLE RESTAURANT.Users
     email varchar(50) UNIQUE NOT NULL,
     name varchar(50) NOT NULL,
     password varchar(50) NOT NULL,
+    accountType varchar(50) NOT NULL
 );
 
 CREATE TABLE RESTAURANT.Manager (
-    userId integer PRIMARY KEY references RESTAURANT.Users(userId) on delete cascade,
+    userId integer PRIMARY KEY references RESTAURANT.Users(userId) on delete cascade
 );
 
 CREATE TABLE RESTAURANT.GeneralManager{
