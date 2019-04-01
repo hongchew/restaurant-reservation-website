@@ -4,132 +4,117 @@ CREATE SCHEMA RESTAURANT;
 
 CREATE TABLE RESTAURANT.Users
 (
-    userId SERIAL PRIMARY KEY,
-    email varchar(50) UNIQUE NOT NULL,
+    email varchar(50) primary key,
     name varchar(50) NOT NULL,
     password varchar(50) NOT NULL,
     accountType varchar(50) NOT NULL
 );
 
 CREATE TABLE RESTAURANT.Manager (
-    managerId integer PRIMARY KEY references RESTAURANT.Users(userId) on delete cascade
+    managerEmail varchar(50) PRIMARY KEY references RESTAURANT.Users(email) on delete cascade
 );
 
 CREATE TABLE RESTAURANT.GeneralManager(
-    generalManagerId integer PRIMARY KEY REFERENCES RESTAURANT.Users(userId) ON DELETE CASCADE,
-    restaurantId integer
+    generalManagerEmail varchar(50) PRIMARY KEY references RESTAURANT.Users(email) on delete cascade,
+    restaurantName varchar(50) references RESTAURANT.Restaurant(restaurantName)
 );
 
 CREATE TABLE RESTAURANT.Admin (
-    userId integer PRIMARY KEY references RESTAURANT.Users(userId) on delete cascade
+    adminEmail varchar(50) PRIMARY KEY references RESTAURANT.Users(email) on delete cascade
 );
 
 CREATE TABLE RESTAURANT.Customer (
-    userId integer PRIMARY KEY references RESTAURANT.Users(userId) on delete cascade
+    customerEmail varchar(50) PRIMARY KEY references RESTAURANT.Users(email) on delete cascade
 );
 
 CREATE TABLE RESTAURANT.Restaurant
 (
-    restaurantId SERIAL PRIMARY KEY,
-    restaurantName varchar(50),
-    generalManagerId INTEGER REFERENCES RESTAURANT.GeneralManager(generalManagerId) 
+    restaurantName varchar(50) primary key,
+    generalManagerEmail varchar(50) REFERENCES RESTAURANT.GeneralManager(email) 
 );
 
 CREATE TABLE RESTAURANT.Cuisine
 (
-    cuisineId SERIAL PRIMARY KEY,
-    cuisineName VARCHAR(50)
+    cuisineName VARCHAR(50) primary key
 );
 
 CREATE TABLE RESTAURANT.MenuItem
 (
-    restaurantId integer,
+    restaurantName varchar(50) references RESTAURANT.Restaurant ON DELETE CASCADE,
     menuName varchar(50),
     price NUMERIC(7,2) NOT NULL,
-    cuisineId integer,
-    primary key(restaurantId, menuName),
-    foreign key(restaurantId) REFERENCES RESTAURANT.Restaurant(restaurantId) ON DELETE CASCADE,
-    foreign key(cuisineId) REFERENCES RESTAURANT.Cuisine(cuisineId)
+    cuisineName varchar(50) references RESTAURANT.Cuisine(cuisineName),
+    primary key(restaurantId, menuName)
 );
 
 CREATE TABLE RESTAURANT.Region(
-    regionId SERIAL PRIMARY KEY,
-    regionName varchar(50)
+    regionName varchar(50) PRIMARY KEY
 );  
 
 CREATE TABLE RESTAURANT.Branch
 (
-    restaurantId integer,
+    restaurantName varchar(50) references RESTAURANT.Restaurant ON DELETE CASCADE,
     branchArea varchar(50),
-    regionId integer,
+    regionName varchar(50) references RESTAURANT.Region(regionName) on delete cascade, 
     address varchar(50),
     openingHour integer,
     closingHour integer,
     capacity integer,
-    PRIMARY KEY(restaurantId, branchArea),
-    FOREIGN KEY(restaurantId) references RESTAURANT.Restaurant(restaurantId) ON DELETE CASCADE,
-    FOREIGN KEY(regionId) references RESTAURANT.region(regionId) ON DELETE CASCADE
+    PRIMARY KEY(restaurantName, branchArea),
 );
 
 CREATE TABLE RESTAURANT.Manages(
-    managerId integer references RESTAURANT.Manager(managerId),
-    restaurantId integer,
+    managerEmail varchar(50) references RESTAURANT.Manager(managerEmail) on delete cascade,
+    restaurantName varchar(50),
     branchArea varchar(50),
-    PRIMARY KEY(managerId, restaurantId, branchArea),
-    FOREIGN KEY (restaurantId, branchArea) references RESTAURANT.Branch(restaurantId, branchArea) on DELETE CASCADE,
-    FOREIGN KEY (managerId) references RESTAURANT.Manager(managerId) on DELETE CASCADE
+    PRIMARY KEY(managerEmail, restaurantId, branchArea),
+    FOREIGN KEY (restaurantName, branchArea) references RESTAURANT.Branch(restaurantName, branchArea) on DELETE CASCADE
 );
 
 CREATE TABLE RESTAURANT.Bookmark
 (
-    bookmarkId SERIAL PRIMARY KEY,
-    userId integer,    
-    restaurantId integer,
+    customerEmail integer references RESTAURANT.Customer(customerEmail) ON DELETE CASCADE,    
+    restaurantName varchar(50),
     branchArea varchar(50),
-    foreign key (branchArea,restaurantId) references RESTAURANT.Branch(branchArea, restaurantId) ON DELETE CASCADE,    
-    foreign key (userId) references RESTAURANT.Customer(userId) ON DELETE CASCADE
+    PRIMARY KEY(customerEmail, restaurantName, branchArea),
+    foreign key (branchArea,restaurantName) references RESTAURANT.Branch(branchArea, restaurantName) ON DELETE CASCADE
 );
 
 CREATE TABLE RESTAURANT.MealType(
-    mealTypeId SERIAL PRIMARY KEY,
-    mealTypeName varchar(50)
+    mealTypeName varchar(50) primary key
 ); 
 
 CREATE TABLE RESTAURANT.Vacancy
 (
-    restaurantId integer,
+    restaurantName varchar(50),
     branchArea varchar(50),
-
-    mealTypId integer,
+    mealTypeName varchar(50) references RESTAURANT.MealType(mealTypeName) on delete cascade,
     vacancyDate date,
-    mealTypeId integer,
     vacancy integer,
-    PRIMARY KEY(restaurantId,branchArea, mealTypeId, vacancyDate),
-    foreign key(mealTypeId) REFERENCES RESTAURANT.MealType(mealTypeId) on delete cascade,
-    FOREIGN KEY(restaurantId, branchArea) REFERENCES RESTAURANT.branch(restaurantId, branchArea)
+    PRIMARY KEY(restaurantName,branchArea, mealTypeName, vacancyDate),
+    FOREIGN KEY(restaurantName, branchArea) REFERENCES RESTAURANT.branch(restaurantName, branchArea)
 );
 
 CREATE TABLE RESTAURANT.Reservation
 (
     reservationId SERIAL PRIMARY KEY,
-    restaurantId integer,
+    restaurantName varchar(50),
     branchArea varchar(50),
-    mealtypeId integer,
+    mealTypeName varchar(50),
     vacancyDate date,
-    userId integer NOT NULL,
-    name varchar(50),
+    customerEmail NOT NULL references RESTAURANT.Customer(customerEmail) on delete cascade,
     numDiner integer NOT NULL,
     status boolean,
     check(numDiner > 0),
     -- check(mealType = 'Breakfast' OR mealType = 'Lunch' OR mealType = 'Dinner'),
-    foreign key(userId) references RESTAURANT.Customer(userId) ON DELETE CASCADE,
-    FOREIGN KEY(restaurantId, branchArea, mealtypeId, vacancyDate) references RESTAURANT.Vacancy(restaurantId, branchArea, mealtypeId, vacancyDate)
+    FOREIGN KEY(restaurantName, branchArea, mealTypeName, vacancyDate) references RESTAURANT.Vacancy(restaurantName, branchArea, mealTypeName, vacancyDate)
 );
 
+--Does not capture the constraint that one reservation only can have one feedback
 CREATE TABLE RESTAURANT.Feedback
 (
     feedbackId SERIAL PRIMARY KEY,
-    reservationId integer,
+    reservationId integer NOT NULL,
     rating NUMERIC(2,1) default 0,
     comments varchar(50),
     foreign key(reservationId) references RESTAURANT.Reservation(reservationId) ON DELETE CASCADE,
