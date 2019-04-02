@@ -15,8 +15,8 @@ CREATE TABLE RESTAURANT.Manager (
 );
 
 CREATE TABLE RESTAURANT.GeneralManager(
-    generalManagerEmail varchar(50) PRIMARY KEY references RESTAURANT.Users(email) on delete cascade,
-    restaurantName varchar(50) references RESTAURANT.Restaurant(restaurantName)
+    generalManagerEmail varchar(50) PRIMARY KEY references RESTAURANT.Users(email) on delete cascade
+    -- restaurantName varchar(50) references RESTAURANT.Restaurant(restaurantName)
 );
 
 CREATE TABLE RESTAURANT.Admin (
@@ -30,7 +30,7 @@ CREATE TABLE RESTAURANT.Customer (
 CREATE TABLE RESTAURANT.Restaurant
 (
     restaurantName varchar(50) primary key,
-    generalManagerEmail varchar(50) REFERENCES RESTAURANT.GeneralManager(email) 
+    generalManagerEmail varchar(50) REFERENCES RESTAURANT.GeneralManager(generalManagerEmail) 
 );
 
 CREATE TABLE RESTAURANT.Cuisine
@@ -40,11 +40,11 @@ CREATE TABLE RESTAURANT.Cuisine
 
 CREATE TABLE RESTAURANT.MenuItem
 (
-    restaurantName varchar(50) references RESTAURANT.Restaurant ON DELETE CASCADE,
+    restaurantName varchar(50) references RESTAURANT.Restaurant(RestaurantName) ON DELETE CASCADE,
     menuName varchar(50),
     price NUMERIC(7,2) NOT NULL,
     cuisineName varchar(50) references RESTAURANT.Cuisine(cuisineName),
-    primary key(restaurantId, menuName)
+    primary key(restaurantName, menuName)
 );
 
 CREATE TABLE RESTAURANT.Region(
@@ -60,20 +60,20 @@ CREATE TABLE RESTAURANT.Branch
     openingHour integer,
     closingHour integer,
     capacity integer,
-    PRIMARY KEY(restaurantName, branchArea),
+    PRIMARY KEY(restaurantName, branchArea)
 );
 
 CREATE TABLE RESTAURANT.Manages(
     managerEmail varchar(50) references RESTAURANT.Manager(managerEmail) on delete cascade,
     restaurantName varchar(50),
     branchArea varchar(50),
-    PRIMARY KEY(managerEmail, restaurantId, branchArea),
+    PRIMARY KEY(managerEmail, restaurantName, branchArea),
     FOREIGN KEY (restaurantName, branchArea) references RESTAURANT.Branch(restaurantName, branchArea) on DELETE CASCADE
 );
 
 CREATE TABLE RESTAURANT.Bookmark
 (
-    customerEmail integer references RESTAURANT.Customer(customerEmail) ON DELETE CASCADE,    
+    customerEmail varchar(50) references RESTAURANT.Customer(customerEmail) ON DELETE CASCADE,    
     restaurantName varchar(50),
     branchArea varchar(50),
     PRIMARY KEY(customerEmail, restaurantName, branchArea),
@@ -102,7 +102,7 @@ CREATE TABLE RESTAURANT.Reservation
     branchArea varchar(50),
     mealTypeName varchar(50),
     vacancyDate date,
-    customerEmail NOT NULL references RESTAURANT.Customer(customerEmail) on delete cascade,
+    customerEmail varchar(50) NOT NULL references RESTAURANT.Customer(customerEmail) on delete cascade,
     numDiner integer NOT NULL,
     status boolean,
     check(numDiner > 0),
@@ -129,13 +129,13 @@ CREATE TABLE RESTAURANT.Feedback
 Insert into User
 */
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('test1@gmail.com','GM1','password','GeneralManager');
-Insert into RESTAURANT.GeneralManager (generalManagerId,restaurantId) VALUES('1','1');
+Insert into RESTAURANT.GeneralManager (generalManagerId,restaurantId) VALUES('test1@gmail.com');
 
 
 /*
 Insert into Restaurant
 */
-Insert into RESTAURANT.Restaurant (restaurantName, generalManagerId) VALUES('restaurant1','1');
+Insert into RESTAURANT.Restaurant (restaurantName, generalManagerId) VALUES('restaurant1','test1@gmail.com');
 
 /*
 Insert into Region
@@ -145,8 +145,8 @@ Insert into RESTAURANT.Region(regionName) VALUES('East');
 /*
 Insert into Branch
 */
-Insert into RESTAURANT.Branch (restaurantId, branchArea, regionId, address, openingHour, closingHour, capacity) 
-VALUES('1','Bedok','1','S123456','0800','2200','100');
-Insert into RESTAURANT.Branch (restaurantId, branchArea, regionId, address, openingHour, closingHour, capacity) 
-VALUES('1','Simei','1','S123457','0800','2200','80');
+Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity) 
+VALUES('restaurant1','Bedok','East','S123456','0800','2200','100');
+Insert into RESTAURANT.Branch (restaurantId, branchArea, regionName, address, openingHour, closingHour, capacity) 
+VALUES('restaurant1','Simei','East','S123457','0800','2200','80');
 
