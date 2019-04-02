@@ -1,49 +1,115 @@
 <!DOCTYPE html>
 <html>
-  <head>
-		<!-- Page Title -->
-    <title>List Restaurant</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-		
-		<!-- CSS for Styling -->
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  </head>
-  <body>
-    <h1><%= title%></h1>
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">Restaurant Name</th>
-                    <th scope="col">Branch Area</th>
-                    <th scope="col">Region ID</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Opening Hour</th>
-                    <th scope="col">Closing Hour</th>
-										<th scope="col">Capacity</th>
-										<th scope="col">Add to Bookmark</th>
-                    
-				</tr>
-			</thead>
-			<tbody>
-				<% for(var i=0; i<data.length; i++) { %>
-				<tr>
-					<td><%= data[i].restaurantname%></td>
-					<td><%= data[i].brancharea%></td>
-					<td>
-						<% if(data[i].regionid===1) {%>	East <%}%>
+
+<head>
+	<!-- Page Title -->
+	<title>List Restaurant</title>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+
+	<!-- CSS for Styling -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+		integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+	<!-- JavaScript for Interactivity -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+		integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+		integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+		crossorigin="anonymous"></script>
+
+	<!-- ADDED JavaScript -->
+
+
+</head>
+
+<body>
+	<form id="html_form" action="createReservation" role="form" method="post">
+		<p> Make a reservation for:</p>
+		<div class="form-group">
+			<label for="restaurantName">Restaurant Name</label>
+			<input type="text" class="form-control" id="restaurantName" name="restaurantName" aria-describedby="matricHelp"
+				placeholder="Enter restaurant name ...">
+		</div>
+
+		<div class="form-group">
+			<label for="branchArea">Branch Area</label>
+			<input type="text" class="form-control" id="branchArea" name="branchArea" aria-describedby="matricHelp"
+				placeholder="Enter branch area ...">
+		</div>
+
+		<div class="form-group">
+			<label for="mealType"> Meal Type </label>
+			<select id="mealType">
+				<option value="breakfast">Breakfast</option>
+				<option value="lunch" selected>Lunch</option>
+				<option value="Dinner">Dinner</option>
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label for="numDiners">Number of Diners</label>
+			<input type="number" class="form-control" id="numDiners" name="numDiners" aria-describedby="matricHelp"
+				placeholder="Number of diners ...">
+		</div>
+
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+
+
+	<h1><%= title%></h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Restaurant Name</th>
+				<th scope="col">Branch Area</th>
+				<th scope="col">Region Name</th>
+				<th scope="col">Address</th>
+				<th scope="col">Opening Hour</th>
+				<th scope="col">Closing Hour</th>
+				<th scope="col">Max Capacity</th>
+				<th scope="col">Add to Bookmark</th>
+				<th scope="col">Make Booking</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			<% for(var i=0; i<data.length; i++) { %>
+			<tr id="tableBody">
+				<td id="restaurantName"><%= data[i].restaurantname%></td>
+				<td id="brancharea"><%= data[i].brancharea%></td>
+				<td id="regionname"><%= data[i].regionname%>
+					<!-- <% if(data[i].regionid===1) {%>	East <%}%>
 						<% if(data[i].regionid===2) {%>	South <%}%>
 						<% if(data[i].regionid===3) {%>	West <%}%>
-						<% if(data[i].regionid===4) {%>	North <%}%>
+						<% if(data[i].regionid===4) {%>	North <%}%> -->
 				</td>
-					<td><%= data[i].address%></td>
-					<td><%= data[i].openinghour%></td>
-					<td><%= data[i].closinghour%></td>
-					<td><%= data[i].capacity%></td>
-					<td><button class="btn btn-lg btn-success" onclick="addBookmark()">Bookmark</button></td>
-                    
-				</tr>
-				<% } %>
-			</tbody>
-		</table>
-  </body>
+				<td id="address"><%= data[i].address%></td>
+				<td id="openinghour"><%= data[i].openinghour%></td>
+				<td id="closinghour"><%= data[i].closinghour%></td>
+				<td id="capactiy"><%= data[i].capacity%></td>
+				<td>
+					<form id="bookmark" action="" method="POST">
+						<input type="hidden" name=bookmarkIndex value="<%=i%>">
+						<button id="button" class="btn btn-lg btn-success" value="Bookmark" type="submit" >Bookmark</button>
+					</form>
+					</td>
+
+					<td>
+							<form id="bookmark" action="" method="POST">
+									<input type="hidden" name=reservationIndex value="<%=i%>">
+									<button id="button" class="btn btn-lg btn-success" value="Bookmark" type="submit" >Book</button>
+								</form>
+					</td>
+
+			</tr>
+			<% } %>
+		</tbody>
+	</table>
+
+</body>
+
 </html>

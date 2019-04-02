@@ -37,6 +37,7 @@ var customerSignupRouter = require('./routes/customersignup');
 
 var restaurantSignupRouter = require('./routes/restaurantsignup');
 var listRestaurantRouter = require('./routes/listRestaurant');
+var createReservationRouter = require('./routes/createReservation');
 
 var app = express();
 
@@ -84,6 +85,7 @@ app.use('/customersignup', customerSignupRouter);
 app.use('/restaurantsignup', customerSignupRouter);
 
 app.use('/listRestaurant', listRestaurantRouter);
+app.use('/createReservation', createReservationRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

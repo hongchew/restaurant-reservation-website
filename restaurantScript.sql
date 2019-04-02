@@ -129,24 +129,51 @@ CREATE TABLE RESTAURANT.Feedback
 Insert into User
 */
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('test1@gmail.com','GM1','password','GeneralManager');
-Insert into RESTAURANT.GeneralManager (generalManagerId,restaurantId) VALUES('test1@gmail.com');
+Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('test2@gmail.com','GM2','password','GeneralManager');
+Insert into RESTAURANT.GeneralManager (generalManagerEmail) VALUES('test1@gmail.com');
+Insert into RESTAURANT.GeneralManager (generalManagerEmail) VALUES('test2@gmail.com');
+
+Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('cust1@gmail.com','Cust1','password','Customer');
+Insert into RESTAURANT.Customer (customerEmail) VALUES ('cust1@gmail.com');
+
 
 
 /*
 Insert into Restaurant
 */
-Insert into RESTAURANT.Restaurant (restaurantName, generalManagerId) VALUES('restaurant1','test1@gmail.com');
+Insert into RESTAURANT.Restaurant (restaurantName, generalManagerEmail) VALUES('restaurant1','test1@gmail.com');
+Insert into RESTAURANT.Restaurant (restaurantName, generalManagerEmail) VALUES('restaurant2','test2@gmail.com');
 
 /*
 Insert into Region
 */
 Insert into RESTAURANT.Region(regionName) VALUES('East');
+Insert into RESTAURANT.Region(regionName) VALUES('North');
+
 
 /*
 Insert into Branch
 */
 Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity) 
 VALUES('restaurant1','Bedok','East','S123456','0800','2200','100');
-Insert into RESTAURANT.Branch (restaurantId, branchArea, regionName, address, openingHour, closingHour, capacity) 
+Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity) 
 VALUES('restaurant1','Simei','East','S123457','0800','2200','80');
+Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity) 
+VALUES('restaurant2','Yishun','North','S123459','0800','2200','30');
 
+/*
+Insert into Meal Type
+*/
+Insert into RESTAURANT.MealType (mealTypeName) VALUES ('breakfast');
+Insert into RESTAURANT.MealType (mealTypeName) VALUES ('lunch');
+Insert into RESTAURANT.MealType (mealTypeName) VALUES ('dinner');
+
+/*
+Insert into Vacancy
+*/
+Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-04-05', '200');
+
+/*
+Insert into Reservation
+*/
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-04-05', 'cust1@gmail.com', '2', 'TRUE');
