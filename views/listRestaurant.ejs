@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+		<!-- Page Title -->
+    <title>List Restaurant</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+		
+		<!-- CSS for Styling -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  </head>
+  <body>
+    <h1><%= title%></h1>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Restaurant Name</th>
+                    <th scope="col">Branch Area</th>
+                    <th scope="col">Region ID</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Opening Hour</th>
+                    <th scope="col">Closing Hour</th>
+										<th scope="col">Capacity</th>
+										<th scope="col">Add to Bookmark</th>
+                    
+				</tr>
+			</thead>
+			<tbody>
+				<% for(var i=0; i<data.length; i++) { %>
+				<tr>
+					<td><%= data[i].restaurantname%></td>
+					<td><%= data[i].brancharea%></td>
+					<td>
+						<% if(data[i].regionid===1) {%>	East <%}%>
+						<% if(data[i].regionid===2) {%>	South <%}%>
+						<% if(data[i].regionid===3) {%>	West <%}%>
+						<% if(data[i].regionid===4) {%>	North <%}%>
+				</td>
+					<td><%= data[i].address%></td>
+					<td><%= data[i].openinghour%></td>
+					<td><%= data[i].closinghour%></td>
+					<td><%= data[i].capacity%></td>
+					<td><button class="btn btn-lg btn-success" onclick="addBookmark()">Bookmark</button></td>
+                    
+				</tr>
+				<% } %>
+			</tbody>
+		</table>
+  </body>
+</html>

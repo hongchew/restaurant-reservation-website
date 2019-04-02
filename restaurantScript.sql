@@ -140,4 +140,28 @@ CREATE TABLE RESTAURANT.Feedback
 
 
 
+/*
+Insert into User
+*/
+Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('test1@gmail.com','GM1','password','GeneralManager');
+Insert into RESTAURANT.GeneralManager (generalManagerId,restaurantId) VALUES('1','1');
+
+
+/*
+Insert into Restaurant
+*/
+Insert into RESTAURANT.Restaurant (restaurantName, generalManagerId) VALUES('restaurant1','1');
+
+/*
+Insert into Region
+*/
+Insert into RESTAURANT.Region(regionName) VALUES('East');
+
+/*
+Insert into Branch
+*/
+Insert into RESTAURANT.Branch (restaurantId, branchArea, regionId, address, openingHour, closingHour, capacity) 
+VALUES('1','Bedok','1','S123456','0800','2200','100');
+Insert into RESTAURANT.Branch (restaurantId, branchArea, regionId, address, openingHour, closingHour, capacity) 
+VALUES('1','Simei','1','S123457','0800','2200','80');
 
