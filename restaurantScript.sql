@@ -128,7 +128,7 @@ CREATE TABLE RESTAURANT.Feedback
 /*
 Insert into User
 */
-Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('test1@gmail.com','GM1','password','GeneralManager');
+Insert into RESTAURANT.Users VALUES('test1@gmail.com','GM1','password','GeneralManager');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('test2@gmail.com','GM2','password','GeneralManager');
 Insert into RESTAURANT.GeneralManager (generalManagerEmail) VALUES('test1@gmail.com');
 Insert into RESTAURANT.GeneralManager (generalManagerEmail) VALUES('test2@gmail.com');
