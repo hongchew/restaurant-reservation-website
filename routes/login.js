@@ -3,11 +3,7 @@ var router = express.Router();
 
 const { Pool } = require('pg')
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'postgres',
-  password: '********',
-  port: 5432,
+  connectionString: process.env.DATABASE_URL
 })
 
 /* SQL Query */
@@ -42,7 +38,7 @@ router.post('/', function(req, res, next) {
         name: data.rows[0].name,
         email: data.rows[0].email,
         accountType: data.rows[0].accounttype,
-        login: true
+        isLogin: true
       };
 
       req.app.locals.user = user;

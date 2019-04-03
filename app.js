@@ -103,4 +103,12 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+//Global varaible
+app.locals.user = {
+  email: null,
+  name: null,
+  accountType: null,
+  isLogIn: false
+}
+
 module.exports = app;

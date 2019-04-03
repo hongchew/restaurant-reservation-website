@@ -9,12 +9,22 @@ const pool = new Pool({
 
 router.get('/', function (req, res, next)) {
     var user = req.app.locals.user;
-    var reservationsQuery = "SELECT * FROM RESTAURANT.Reservation WHERE userid = '" + user.userId + "'";
-    
-    pool.query(reservationsQuery, (err,data) => {
+        var pastReservationsQuery = "SELECT r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, r.vacancyDate, r.numDiner FROM RESTAURANT.Reservation r join RESTAURANT.Customer c on r.customerEmail = c.customerEmail WHERE c.customerEmail = '" + user.customerEmail + "' AND r.vacancyDate < NOW() ORDER BY r.vacancyDate";
+        
+        var upcomingReservationsQuery = "SELECT r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, r.vacancyDate, r.numDiner FROM RESTAURANT.Reservation r join RESTAURANT.Customer c on r.customerEmail = c.customerEmail WHERE c.customerEmail = '" + user.customerEmail + "' AND r.vacancyDate >= NOW() ORDER BY r.vacancyDate";
+    pool.query(pastReservationsQuery, (err,data) => {
+        var reservationId = data.rows[0].reservationId;
+        var restaurantName = data.rows[0].restaurantName;
+        var branchArea = data.rows[0].branchArea;
+        var mealTypeName = data.rows[0].mealTypeName;
+        var vacancyDate = data.rows[0].vacancyDate;
+        var numDiner = data.rows[0].numDiner;
+        res.render('userInfo', {title:'User Information', data1: data.rows});
+    });
 
-    }
-    )
-
-
+    pool.query(upcomingReservationsQuery, (err,data) => {
+        res.render('userInfo', {data2: data.rows});
+    });
 }
+
+module.exports = router;
