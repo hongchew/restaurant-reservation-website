@@ -35,7 +35,7 @@ var adminRouter = require('./routes/admin');
 
 var customerSignupRouter = require('./routes/customersignup');
 
-var restaurantSignupRouter = require('./routes/restaurantsignup');
+var createGeneralManager = require('./routes/createGeneralManager');
 var listRestaurantRouter = require('./routes/listRestaurant');
 var createReservationRouter = require('./routes/createReservation');
 
@@ -82,7 +82,7 @@ app.use('/insert', insertRouter);
 
 app.use('/customersignup', customerSignupRouter);
 
-app.use('/restaurantsignup', customerSignupRouter);
+app.use('/createGeneralManager', createGeneralManager);
 
 app.use('/listRestaurant', listRestaurantRouter);
 app.use('/createReservation', createReservationRouter);
