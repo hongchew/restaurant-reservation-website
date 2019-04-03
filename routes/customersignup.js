@@ -21,7 +21,7 @@ router.post('/', function(req, res, next) {
   var name = req.body.name;
   var email = req.body.email;
   var password = req.body.password;
-  var accountType = 'customer';
+  var accountType = 'Customer';
   console.log(name);
   var sql_insert_query = 'INSERT INTO RESTAURANT.Users VALUES';
   var retrieve_query =
@@ -42,6 +42,12 @@ router.post('/', function(req, res, next) {
     if (data.rows.length == 0) {
       pool.query(insert_query, (err, data) => {
         console.log(err);
+        var user = {
+          email: email,
+          accountType: accountType,
+          login: true
+        }
+        req.app.locals.user = user;
         res.redirect('/listrestaurant');
       });
     } else{

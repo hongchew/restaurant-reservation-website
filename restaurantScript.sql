@@ -1,5 +1,4 @@
-DROP SCHEMA RESTAURANT
-CASCADE;
+DROP SCHEMA RESTAURANT CASCADE;
 CREATE SCHEMA RESTAURANT;
 
 CREATE TABLE RESTAURANT.Users
@@ -120,8 +119,30 @@ CREATE TABLE RESTAURANT.Feedback
     foreign key(reservationId) references RESTAURANT.Reservation(reservationId) ON DELETE CASCADE,
     CHECK(rating >= 0.0 and rating <= 5.0)
 );
+--Slots into corresponding table based on user type--
+CREATE OR REPLACE FUNCTION accountTypeUpdate()
+    RETURNS trigger AS
+$$
+BEGIN 
+if new.accountType = 'Customer' THEN
+    insert into RESTAURANT.customer VALUES (new.email);
+    elsif new.accountType='GeneralManager' THEN
+        insert into RESTAURANT.GeneralManager VALUES (new.email);
+    elsif new.accountType='Admin' THEN
+        insert into RESTAURANT.Admin VALUES (new.email);
+    elsif new.accountType='Manager' THEN
+        insert into RESTAURANT.Manager VALUES (new.email);
+end if;
+return new;
+end;
+$$
+language 'plpgsql';
 
-
+--TRIGGERS--
+CREATE TRIGGER newUserInsertedTrigger
+AFTER INSERT ON RESTAURANT.Users
+for each row
+execute procedure accountTypeUpdate();
 
 
 
@@ -130,11 +151,7 @@ Insert into User
 */
 Insert into RESTAURANT.Users VALUES('test1@gmail.com','GM1','password','GeneralManager');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('test2@gmail.com','GM2','password','GeneralManager');
-Insert into RESTAURANT.GeneralManager (generalManagerEmail) VALUES('test1@gmail.com');
-Insert into RESTAURANT.GeneralManager (generalManagerEmail) VALUES('test2@gmail.com');
-
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('cust1@gmail.com','Cust1','password','Customer');
-Insert into RESTAURANT.Customer (customerEmail) VALUES ('cust1@gmail.com');
 
 
 
