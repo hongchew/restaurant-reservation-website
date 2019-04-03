@@ -34,10 +34,14 @@
   </head>
 
   <body class="bg-dark">
-    <h1 style="color:white">Diner Page</h1>
+    <h1 style="color:white">
+      Diner Page
+      <% if(emailUsed == true){ %>
+        The email you have entered is already registered.
+        <% } %>
+    </h1>
 
-    <!-- Alert user if email is already registered -->
-
+    
     <div class="container py-3">
       <div class="row">
         <div class="mx-auto col-sm-6">
