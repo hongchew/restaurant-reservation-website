@@ -55,20 +55,13 @@ CREATE TABLE RESTAURANT.Branch
     restaurantName varchar(50) references RESTAURANT.Restaurant ON DELETE CASCADE,
     branchArea varchar(50),
     regionName varchar(50) references RESTAURANT.Region(regionName) on delete cascade, 
+    managerEmail varchar(50) references RESTAURANT.Manager(managerEmail),
     address varchar(50),
     openingHour integer,
     closingHour integer,
     capacity integer,
     rating integer,
     PRIMARY KEY(restaurantName, branchArea)
-);
-
-CREATE TABLE RESTAURANT.Manages(
-    managerEmail varchar(50) references RESTAURANT.Manager(managerEmail) on delete cascade,
-    restaurantName varchar(50),
-    branchArea varchar(50),
-    PRIMARY KEY(managerEmail, restaurantName, branchArea),
-    FOREIGN KEY (restaurantName, branchArea) references RESTAURANT.Branch(restaurantName, branchArea) on DELETE CASCADE
 );
 
 CREATE TABLE RESTAURANT.Bookmark
