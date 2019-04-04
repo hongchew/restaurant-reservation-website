@@ -151,8 +151,8 @@ WHERE v.restaurantName = NEW.restaurantName and v.branchArea = NEW.branchArea an
 SELECT capacity into capacity1
 FROM RESTAURANT.Branch
 WHERE NEW.restaurantName = restaurantName and NEW.branchArea = branchArea; --get capacity of branch--
-IF ((bArea IS NULL)) THEN
-    Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancyDate, vacancy) VALUES (NEW.restaurantName, NEW.branchArea, NEW.mealTypeName, NEW.vacancyDate, NEW.vacancy);
+IF (bArea IS NULL) THEN
+    Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancyDate, vacancy) VALUES (NEW.restaurantName, NEW.branchArea, NEW.mealTypeName, NEW.vacancyDate, capacity1 );
 END IF;
 RETURN NEW;
 end;
