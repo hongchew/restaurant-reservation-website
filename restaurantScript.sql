@@ -103,7 +103,7 @@ CREATE TABLE RESTAURANT.Reservation
     vacancyDate date,
     customerEmail varchar(50) NOT NULL references RESTAURANT.Customer(customerEmail) on delete cascade,
     numDiner integer NOT NULL,
-    status boolean,
+    status boolean, --true means come already, false means haven't come
     check(numDiner > 0),
     -- check(mealType = 'Breakfast' OR mealType = 'Lunch' OR mealType = 'Dinner'),
     FOREIGN KEY(restaurantName, branchArea, mealTypeName, vacancyDate) references RESTAURANT.Vacancy(restaurantName, branchArea, mealTypeName, vacancyDate)
@@ -175,7 +175,7 @@ EXECUTE PROCEDURE new_reservation_OTD();
 /*
 Insert into User
 */
-Insert into RESTAURANT.Users VALUES('test1@gmail.com','GM1','password','GeneralManager');
+Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('test1@gmail.com','GM1','password','GeneralManager');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('test2@gmail.com','GM2','password','GeneralManager');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('cust1@gmail.com','Cust1','password','Customer');
 
