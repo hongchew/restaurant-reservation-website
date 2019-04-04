@@ -17,23 +17,20 @@ router.get('/', function (req, res, next) {
         var upcomingReservationsQuery = "SELECT r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, r.vacancyDate, r.numDiner FROM RESTAURANT.Reservation r join RESTAURANT.Customer c on r.customerEmail = c.customerEmail WHERE c.customerEmail = '" + email + "' AND r.vacancyDate >= NOW() ORDER BY r.vacancyDate";
 
         var pastReservations=null;
+        var upcomingReservation=null;
     pool.query(pastReservationsQuery, (err,data) => {
-        // var reservationId = data.rows[0].reservationId;
-        // var restaurantName = data.rows[0].restaurantName;
-        // var branchArea = data.rows[0].branchArea;
-        // var mealTypeName = data.rows[0].mealTypeName;
-        // var vacancyDate = data.rows[0].vacancyDate;
-        // var numDiner = data.rows[0].numDiner;
-        pastReservations = data;
         
-    });
-    var upcomingReservation=null;
-    pool.query(upcomingReservationsQuery, (err,data) => {
+        pastReservations = data;
+        pool.query(upcomingReservationsQuery, (err,data) => {
             console.log(data.rows);
             upcomingReservation = data;
             res.render('userInfo', {title:'User Information', data2: upcomingReservation.rows, data1:pastReservations.rows});
 
     });
+        
+    });
+    
+    
 
     
 });
