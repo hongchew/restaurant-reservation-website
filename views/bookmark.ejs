@@ -3,7 +3,7 @@
 
 <head>
 	<!-- Page Title -->
-	<title>List Restaurant</title>
+	<title>Bookmark</title>
 	<link rel='stylesheet' href='/stylesheets/style.css' />
 
 
@@ -48,52 +48,6 @@
 
 	</div>
 
-	<h1><%= title%></h1>
-	<table class="table">
-		<thead>
-			<tr>
-				<th scope="col">Restaurant Name</th>
-				<th scope="col">Branch Area</th>
-				<th scope="col">Region Name</th>
-				<th scope="col">Address</th>
-				<th scope="col">Opening Hour</th>
-				<th scope="col">Closing Hour</th>
-				<th scope="col">Max Capacity</th>
-                <th scope="col">Make Booking</th>
-                <th scope="col">Remove Bookmark</th>
-			</tr>
-        </thead>
-        
-		<tbody>
-			<% for(var i=0; i<data.length; i++) { %>
-			<tr id="tableBody">
-				<td id="restaurantName"><%= data[i].restaurantname%></td>
-				<td id="brancharea"><%= data[i].brancharea%></td>
-				<td id="regionname"><%= data[i].regionname%>
-				</td>
-				<td id="address"><%= data[i].address%></td>
-				<td id="openinghour"><%= data[i].openinghour%></td>
-				<td id="closinghour"><%= data[i].closinghour%></td>
-				<td id="capactiy"><%= data[i].capacity%></td>
-
-				<td>
-					<form id="bookmark" action="" method="POST">
-						<input type="hidden" name=reservationIndex value="<%=i%>">
-						<button id="button" class="btn btn-lg btn-primary" value="Bookmark" type="submit">Reserve</button>
-					</form>
-                </td>
-                <td>
-                        <form id="bookmark" action="" method="POST">
-                            <input type="hidden" name=reservationIndex value="<%=i%>">
-                            <button id="button" class="btn btn-lg btn-error" value="Bookmark" type="submit">Remove</button>
-                        </form>
-                    </td>
-                
-
-			</tr>
-			<% } %>
-		</tbody>
-	</table>
 
 </body>
 
