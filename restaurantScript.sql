@@ -156,7 +156,6 @@ IF ((bArea IS NULL)) THEN
     elsif (capacity1 >= NEW.numDiner) THEN
     update RESTAURANT.Vacancy SET vacancy = vacancy - new.numdiner 
     WHERE restaurantName = NEW.restaurantName and branchArea = NEW.branchArea and mealTypeName = NEW.mealTypeName and vacancyDate = NEW.vacancyDate;--check if vacancy instance created--
-
 RETURN NEW;   
 END IF;
 return null;
