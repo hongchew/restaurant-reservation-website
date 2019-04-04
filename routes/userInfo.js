@@ -11,7 +11,7 @@ var email = 'cust1@gmail.com';
 
 
 router.get('/', function (req, res, next) {
-        var user = req.app.locals.user;
+        var customer = req.app.locals.user;
         var pastReservationsQuery = "SELECT r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, r.vacancyDate, r.numDiner FROM RESTAURANT.Reservation r join RESTAURANT.Customer c on r.customerEmail = c.customerEmail WHERE c.customerEmail = '" + email + "' AND r.vacancyDate < NOW() ORDER BY r.vacancyDate";
         
         var upcomingReservationsQuery = "SELECT r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, r.vacancyDate, r.numDiner FROM RESTAURANT.Reservation r join RESTAURANT.Customer c on r.customerEmail = c.customerEmail WHERE c.customerEmail = '" + email + "' AND r.vacancyDate >= NOW() ORDER BY r.vacancyDate";
@@ -24,7 +24,7 @@ router.get('/', function (req, res, next) {
         pool.query(upcomingReservationsQuery, (err,data) => {
             console.log(data.rows);
             upcomingReservation = data;
-            res.render('userInfo', {title:'User Information', data2: upcomingReservation.rows, data1:pastReservations.rows});
+            res.render('userInfo', {title:'User Information', user:customer, data2: upcomingReservation.rows, data1:pastReservations.rows});
     });
     });
     

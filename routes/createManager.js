@@ -50,6 +50,8 @@ var restaurantName;
     "','" +
     regionName +
     "','" +
+    email +
+    "','" +
     address +
     "'," +
     openingHour +
@@ -57,13 +59,17 @@ var restaurantName;
     closingHour +
     "," +
     capacity +
+    "," +
+    0 +
     ")";
 
   pool.query(insertManagerQuery, (err, data) => {
+    pool.query(insertBranchQuery, (err,data)=> {
+      res.render('createManager');
+    });
   });
-  pool.query(insertBranchQuery, (err,data)=> {
-  });
-  res.render('createManager');
+  
+  
 });
 
 module.exports = router;
