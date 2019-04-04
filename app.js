@@ -89,8 +89,8 @@ app.use('/createGeneralManager', createGeneralManager);
 app.use('/listRestaurant', listRestaurantRouter);
 app.use('/createReservation', createReservationRouter);
 
-app.use('/userInfo', userInfo)
-app.use('/createManager', createManager)
+app.use('/userInfo', userInfo);
+app.use('/createManager', createManager);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

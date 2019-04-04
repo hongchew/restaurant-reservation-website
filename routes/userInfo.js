@@ -18,12 +18,12 @@ router.get('/', function (req, res, next) {
 
         var pastReservations;
     pool.query(pastReservationsQuery, (err,data) => {
-        var reservationId = data.rows[0].reservationId;
-        var restaurantName = data.rows[0].restaurantName;
-        var branchArea = data.rows[0].branchArea;
-        var mealTypeName = data.rows[0].mealTypeName;
-        var vacancyDate = data.rows[0].vacancyDate;
-        var numDiner = data.rows[0].numDiner;
+        // var reservationId = data.rows[0].reservationId;
+        // var restaurantName = data.rows[0].restaurantName;
+        // var branchArea = data.rows[0].branchArea;
+        // var mealTypeName = data.rows[0].mealTypeName;
+        // var vacancyDate = data.rows[0].vacancyDate;
+        // var numDiner = data.rows[0].numDiner;
         pastReservations = data;
     });
 
