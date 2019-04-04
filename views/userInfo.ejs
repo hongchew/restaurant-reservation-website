@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><%=title=></title>
+        <title><%=title%></title>
 
 	<!-- CSS for Styling -->
 	<link rel='stylesheet' href='/stylesheets/style.css' />
@@ -53,12 +53,14 @@
                 </thead>
                 <tbody>
                     <% for(var i = 0; i < data1.length ; i++) {%> 
-                        <tr><%=data1[i].reservationId%></tr>
-                        <tr><%=data1[i].restaurantName%></tr>
-                        <tr><%=data1[i].branchArea%></tr>
-                        <tr><%=data1[i].mealTypeName%></tr>
-                        <tr><%=data1[i].vacancyDate%></tr>
-                        <tr><%=data1[i].numDiner%></tr>
+                        <tr>
+                        <td><%=data1[i].reservationId%></td>
+                        <td><%=data1[i].restaurantName%></td>
+                        <td><%=data1[i].branchArea%></td>
+                        <td><%=data1[i].mealTypeName%></td>
+                        <td><%=data1[i].vacancyDate%></td>
+                        <td><%=data1[i].numDiner%></td>
+                        </tr>
                     <% } %>
                 </tbody>
             </table>
@@ -76,13 +78,15 @@
                         <th scope="col">Number diners</th>
                     </thead>
                     <tbody>
-                        <% for(var i = 0; i < data1.length ; i++) {%> 
-                            <tr><%=data2[i].reservationId%></tr>
-                            <tr><%=data2[i].restaurantName%></tr>
-                            <tr><%=data2[i].branchArea%></tr>
-                            <tr><%=data2[i].mealTypeName%></tr>
-                            <tr><%=data2[i].vacancyDate%></tr>
-                            <tr><%=data2[i].numDiner%></tr>
+                        <% for(var i = 0; i < data2.length ; i++) {%> 
+                            <tr>
+                            <td><%=data2[i].reservationId%></td>
+                            <td><%=data2[i].restaurantName%></td>
+                            <td><%=data2[i].branchArea%></td>
+                            <td><%=data2[i].mealTypeName%></td>
+                            <td><%=data2[i].vacancyDate%></td>
+                            <td><%=data2[i].numDiner%></td>
+                        </tr>
                         <% } %>
                     </tbody>
                 </table>
