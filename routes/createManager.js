@@ -5,7 +5,7 @@ const pool = new Pool({
     connectionString:process.env.DATABASE_URL
 });
 router.get('/', function(req, res, next) {
-  res.render('createGeneralManager', { emailUsed: false });
+  res.render('createManager', { emailUsed: false });
 });
 
 // POST
