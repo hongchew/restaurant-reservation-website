@@ -59,6 +59,7 @@ CREATE TABLE RESTAURANT.Branch
     openingHour integer,
     closingHour integer,
     capacity integer,
+    rating integer,
     PRIMARY KEY(restaurantName, branchArea)
 );
 
