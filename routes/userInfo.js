@@ -31,8 +31,10 @@ router.get('/', function (req, res, next) {
     pool.query(upcomingReservationsQuery, (err,data) => {
             console.log(data.rows);
             upcomingReservation = data;
-            res.render('userInfo', {title:'User Information', data2: data.rows, data1: data.rows});
+            res.render('userInfo', {title:'User Information', data2: upcomingReservation.rows, data1:pastReservations.rows});
+
     });
+
     
 });
 
