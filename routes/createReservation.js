@@ -38,18 +38,18 @@ var vacancyDate = req.body.date;
 
 var insert_query = "INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('" + restaurantName +"', '" + branchArea +"', '" + mealType + "', '" + vacancyDate + "', '" + customerEmail +"', '"+ pax + "', 'FALSE')"; 
 var check_query ="SELECT * FROM RESTAURANT.Vacancy WHERE bArea = 'Nothing';";
-// pool.query(insert_query, (err, data) => {
-//     console.log(err);
-//     console.log("*********** HERE'S THE ERROR ABOVE*****************")
-//     res.redirect('/listRestaurant'); /********Change route too!!!********* */
-// })
-
-pool.query(check_query, (err, data) => {
-    if(typeof data === 'undefined'){
-    console.log(data.rows);
-    }
-    res.redirect('/listRestaurant');
+pool.query(insert_query, (err, data) => {
+    console.log(err);
+    console.log("*********** HERE'S THE ERROR ABOVE*****************")
+    res.redirect('/listRestaurant'); /********Change route too!!!********* */
 })
+
+// pool.query(check_query, (err, data) => {
+//     if(typeof data === 'undefined'){
+//     console.log(data.rows);
+//     }
+//     res.redirect('/listRestaurant');
+// })
     
 
 });
