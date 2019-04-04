@@ -5,18 +5,19 @@ const pool = new Pool({
     connectionString:process.env.DATABASE_URL
 });
 router.get('/', function(req, res, next) {
-  res.render('createManager', { emailUsed: false });
+  res.render('createManager');
 });
 
 // POST
 router.post('/', function(req, res, next) {
+  var generalManagerEmail = "test1@gmail.com";
 var restaurantName;
-  var getRestaurantNameQuery = "SELECT restaurantName FROM RESTAURANT.Restaurant WHERE generalManagerEmail =" + user.email;
+  var getRestaurantNameQuery = "SELECT restaurantName FROM RESTAURANT.Restaurant WHERE generalManagerEmail ='" + generalManagerEmail + "'";
   pool.query(getRestaurantNameQuery, (err,data) => {
     if(data.rows.length ==0) {
         console.log("General Manager is not associated with any Restaurants")
     } else{
-        restaurantName = data[0].restaurantName;
+        restaurantName = data.rows[0].restaurantName;
     }
   });
   var name = req.body.name;
@@ -57,9 +58,11 @@ var restaurantName;
     capacity +
     "')";
 
-  pool.query(retrieve_query, (err, data) => {
-    res.render('createManager');
+  pool.query(insertManagerQuery, (err, data) => {
   });
+  pool.query(insertBranchQuery, (err,data)=> {
+  });
+  res.render('createManager');
 });
 
 module.exports = router;
