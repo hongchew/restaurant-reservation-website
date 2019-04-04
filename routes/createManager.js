@@ -31,6 +31,7 @@ var restaurantName;
   var closingHour = req.body.closingHour;
   var capacity = req.body.capacity;
 
+
   var insertManagerQuery =
   "INSERT INTO RESTAURANT.Users VALUES" +
     "('" +
@@ -50,13 +51,13 @@ var restaurantName;
     regionName +
     "','" +
     address +
-    "','" +
+    "'," +
     openingHour +
-    "','" +
+    "," +
     closingHour +
-    "','" +
+    "," +
     capacity +
-    "')";
+    ")";
 
   pool.query(insertManagerQuery, (err, data) => {
   });
