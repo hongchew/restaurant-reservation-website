@@ -15,7 +15,7 @@ var rubbish;
 
 // GET
 router.get('/', function (req, res, next) {
-    rubbsh = "test";
+    rubbsh = 'test';
     restaurantName = req.query.restaurantName;
     branchArea = req.query.branchArea;
     res.render('createReservation', { title: 'Create Reservation', data: req.query, rubbish: rubbish });

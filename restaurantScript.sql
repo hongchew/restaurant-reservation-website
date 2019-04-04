@@ -148,13 +148,17 @@ BEGIN
 SELECT branchArea into bArea
 FROM RESTAURANT.Vacancy v
 WHERE v.restaurantName = NEW.restaurantName and v.branchArea = NEW.branchArea and v.mealTypeName = NEW.mealTypeName and v.vacancyDate = NEW.vacancyDate;--check if vacancy instance created--
-SELECT capacity into capacity1
-FROM RESTAURANT.Branch
-WHERE NEW.restaurantName = restaurantName and NEW.branchArea = branchArea; --get capacity of branch--
-IF (bArea IS NULL) THEN
-    Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancyDate, vacancy) VALUES (NEW.restaurantName, NEW.branchArea, NEW.mealTypeName, NEW.vacancyDate, capacity1 );
+SELECT v.vacancy into capacity1
+FROM RESTAURANT.Vacancy v
+WHERE v.restaurantName = NEW.restaurantName and v.branchArea = NEW.branchArea and v.mealTypeName = NEW.mealTypeName and v.vacancyDate = NEW.vacancyDate; --get capacity of branch--
+IF ((bArea IS NULL)) THEN
+    Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancyDate, vacancy) VALUES (NEW.restaurantName, NEW.branchArea, NEW.mealTypeName, NEW.vacancyDate, capacity1-NEW.numDiner);
+    elsif (capacity1 >= NEW.numDiner) THEN
+    update RESTAURANT.Vacancy SET vacancy = vacancy - new.numdiner 
+    WHERE restaurantName = NEW.restaurantName and branchArea = NEW.branchArea and mealTypeName = NEW.mealTypeName and vacancyDate = NEW.vacancyDate;--check if vacancy instance created--
+RETURN NEW;   
 END IF;
-RETURN NEW;
+return null;
 end;
 $$
 language plpgsql;
@@ -214,9 +218,14 @@ Insert into RESTAURANT.MealType (mealTypeName) VALUES ('dinner');
 /*
 Insert into Vacancy
 */
+<<<<<<< HEAD
+Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-04-05', '100');
+Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'lunch', '2019-04-05', '100');
+=======
 Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-04-05', '200');
 Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-03-05', '200');
 Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'lunch', '2019-04-05', '200');
+>>>>>>> a3b4ae0fcd0c6d8a951c97688d6089610f6cfe7e
 
 /*
 Insert into Reservation
