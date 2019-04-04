@@ -7,11 +7,16 @@ const pool = new Pool({
     connectionString: process.env.DATABASE_URL
 });
 
-router.get('/', function (req, res, next)) {
-    var user = req.app.locals.user;
-        var pastReservationsQuery = "SELECT r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, r.vacancyDate, r.numDiner FROM RESTAURANT.Reservation r join RESTAURANT.Customer c on r.customerEmail = c.customerEmail WHERE c.customerEmail = '" + user.customerEmail + "' AND r.vacancyDate < NOW() ORDER BY r.vacancyDate";
+var email = 'cust1@gmail.com';
+
+
+router.get('/', function (req, res, next) {
+        var user = req.app.locals.user;
+        var pastReservationsQuery = "SELECT r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, r.vacancyDate, r.numDiner FROM RESTAURANT.Reservation r join RESTAURANT.Customer c on r.customerEmail = c.customerEmail WHERE c.customerEmail = '" + email + "' AND r.vacancyDate < NOW() ORDER BY r.vacancyDate";
         
-        var upcomingReservationsQuery = "SELECT r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, r.vacancyDate, r.numDiner FROM RESTAURANT.Reservation r join RESTAURANT.Customer c on r.customerEmail = c.customerEmail WHERE c.customerEmail = '" + user.customerEmail + "' AND r.vacancyDate >= NOW() ORDER BY r.vacancyDate";
+        var upcomingReservationsQuery = "SELECT r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, r.vacancyDate, r.numDiner FROM RESTAURANT.Reservation r join RESTAURANT.Customer c on r.customerEmail = c.customerEmail WHERE c.customerEmail = '" + email + "' AND r.vacancyDate >= NOW() ORDER BY r.vacancyDate";
+
+        var pastReservations;
     pool.query(pastReservationsQuery, (err,data) => {
         var reservationId = data.rows[0].reservationId;
         var restaurantName = data.rows[0].restaurantName;
@@ -19,12 +24,16 @@ router.get('/', function (req, res, next)) {
         var mealTypeName = data.rows[0].mealTypeName;
         var vacancyDate = data.rows[0].vacancyDate;
         var numDiner = data.rows[0].numDiner;
-        res.render('userInfo', {title:'User Information', data1: data.rows});
+        pastReservations = data;
     });
 
     pool.query(upcomingReservationsQuery, (err,data) => {
-        res.render('userInfo', {data2: data.rows});
+        if(data.rows.length == 0 || pastReservations.rows.length == 0) {
+            console.log("No reservations");
+        } else {
+        res.render('userInfo', {data2: data.rows, data1: pastReservations.rows});
+        }
     });
-}
+});
 
 module.exports = router;
