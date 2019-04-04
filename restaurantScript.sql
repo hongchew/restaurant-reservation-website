@@ -136,13 +136,39 @@ end if;
 return new;
 end;
 $$
-language 'plpgsql';
+language plpgsql;
+
+--Create new vacancy instancy if new reservation of the day--
+CREATE OR REPLACE FUNCTION new_reservation_OTD()
+    RETURNS trigger AS
+$$
+DECLARE bArea varchar;
+        capacity1 integer;
+BEGIN
+SELECT branchArea into bArea
+FROM RESTAURANT.Vacancy
+WHERE NEW.restaurantName = restaurantName and NEW.branchArea = branchArea and NEW.mealTypeName = mealTypeName and NEW.vacancyDate = vacancyDate;--check if vacancy instance created--
+SELECT capacity into capacity1
+FROM RESTAURANT.Branch
+WHERE NEW.restaurantName = restaurantName and NEW.branchArea = branchArea; --get capacity of branch--
+IF (bArea IS NOT NULL) THEN
+    Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancyDate, vacancy) VALUES (NEW.restaurantName, NEW.branchArea, NEW.mealTypeName, NEW.vacancyDate, capacity1 );
+END IF;
+RETURN NEW;
+end;
+$$
+language plpgsql;
 
 --TRIGGERS--
 CREATE TRIGGER newUserInsertedTrigger
 AFTER INSERT ON RESTAURANT.Users
 for each row
 execute procedure accountTypeUpdate();
+
+CREATE TRIGGER newVacancy
+BEFORE INSERT ON RESTAURANT.Reservation
+for each row
+EXECUTE PROCEDURE new_reservation_OTD();
 
 
 
@@ -189,6 +215,7 @@ Insert into RESTAURANT.MealType (mealTypeName) VALUES ('dinner');
 Insert into Vacancy
 */
 Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-04-05', '200');
+Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'lunch', '2019-04-05', '200');
 
 /*
 Insert into Reservation
