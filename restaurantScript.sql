@@ -194,8 +194,14 @@ Insert into RESTAURANT.Restaurant (restaurantName, generalManagerEmail) VALUES('
 /*
 Insert into Region
 */
-Insert into RESTAURANT.Region(regionName) VALUES('East');
+
+
 Insert into RESTAURANT.Region(regionName) VALUES('North');
+Insert into RESTAURANT.Region(regionName) VALUES('South');
+Insert into RESTAURANT.Region(regionName) VALUES('East');
+Insert into RESTAURANT.Region(regionName) VALUES('West');
+Insert into RESTAURANT.Region(regionName) VALUES('Central');
+
 
 
 /*
@@ -218,14 +224,9 @@ Insert into RESTAURANT.MealType (mealTypeName) VALUES ('dinner');
 /*
 Insert into Vacancy
 */
-<<<<<<< HEAD
-Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-04-05', '100');
-Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'lunch', '2019-04-05', '100');
-=======
 Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-04-05', '200');
 Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-03-05', '200');
 Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'lunch', '2019-04-05', '200');
->>>>>>> a3b4ae0fcd0c6d8a951c97688d6089610f6cfe7e
 
 /*
 Insert into Reservation
