@@ -28,12 +28,9 @@ router.get('/', function (req, res, next) {
     });
 
     pool.query(upcomingReservationsQuery, (err,data) => {
-        if(data.rows.length == 0 || pastReservations.rows.length == 0) {
-            console.log("No reservations");
-        } else {
-            console.log(data2.rows);
-        res.render('userInfo', {data2: data.rows, data1: pastReservations.rows});
-        }
+            // console.log(data.rows);
+            // console.log(pastReservations.rows);
+        res.render('userInfo', {title:'User Information', data2: data.rows, data1: pastReservations.rows});
     });
 });
 
