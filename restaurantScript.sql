@@ -146,12 +146,12 @@ DECLARE bArea varchar;
         capacity1 integer;
 BEGIN
 SELECT branchArea into bArea
-FROM RESTAURANT.Vacancy
-WHERE NEW.restaurantName = restaurantName and NEW.branchArea = branchArea and NEW.mealTypeName = mealTypeName and NEW.vacancyDate = vacancyDate;--check if vacancy instance created--
+FROM RESTAURANT.Vacancy v
+WHERE v.restaurantName = NEW.restaurantName and v.branchArea = NEW.branchArea and v.mealTypeName = NEW.mealTypeName and v.vacancyDate = NEW.vacancyDate;--check if vacancy instance created--
 SELECT capacity into capacity1
 FROM RESTAURANT.Branch
 WHERE NEW.restaurantName = restaurantName and NEW.branchArea = branchArea; --get capacity of branch--
-IF (bArea IS NOT NULL) THEN
+IF (bArea IS NULL) THEN
     Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancyDate, vacancy) VALUES (NEW.restaurantName, NEW.branchArea, NEW.mealTypeName, NEW.vacancyDate, capacity1 );
 END IF;
 RETURN NEW;
@@ -220,4 +220,3 @@ Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacanc
 /*
 Insert into Reservation
 */
-INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-04-05', 'cust1@gmail.com', '2', 'TRUE');
