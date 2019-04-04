@@ -43,6 +43,7 @@ var userInfo = require('./routes/userInfo');
 var createManager = require('./routes/createManager');
 
 var listBookingsRouter =  require('./routes/listBookings');
+var bookmarkRouter = require('./routes/bookmark');
 
 var app = express();
 
@@ -95,6 +96,7 @@ app.use('/listBookings', listBookingsRouter);
 
 app.use('/userInfo', userInfo);
 app.use('/createManager', createManager);
+app.use('/bookmark', bookmarkRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
