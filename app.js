@@ -45,6 +45,7 @@ var createManager = require('./routes/createManager');
 var listBookingsRouter =  require('./routes/listBookings');
 var bookmarkRouter = require('./routes/bookmark');
 
+var listDishes = require('./routes/listdishes');
 var app = express();
 
 // view engine setup
@@ -97,6 +98,7 @@ app.use('/listBookings', listBookingsRouter);
 app.use('/userInfo', userInfo);
 app.use('/createManager', createManager);
 app.use('/bookmark', bookmarkRouter);
+app.use('/listDishes', listDishes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
