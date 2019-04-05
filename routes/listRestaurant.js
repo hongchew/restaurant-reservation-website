@@ -18,7 +18,7 @@ const pool = new Pool({
 
 
 /* SQL Query */
-var sql_query = 'SELECT * FROM Restaurant.Branch ORDER BY restaurantName,branchArea ASC';
+var sql_query = 'SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant ORDER BY restaurantName,branchArea ASC';
 var table;
 var user;
 var restaurantName
