@@ -109,7 +109,7 @@ CREATE TABLE RESTAURANT.Feedback
 (
     feedbackId SERIAL PRIMARY KEY,
     reservationId integer NOT NULL,
-    rating NUMERIC(2,1) default 0,
+    rating NUMERIC(2,1) default '0',
     comments varchar(50),
     foreign key(reservationId) references RESTAURANT.Reservation(reservationId) ON DELETE CASCADE,
     CHECK(rating >= 0.0 and rating <= 5.0)
@@ -237,6 +237,8 @@ Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, 
 VALUES('restaurant2','Yishun','North','S123459','0800','2200','30');
 Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity) 
 VALUES('restaurant2','Woodlands','North','S123451','1200','2200','30');
+Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity) 
+VALUES('restaurant1','Jurong','West','S123456','1900','2200','100');
 
 /*
 Insert into Meal Type

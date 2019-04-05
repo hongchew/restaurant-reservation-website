@@ -18,7 +18,7 @@ const pool = new Pool({
 
 
 /* SQL Query */
-var sql_query = 'SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant ORDER BY restaurantName,branchArea ASC';
+var sql_query
 var table;
 var user;
 var restaurantName
@@ -27,10 +27,37 @@ var branchArea
 router.get('/', function (req, res, next) {
 	console.log("hello");
 	user = req.app.locals.user;
-	if (user.isLogin == true) {
+	var region = req.app.locals.user;
+	region = req.query.regionName;
+	openingHour = req.query.openingHour;
+	closingHour = req.query.closingHour;
+	console.log(req.query.regionName);
+	console.log(req.query.openingHour);
+	console.log(req.query.closingHour);
+	if(region != null)
+	{
+		console.log("region query");
+		sql_query ="SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant WHERE regionName = '" + region +"' ORDER BY restaurantName,branchArea ASC;";
+	} else if (openingHour != null)
+	{
+		sql_query = "SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant WHERE openingHour < 1030 ORDER BY restaurantName,branchArea ASC;";
+	} else if (closingHour != null) 
+	{
+		if(closingHour == 'Lunch'){
+		sql_query = "SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant WHERE closingHour > 1200  and openingHour < 1300 ORDER BY restaurantName,branchArea ASC;";
+		} else {
+			sql_query = "SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant WHERE closingHour > 1900 ORDER BY restaurantName,branchArea ASC;";
+		}
+	} else 
+	{
+		console.log("else")
+		sql_query = 'SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant ORDER BY restaurantName,branchArea ASC';
+	}
+	
+		if (user.isLogin == true) {
 		pool.query(sql_query, (err, data) => {
 			table = data.rows;
-			console.log(table);
+			// console.log(table);
 			res.render('listRestaurant', { title: 'Restaurants Available', data: data.rows });
 		});
 	} else {
@@ -43,8 +70,11 @@ router.post('/', function (req, res, next) {
 	console.log(req.body.bookmarkIndex);
 	console.log(req.body.reservationIndex);
 	console.log(req.body.viewDetails);
+	console.log(req.body.searchValueInput);
+	console.log("***done print**");
 	// console.log(req.body.reservationIndex);
-	if (req.body.bookmarkIndex != null) { //ADD BOOKMARK
+	if (req.body.bookmarkIndex != null)  //ADD BOOKMARK
+	{
 		console.log("**inside***");
 		var index = parseInt(req.body.bookmarkIndex);
 		var email = req.app.locals.user.email; // ********************************change******************
@@ -76,7 +106,8 @@ router.post('/', function (req, res, next) {
 			pathname: "/createReservation",
 			query: passInfo
 		}));
-	} else if (req.body.viewDetails != null) {
+	} else if (req.body.viewDetails != null) 
+	{
 		var index = parseInt(req.body.viewDetails);
 		restaurantName = table[index].restaurantname;
 		branchArea = table[index].brancharea;
@@ -90,7 +121,17 @@ router.post('/', function (req, res, next) {
 			pathname: "/restaurantDetails",
 			query: passInfo
 		}));
+	} else if (req.body.searchValueinput != null) /* NOT FUNCTIONING!!!! */
+	{
+		var search = req.body.searchValueinput;
+		console.log("***Inside Search***");
+		res.redirect(url.format({
+			pathname: "/listRestaurant",
+			query: search
+		}));
 	}
+	console.log(req.body.searchValueInput);
+
 })
 
 module.exports = router;
