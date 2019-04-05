@@ -31,9 +31,14 @@ router.get('/', function (req, res, next) {
 	region = req.query.regionName;
 	openingHour = req.query.openingHour;
 	closingHour = req.query.closingHour;
-	console.log(req.query.regionName);
-	console.log(req.query.openingHour);
-	console.log(req.query.closingHour);
+	var searchTerm = req.query.searchWord;
+	console.log(req.query);
+	// console.log(req.query.regionName);
+	// console.log(req.query.openingHour);
+	// console.log(req.query.closingHour);
+	console.log(req.query.searchTerm);
+	console.log(searchTerm);
+	
 	if(region != null)
 	{
 		console.log("region query");
@@ -48,6 +53,8 @@ router.get('/', function (req, res, next) {
 		} else {
 			sql_query = "SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant WHERE closingHour > 1900 ORDER BY restaurantName,branchArea ASC;";
 		}
+	} else if (searchTerm != null) {
+		sql_query = "SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant WHERE branchArea ILIKE '%" + searchTerm + "%' OR restaurantName ILIKE '%" + searchTerm +"%' ORDER BY restaurantName,branchArea ASC;";
 	} else 
 	{
 		console.log("else")
@@ -73,6 +80,8 @@ router.post('/', function (req, res, next) {
 	console.log(req.body.searchValueInput);
 	console.log("***done print**");
 	// console.log(req.body.reservationIndex);
+	var test = req.body.searchValueInput;
+	console.log("Printing...." + test);
 	if (req.body.bookmarkIndex != null)  //ADD BOOKMARK
 	{
 		console.log("**inside***");
@@ -121,14 +130,21 @@ router.post('/', function (req, res, next) {
 			pathname: "/restaurantDetails",
 			query: passInfo
 		}));
-	} else if (req.body.searchValueinput != null) /* NOT FUNCTIONING!!!! */
+	} else if (test.length > 0) /* NOT FUNCTIONING!!!! */
 	{
-		var search = req.body.searchValueinput;
+		// var search = req.body.searchValueinput;
 		console.log("***Inside Search***");
+
+		var passInfo = {
+			searchWord: test
+		}
+
 		res.redirect(url.format({
 			pathname: "/listRestaurant",
-			query: search
+			query: passInfo
 		}));
+
+
 	}
 	console.log(req.body.searchValueInput);
 
