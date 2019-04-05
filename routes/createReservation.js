@@ -31,7 +31,7 @@ console.log(req.body);
 console.log(req.body.mealType);
 console.log("*****Document*******");
 
-var customerEmail = "cust1@gmail.com"; //***************need to change***********************
+var customerEmail = req.app.locals.user.email; //***************need to change***********************
 var mealType = req.body.mealType;
 var pax = req.body.pax;
 var vacancyDate = req.body.date;

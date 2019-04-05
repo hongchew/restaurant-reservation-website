@@ -20,14 +20,20 @@ const pool = new Pool({
 /* SQL Query */
 var sql_query = 'SELECT * FROM Restaurant.Branch ORDER BY restaurantName,branchArea ASC';
 var table;
+var user;
 
 router.get('/', function (req, res, next) {
 	console.log("hello");
-	pool.query(sql_query, (err, data) => {
-		table = data.rows;
-		res.render('listRestaurant', { title: 'Restaurants Available', data: data.rows });
-		console.log(data.rows);
-	});
+	user = req.app.locals.user;
+	if (user.isLogin == true) {
+		pool.query(sql_query, (err, data) => {
+			table = data.rows;
+			res.render('listRestaurant', { title: 'Restaurants Available', data: data.rows });
+			console.log(data.rows);
+		});
+	} else {
+		res.redirect('login');
+	}
 });
 
 router.post('/', function (req, res, next) {
@@ -35,9 +41,9 @@ router.post('/', function (req, res, next) {
 	console.log(req.body.bookmarkIndex);
 	console.log(req.body.reservationIndex);
 	// console.log(req.body.reservationIndex);
-	if (req.body.reservationIndex == null) { //ADD BOOKMARK
+	if (req.body.bookmarkIndex != null) { //ADD BOOKMARK
 		var index = parseInt(req.body.bookmarkIndex);
-		var email = "cust1@gmail.com"; // ********************************change******************
+		var email = req.app.locals.user.email; // ********************************change******************
 		var restaurantName = table[index].restaurantname;
 		var branchArea = table[index].brancharea;
 
@@ -48,33 +54,44 @@ router.post('/', function (req, res, next) {
 			console.log(err);
 			res.redirect('/listRestaurant');
 		})
-	} else //making reservation.
+	} else if (req.body.reservationIndex != null) //making reservation.
 	{
 		var index = parseInt(req.body.reservationIndex);
-		var email = "cust1@gmail.com"; // ********************************change******************
+		var email = req.app.locals.user.email; // ********************************change******************
 		var restaurantName = table[index].restaurantname;
 		var branchArea = table[index].brancharea;
 
-		var passInfo ={
-			email: email,
+		var passInfo = {
 			restaurantName: restaurantName,
 			branchArea: branchArea
 		}
-		
+
 		res.redirect(url.format({
 			pathname: "/createReservation",
 			query: passInfo
 		}));
+	} else if (req.body.viewDetails != null) {
+		var index = parseInt(req.body.reservationIndex);
+		var restaurantName = table[index].restaurantname;
+		var branchArea = table[index].brancharea;
+
+		var passInfo = {
+			restaurantName: restaurantName,
+			branchArea: branchArea
+		}
+
+		res.redirect(url.format({
+			pathname: "/restaurantDetails",
+			query: passInfo
+		}));
+
+
+
+
 	}
 
 
 
 })
-
-
-function addBookmark(button) { //not working !
-
-	alert(button.parentNode.parentNode.rowIndex);
-}
 
 module.exports = router;

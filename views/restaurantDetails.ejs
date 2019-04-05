@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Page Title -->
+    <title>List Restaurant</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+
+    <!-- CSS for Styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <!-- JavaScript for Interactivity -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+
+    <!-- NAV BAR -->
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/stylesheets/navbar.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="script.js"></script>
+
+
+
+</head>
+
+<body>
+
+    <div id='cssmenu'>
+
+        <ul>
+            <li class='active'><a href='/listRestaurant'>Search Restaurant</a></li>
+            <li><a href='/userInfo'>Reservation Record</a></li>
+            <li><a href='/bookmark'>Bookmark</a></li>
+            <li><a href='#'>logout</a></li>
+        </ul>
+
+
+    </div>
+
+    <h1><%= title%></h1>
+    <table class="table">
+        <thead></thead>
+        <tbody>
+
+            <tr>
+                <th bgcolor="#9b99b5">Restaurant Name</th>
+                <!-- <td><%=data.restaurantname%></td> -->
+                <td>test</td>
+            </tr>
+            <tr>
+                <th bgcolor="#9b99b5">Branch Area</th>
+                <!-- <td><%=data.brancharea%></td> -->
+                <td>test</td>
+            </tr>
+            <tr>
+                <th bgcolor="#9b99b5">Region</th>
+                <!-- <td><%=data.regionarea%></td> -->
+                <td>test</td>
+                <!--IF ELSE Statement + commas-->
+            </tr>
+            <tr>
+                <th bgcolor="#9b99b5">Meal Type</th>
+                <!-- <td><%=data.mealtype%></td> -->
+                <td>test</td>
+                <!--IF ELSE Statement + commas-->
+            </tr>
+            <tr>
+                <th bgcolor="#9b99b5">Opening & Closing hours</th>
+                <!-- <td><%=data.openinghour%></td> -->
+                <td>test</td>
+                <!--IF ELSE Statement for opening-->
+            </tr>
+            <tr>
+                <th bgcolor="#9b99b5">Max Capacity</th>
+                <!-- <td><%=data.capacity%></td> -->
+                <td>test</td>
+                <!--IF ELSE Statement for opening-->
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+
+</body>
+
+</html>

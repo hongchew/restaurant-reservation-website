@@ -52,7 +52,7 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th scope="col">Restaurant Name</th>
+				<th scope="col" >Restaurant Name</th>
 				<th scope="col">Branch Area</th>
 				<th scope="col">Region Name</th>
 				<th scope="col">Address</th>
@@ -61,6 +61,7 @@
 				<th scope="col">Max Capacity</th>
 				<th scope="col">Add to Bookmark</th>
 				<th scope="col">Make Booking</th>
+				<th scope="col">Restaurant Details</th>
 
 			</tr>
 		</thead>
@@ -94,7 +95,14 @@
 					</form>
 				</td>
 
+				<td>
+						<form id="bookmark" action="" method="POST">
+							<input type="hidden" name=viewDetails value="<%=i%>">
+							<button id="button" class="btn btn-lg btn-secondary" value="Bookmark" type="submit">View Details</button>
+						</form>
+					</td>
 			</tr>
+
 			<% } %>
 		</tbody>
 	</table>
