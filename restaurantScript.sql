@@ -61,7 +61,7 @@ CREATE TABLE RESTAURANT.Branch
     openingHour integer,
     closingHour integer,
     capacity integer,
-    rating integer,
+    rating integer DEFAULT 5,
     PRIMARY KEY(restaurantName, branchArea)
 );
 
@@ -171,7 +171,9 @@ UPDATE RESTAURANT.Restaurant
 SET avgPrice = (initialTotalPrice+new.price)/
 (SELECT count(*)+1 
 FROM RESTAURANT.MenuItem m 
-WHERE m.restaurantName = new.restaurantName);
+WHERE m.restaurantName = new.restaurantName)
+WHERE restaurantname = new.restaurantName;
+
 RETURN NEW;
 END;    
 $$
@@ -233,6 +235,8 @@ Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, 
 VALUES('restaurant1','Simei','East','S123457','0800','2200','80');
 Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity) 
 VALUES('restaurant2','Yishun','North','S123459','0800','2200','30');
+Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity) 
+VALUES('restaurant2','Woodlands','North','S123451','1200','2200','30');
 
 /*
 Insert into Meal Type
@@ -254,4 +258,18 @@ Insert into Reservation
 INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-04-05', 'cust1@gmail.com', '2', 'TRUE');
 INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-03-05', 'cust1@gmail.com', '2', 'TRUE');
 
-INSERT INTO RESTAURANT.Cuisine values('Chinese'), ('Western'), ('Peranakan'), ('Indian');
+INSERT INTO RESTAURANT.Cuisine values('Chinese'), ('Western'), ('Peranakan'), ('Indian'),('Drinks');
+
+/*
+Insert into Menu Item
+*/
+
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Bandung', '1.00', 'Drinks');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Chicken Rice', '4.00', 'Chinese');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Ice Milo', '1.50', 'Drinks');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Hot Coffee', '0.90', 'Drinks');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Maggi Goreng', '5.00', 'Indian');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Laksa', '3.40', 'Chinese');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Chicken Chop', '9.80', 'Western');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Roti Prata (Plain)', '1.00', 'Indian');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Roti Prata (Egg)', '1.50', 'Indian');

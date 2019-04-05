@@ -42,7 +42,7 @@
             <li><a href='/listRestaurant'>Search Restaurant</a></li>
             <li><a href='/userInfo'>Reservation Record</a></li>
             <li><a href='/bookmark'>Bookmark</a></li>
-            <li><a href='#'>logout</a></li>
+            <li><a href='/login'>logout</a></li>
         </ul>
 
 
@@ -52,21 +52,27 @@
     <h1>CS2102: <%= title%></h1>
     <form id="html_form" action="" role="form" method="post">
         <div class="form-group">
-            <label for="matric">Restaurant Name : <%= data.restaurantName%></label>
+            <label for="matric">Restaurant Name : <%= data[0].restaurantname%></label>
             <!-- <input type="text" class="form-control" id="matric" name="matric" aria-describedby="matricHelp" placeholder="Enter your matric number">
 				<small id="matricHelp" class="form-text text-muted">Do not share your matric number with anyone else.</small> -->
         </div>
         <div class="form-group">
-            <label for="name">Branch Area : <%= data.branchArea%></label>
+            <label for="name">Branch Area : <%= data[0].brancharea%></label>
             <!-- <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name"> -->
         </div>
         <div class="form-group">
             <label for="mealType"> Meal Type :</label>
             <select id="mealType" name="mealType" style="min-width: 100px;">
                 <option value="" disabled selected> Select a meal type</option>
+                <% if(data[0].openinghour <1000){ %>
                 <option value="breakfast">Breakfast</option>
+                <%} %>
+                <% if(data[0].closinghour > 1200){ %>
                 <option value="lunch">Lunch</option>
+                <%} %>
+                <% if(data[0].closinghour > 1900){ %>
                 <option value="dinner">Dinner</option>
+                <%} %>
             </select>
         </div>
         <div class="form-group">

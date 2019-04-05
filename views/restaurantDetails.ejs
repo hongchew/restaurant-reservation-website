@@ -39,61 +39,147 @@
     <div id='cssmenu'>
 
         <ul>
-            <li class='active'><a href='/listRestaurant'>Search Restaurant</a></li>
+                <li class='active'><a>Restaurant Details</a></li>
+            <li><a href='/listRestaurant'>Search Restaurant</a></li>
             <li><a href='/userInfo'>Reservation Record</a></li>
             <li><a href='/bookmark'>Bookmark</a></li>
-            <li><a href='#'>logout</a></li>
+            <li><a href='/login'>logout</a></li>
         </ul>
 
 
     </div>
 
     <h1><%= title%></h1>
-    <table class="table">
-        <thead></thead>
-        <tbody>
+    <div class="split left">
+        <div class="centered">
+            <table class="table" style="width:800px">
+                <thead></thead>
+                <tbody>
 
-            <tr>
-                <th bgcolor="#9b99b5">Restaurant Name</th>
-                <!-- <td><%=data.restaurantname%></td> -->
-                <td>test</td>
-            </tr>
-            <tr>
-                <th bgcolor="#9b99b5">Branch Area</th>
-                <!-- <td><%=data.brancharea%></td> -->
-                <td>test</td>
-            </tr>
-            <tr>
-                <th bgcolor="#9b99b5">Region</th>
-                <!-- <td><%=data.regionarea%></td> -->
-                <td>test</td>
-                <!--IF ELSE Statement + commas-->
-            </tr>
-            <tr>
-                <th bgcolor="#9b99b5">Meal Type</th>
-                <!-- <td><%=data.mealtype%></td> -->
-                <td>test</td>
-                <!--IF ELSE Statement + commas-->
-            </tr>
-            <tr>
-                <th bgcolor="#9b99b5">Opening & Closing hours</th>
-                <!-- <td><%=data.openinghour%></td> -->
-                <td>test</td>
-                <!--IF ELSE Statement for opening-->
-            </tr>
-            <tr>
-                <th bgcolor="#9b99b5">Max Capacity</th>
-                <!-- <td><%=data.capacity%></td> -->
-                <td>test</td>
-                <!--IF ELSE Statement for opening-->
-            </tr>
+                    <tr>
+                        <th bgcolor="#36d181" style="width:300px">Restaurant Name</th>
+                        <td bgcolor="#9ff2c7" bgcolor="#9ff2c7"><%=data[0].restaurantname%></td bgcolor="#9ff2c7">
+                        <!-- <td bgcolor="#9ff2c7">test</td bgcolor="#9ff2c7"> -->
+                    </tr>
+                    <tr>
+                        <th bgcolor="#36d181">Branch Area</th>
+                        <td bgcolor="#9ff2c7"><%=data[0].brancharea%></td bgcolor="#9ff2c7">
+                        <!-- <td bgcolor="#9ff2c7">test</td bgcolor="#9ff2c7"> -->
+                    </tr>
+                    <tr>
+                        <th bgcolor="#36d181">Region</th>
+                        <td bgcolor="#9ff2c7"><%=data[0].regionname%></td bgcolor="#9ff2c7">
+                        <!-- <td bgcolor="#9ff2c7">test</td bgcolor="#9ff2c7"> -->
+                        <!--IF ELSE Statement + commas-->
+                    </tr>
+                    <tr>
+                        <th bgcolor="#36d181">Address</th>
+                        <td bgcolor="#9ff2c7"><%=data[0].address%></td bgcolor="#9ff2c7">
+                        <!-- <td bgcolor="#9ff2c7">test</td bgcolor="#9ff2c7"> -->
+                        <!--IF ELSE Statement + commas-->
+                    </tr>
+                    <tr>
+                        <th bgcolor="#36d181">Meal Type</th>
+
+                        <td bgcolor="#9ff2c7">
+                            <% if(data[0].openinghour <1000){ %>
+                            Breakfast
+                            <%} %>
+                            <% if(data[0].closinghour > 1200){ %>
+                            Lunch
+                            <%} %>
+                            <% if(data[0].closinghour > 1900){ %>
+                            Dinner
+                            <%} %>
+
+
+                        </td bgcolor="#9ff2c7">
+                    </tr>
+
+                    <tr>
+                        <th bgcolor="#36d181">Opening & Closing hours</th>
+                        <td bgcolor="#9ff2c7">
+                            <% if(data[0].openinghour <999){ %>
+                            0<%=data[0].openinghour%> -
+                            <%} else{ %>
+                            <%=data[0].openinghour%> -
+                            <%}%>
+                                    <% if(data[0].closinghour <999){ %>
+                            0<%=data[0].closinghour%>
+                            <%} else{ %>
+                            <%=data[0].closinghour%>
+                            <%}%>
+                
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th bgcolor="#36d181">Average Price</th>
+                        <td bgcolor="#9ff2c7">$<%=avgPrice[0].avgprice%></td bgcolor="#9ff2c7">
+                    </tr>
+
+
+                    <tr>
+                        <th bgcolor="#36d181">Max Capacity</th>
+                        <td bgcolor="#9ff2c7"><%=data[0].capacity%></td bgcolor="#9ff2c7">
+                    </tr>
+                </tbody>
+            </table>
+
+            <table>
+                <thead></thead>
+                <tbody>
+                    <td>
+                        <form id="bookmark" action="" method="POST" style="width: 155px;">
+                            <input type="hidden" name=reservationIndex value="1">
+                            <button id="button" class="btn btn-lg btn-success" value="Bookmark"
+                                type="submit">Bookmark</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form id="" action="" method="POST">
+                            <input type="hidden" name=viewDetails value="2">
+                            <button id="button" class="btn btn-lg btn-primary" value="Bookmark" type="submit">Make
+                                Reservation</button>
+                        </form>
+                    </td>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="split right">
+        <div class="centered1">
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+                <table class="table table-bordered table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Menu Item</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Cuisine Type</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(var i=0; i<menu.length; i++) { %>
+                        <tr id="tableBody">
+                            <td id="restaurantName"><%= menu[i].menuname%></td>
+                            <td id="brancharea"><%= menu[i].price%></td>
+                            <td id="regionname"><%= menu[i].cuisinename%>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 
 
 
 
-        </tbody>
-    </table>
 
 </body>
 

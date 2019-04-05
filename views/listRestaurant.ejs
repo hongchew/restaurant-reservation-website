@@ -42,7 +42,7 @@
 			<li class='active'><a href='/listRestaurant'>Search Restaurant</a></li>
 			<li><a href='/userInfo'>Reservation Record</a></li>
 			<li><a href='/bookmark'>Bookmark</a></li>
-			<li><a href='#'>logout</a></li>
+			<li><a href='/login'>logout</a></li>
 		</ul>
 
 
@@ -89,14 +89,14 @@
 				</td>
 
 				<td>
-					<form id="bookmark" action="" method="POST">
+					<form id="reservation" action="" method="POST">
 						<input type="hidden" name=reservationIndex value="<%=i%>">
-						<button id="button" class="btn btn-lg btn-primary" value="Bookmark" type="submit">Book</button>
+						<button id="button" class="btn btn-lg btn-primary" value="Bookmark" type="submit">Reserve</button>
 					</form>
 				</td>
 
 				<td>
-						<form id="bookmark" action="" method="POST">
+						<form id="viewDetails" action="" method="POST">
 							<input type="hidden" name=viewDetails value="<%=i%>">
 							<button id="button" class="btn btn-lg btn-secondary" value="Bookmark" type="submit">View Details</button>
 						</form>
