@@ -72,9 +72,4 @@ router.post('/', function (req, res, next) {
 })
 
 
-function addBookmark(button) { //not working !
-
-	alert(button.parentNode.parentNode.rowIndex);
-}
-
 module.exports = router;

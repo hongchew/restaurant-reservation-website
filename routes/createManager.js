@@ -53,15 +53,15 @@ var restaurantName;
     email +
     "','" +
     address +
-    "'," +
+    "','" +
     openingHour +
-    "," +
+    "','" +
     closingHour +
-    "," +
+    "','" +
     capacity +
-    "," +
+    "','" +
     0 +
-    ")";
+    "')";
 
   pool.query(insertManagerQuery, (err, data) => {
     pool.query(insertBranchQuery, (err,data)=> {

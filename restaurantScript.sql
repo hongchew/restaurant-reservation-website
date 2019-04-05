@@ -29,7 +29,8 @@ CREATE TABLE RESTAURANT.Customer (
 CREATE TABLE RESTAURANT.Restaurant
 (
     restaurantName varchar(50) primary key,
-    generalManagerEmail varchar(50) REFERENCES RESTAURANT.GeneralManager(generalManagerEmail) 
+    generalManagerEmail varchar(50) REFERENCES RESTAURANT.GeneralManager(generalManagerEmail),
+    avgPrice NUMERIC(7,2) DEFAULT '0'   
 );
 
 CREATE TABLE RESTAURANT.Cuisine
@@ -39,7 +40,7 @@ CREATE TABLE RESTAURANT.Cuisine
 
 CREATE TABLE RESTAURANT.MenuItem
 (
-    restaurantName varchar(50) references RESTAURANT.Restaurant(RestaurantName) ON DELETE CASCADE,
+    restaurantName varchar(50) references RESTAURANT.Restaurant(restaurantName) ON DELETE CASCADE,
     menuName varchar(50),
     price NUMERIC(7,2) NOT NULL,
     cuisineName varchar(50) references RESTAURANT.Cuisine(cuisineName),
@@ -157,6 +158,26 @@ end;
 $$
 language plpgsql;
 
+
+CREATE OR REPLACE FUNCTION calAvgPrice()
+RETURNS TRIGGER AS
+$$
+DECLARE initialTotalPrice NUMERIC(7,2);
+BEGIN
+SELECT coalesce(sum(price),0) INTO initialTotalPrice
+FROM RESTAURANT.MenuItem m
+WHERE m.restaurantName = new.restaurantName;
+UPDATE RESTAURANT.Restaurant
+SET avgPrice = (initialTotalPrice+new.price)/
+(SELECT count(*)+1 
+FROM RESTAURANT.MenuItem m 
+WHERE m.restaurantName = new.restaurantName);
+RETURN NEW;
+END;    
+$$
+language plpgsql;
+
+
 --TRIGGERS--
 CREATE TRIGGER newUserInsertedTrigger
 AFTER INSERT ON RESTAURANT.Users
@@ -167,6 +188,11 @@ CREATE TRIGGER newVacancy
 BEFORE INSERT ON RESTAURANT.Reservation
 for each row
 EXECUTE PROCEDURE new_reservation_OTD();
+
+CREATE TRIGGER avgPrice
+BEFORE INSERT OR UPDATE ON RESTAURANT.MenuItem
+for each row
+EXECUTE PROCEDURE calAvgPrice();
 
 
 
@@ -227,3 +253,5 @@ Insert into Reservation
 */
 INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-04-05', 'cust1@gmail.com', '2', 'TRUE');
 INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-03-05', 'cust1@gmail.com', '2', 'TRUE');
+
+INSERT INTO RESTAURANT.Cuisine values('Chinese'), ('Western'), ('Peranakan'), ('Indian');
