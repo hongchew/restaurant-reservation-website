@@ -47,6 +47,7 @@ var bookmarkRouter = require('./routes/bookmark');
 
 var listDishes = require('./routes/listdishes');
 var restaurantDetailsRouter = require('./routes/restaurantDetails');
+var createFeedbackRouter = require('./routes/createFeedback');
 var app = express();
 
 // view engine setup
@@ -101,6 +102,7 @@ app.use('/createManager', createManager);
 app.use('/bookmark', bookmarkRouter);
 app.use('/listDishes', listDishes);
 app.use('/restaurantDetails', restaurantDetailsRouter);
+app.use('/createFeedback', createFeedbackRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
