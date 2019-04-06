@@ -61,7 +61,7 @@ CREATE TABLE RESTAURANT.Branch
     openingHour integer,
     closingHour integer,
     capacity integer,
-    rating integer DEFAULT 5,
+    rating NUMERIC(2,1) default '0',
     PRIMARY KEY(restaurantName, branchArea)
 );
 
@@ -129,7 +129,7 @@ if new.accountType = 'Customer' THEN
         insert into RESTAURANT.Manager VALUES (new.email);
 end if;
 return new;
-end;
+END;
 $$
 language plpgsql;
 
@@ -154,7 +154,7 @@ IF ((bArea IS NULL)) THEN
 RETURN NEW;   
 END IF;
 return null;
-end;
+END;
 $$
 language plpgsql;
 
@@ -179,6 +179,26 @@ END;
 $$
 language plpgsql;
 
+CREATE OR REPLACE FUNCTION calculateNewRating()
+RETURNS trigger AS
+$$
+DECLARE newRating NUMERIC(2,1);
+        bArea varchar;
+        rName varchar;
+BEGIN
+SELECT r.restaurantName, r.branchArea, COALESCE(AVG(f.rating),0) INTO rName, bArea, newRating
+FROM RESTAURANT.Reservation r 
+JOIN RESTAURANT.Feedback f 
+ON f.reservationId = r.reservationId
+GROUP BY (r.restaurantName, r.branchArea);
+UPDATE RESTAURANT.Branch 
+SET rating = newRating
+WHERE branchArea = bArea and restaurantName = rName;
+RETURN NEW;
+END;
+$$
+language plpgsql;
+
 
 --TRIGGERS--
 CREATE TRIGGER newUserInsertedTrigger
@@ -196,7 +216,10 @@ BEFORE INSERT OR UPDATE ON RESTAURANT.MenuItem
 for each row
 EXECUTE PROCEDURE calAvgPrice();
 
-
+CREATE TRIGGER updateAverageRating
+AFTER INSERT OR UPDATE ON RESTAURANT.Feedback
+for each row
+EXECUTE PROCEDURE calculateNewRating();
 
 /*
 Insert into User
@@ -275,3 +298,10 @@ INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) V
 INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Chicken Chop', '9.80', 'Western');
 INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Roti Prata (Plain)', '1.00', 'Indian');
 INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Roti Prata (Egg)', '1.50', 'Indian');
+
+/*
+Insert into Feedback
+*/
+
+INSERT INTO RESTAURANT.Feedback(reservationId,rating,comments) VALUES('1','2','nice');
+INSERT INTO RESTAURANT.Feedback(reservationId,rating,comments) VALUES('2','3','nicer');
