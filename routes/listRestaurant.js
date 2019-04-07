@@ -23,6 +23,10 @@ var table;
 var user;
 var restaurantName
 var branchArea
+var failRestaurant
+var failBranch
+var failDate
+var failVacancy
 
 router.get('/', function (req, res, next) {
 	console.log("hello");
@@ -32,40 +36,45 @@ router.get('/', function (req, res, next) {
 	openingHour = req.query.openingHour;
 	closingHour = req.query.closingHour;
 	var searchTerm = req.query.searchWord;
+	var errorMessage = req.query.errorMessage;
+	var booleanError = false;
 	console.log(req.query);
 	// console.log(req.query.regionName);
 	// console.log(req.query.openingHour);
 	// console.log(req.query.closingHour);
 	console.log(req.query.searchTerm);
 	console.log(searchTerm);
-	
-	if(region != null)
-	{
+
+	if (region != null) {
 		console.log("region query");
-		sql_query ="SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant WHERE regionName = '" + region +"' ORDER BY restaurantName,branchArea ASC;";
-	} else if (openingHour != null)
-	{
+		sql_query = "SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant WHERE regionName = '" + region + "' ORDER BY restaurantName,branchArea ASC;";
+	} else if (openingHour != null) {
 		sql_query = "SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant WHERE openingHour < 1030 ORDER BY restaurantName,branchArea ASC;";
-	} else if (closingHour != null) 
-	{
-		if(closingHour == 'Lunch'){
-		sql_query = "SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant WHERE closingHour > 1200  and openingHour < 1300 ORDER BY restaurantName,branchArea ASC;";
+	} else if (closingHour != null) {
+		if (closingHour == 'Lunch') {
+			sql_query = "SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant WHERE closingHour > 1200  and openingHour < 1300 ORDER BY restaurantName,branchArea ASC;";
 		} else {
 			sql_query = "SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant WHERE closingHour > 1900 ORDER BY restaurantName,branchArea ASC;";
 		}
 	} else if (searchTerm != null) {
-		sql_query = "SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant WHERE branchArea ILIKE '%" + searchTerm + "%' OR restaurantName ILIKE '%" + searchTerm +"%' ORDER BY restaurantName,branchArea ASC;";
-	} else 
-	{
+		sql_query = "SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant WHERE branchArea ILIKE '%" + searchTerm + "%' OR restaurantName ILIKE '%" + searchTerm + "%' ORDER BY restaurantName,branchArea ASC;";
+	} else if (errorMessage != null) {
+		booleanError = true;
+		failRestaurant = req.query.failRestaurant;
+		failBranch = req.query.failBranch;
+		failDate = req.query.failDate;
+		failVacancy = req.query.failVacancy;
+		
+	} else {
 		console.log("else")
 		sql_query = 'SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant ORDER BY restaurantName,branchArea ASC';
 	}
-	
-		if (user.isLogin == true) {
+
+	if (user.isLogin == true) {
 		pool.query(sql_query, (err, data) => {
 			table = data.rows;
 			// console.log(table);
-			res.render('listRestaurant', { title: 'Restaurants Available', data: data.rows });
+			res.render('listRestaurant', { title: 'Restaurants Available', data: data.rows,error: booleanError, restaurant: failRestaurant, branch: failBranch, date: failDate, vacancy: failVacancy});
 		});
 	} else {
 		res.redirect('login');
@@ -73,6 +82,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
+	req.app.locals.reservationStatus.error = false;
 	console.log("***** refresh page ********")
 	console.log(req.body.bookmarkIndex);
 	console.log(req.body.reservationIndex);
@@ -96,7 +106,7 @@ router.post('/', function (req, res, next) {
 
 		pool.query(insert_query, (err, data) => {
 			console.log(err);
-			
+
 			res.redirect('/listRestaurant');
 		})
 	} else if (req.body.reservationIndex != null) //making reservation.
@@ -115,8 +125,7 @@ router.post('/', function (req, res, next) {
 			pathname: "/createReservation",
 			query: passInfo
 		}));
-	} else if (req.body.viewDetails != null) 
-	{
+	} else if (req.body.viewDetails != null) {
 		var index = parseInt(req.body.viewDetails);
 		restaurantName = table[index].restaurantname;
 		branchArea = table[index].brancharea;
@@ -130,8 +139,7 @@ router.post('/', function (req, res, next) {
 			pathname: "/restaurantDetails",
 			query: passInfo
 		}));
-	} else if (test.length > 0) /* NOT FUNCTIONING!!!! */
-	{
+	} else if (test.length > 0) /* NOT FUNCTIONING!!!! */ {
 		// var search = req.body.searchValueinput;
 		console.log("***Inside Search***");
 

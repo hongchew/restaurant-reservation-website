@@ -156,7 +156,7 @@ IF ((bArea IS NULL)) THEN
     update RESTAURANT.Vacancy SET vacancy = vacancy - new.numdiner 
     WHERE restaurantName = NEW.restaurantName and branchArea = NEW.branchArea and mealTypeName = NEW.mealTypeName and vacancyDate = NEW.vacancyDate;--check if vacancy instance created--
     elsif (capacity1 < NEW.numDiner) THEN
-    RETURN NULL;
+    RAISE EXCEPTION 'Resturant has been fully reserved on that day. Reservation UNSUCCESSFUL';
 END IF;
 RETURN NEW;
 END;

@@ -22,7 +22,7 @@
 		integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
 		crossorigin="anonymous"></script>
 
-	<link rel='stylesheet' href='/stylesheets/dropdown.css'/>
+	<link rel='stylesheet' href='/stylesheets/dropdown.css' />
 
 	<!-- NAV BAR -->
 	<meta charset='utf-8'>
@@ -31,6 +31,29 @@
 	<link rel="stylesheet" href="/stylesheets/navbar.css">
 	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
 	<script src="script.js"></script>
+
+	<style>
+		.alert {
+			padding: 20px;
+			background-color: #f44336;
+			color: white;
+		}
+
+		.closebtn {
+			margin-left: 15px;
+			color: white;
+			font-weight: bold;
+			float: right;
+			font-size: 22px;
+			line-height: 20px;
+			cursor: pointer;
+			transition: 0.3s;
+		}
+
+		.closebtn:hover {
+			color: black;
+		}
+	</style>
 
 
 
@@ -49,11 +72,19 @@
 
 
 	</div>
-
 	<h1><%= title%></h1>
+
+	<% if(reservationStatus.error){ %>
+		<div class="alert">
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+			<strong>Reservation UNSUCCESSFUL!</strong> <br>Your most recent reservation for <%= restaurant%> (<%= branch%>) was not successful as there isn't sufficient vacancy for <%=vacancy%> pax on <%=date%>.
+		  </div>
+	<% } %>
+
 	<form class="d-inline-block" action="" id="searchValueInput" method="POST">
 		<div class="input-group">
-			<input id="searchValueInput" type="text" class="form-control" placeholder="Search Restaurant Name ..." name="searchValueInput">
+			<input id="searchValueInput" type="text" class="form-control" placeholder="Search Restaurant Name ..."
+				name="searchValueInput">
 			<div class="input-group-append">
 				<button class="btn btn-primary" type="submit">
 					Search
@@ -63,26 +94,26 @@
 	</form>
 
 	<div class="dropdown">
-			<button class="btn btn-info">Filter by Region</button>
-			<div class="dropdown-content">
+		<button class="btn btn-info">Filter by Region</button>
+		<div class="dropdown-content">
 			<a href="/listRestaurant">No Filter</a>
 			<a href="/listRestaurant?regionName=Central">Central</a>
 			<a href="/listRestaurant?regionName=North">North</a>
 			<a href="/listRestaurant?regionName=East">East</a>
 			<a href="/listRestaurant?regionName=South">South</a>
 			<a href="/listRestaurant?regionName=West">West</a>
-			</div>
-		  </div>
+		</div>
+	</div>
 
-		  <div class="dropdown">
-				<button class="btn btn-info">Filter by Meals Available</button>
-				<div class="dropdown-content">
-				<a href="/listRestaurant">No Filter</a>
-				<a href="/listRestaurant?openingHour=Breakfast">Breakfast</a>
-				<a href="/listRestaurant?closingHour=Lunch">Lunch</a>
-				<a href="/listRestaurant?closingHour=Dinner">Dinner</a>
-				</div>
-			  </div>
+	<div class="dropdown">
+		<button class="btn btn-info">Filter by Meals Available</button>
+		<div class="dropdown-content">
+			<a href="/listRestaurant">No Filter</a>
+			<a href="/listRestaurant?openingHour=Breakfast">Breakfast</a>
+			<a href="/listRestaurant?closingHour=Lunch">Lunch</a>
+			<a href="/listRestaurant?closingHour=Dinner">Dinner</a>
+		</div>
+	</div>
 
 
 
@@ -118,10 +149,10 @@
 				</td>
 				<td id="address"><%= data[i].address%></td>
 				<td id="openinghour"><% if(data[i].openinghour <999){ %>
-						0<%=data[i].openinghour%>
-						<%} else{ %>
-						<%=data[i].openinghour%>
-						<%}%>
+					0<%=data[i].openinghour%>
+					<%} else{ %>
+					<%=data[i].openinghour%>
+					<%}%>
 					</td>
 				<td id="closinghour"><%= data[i].closinghour%></td>
 				<td id="capactiy"><%= data[i].capacity%></td>
