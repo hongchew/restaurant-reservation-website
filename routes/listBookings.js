@@ -24,7 +24,7 @@ router.get('/', function (req, res, next) {
     currentManager = req.app.locals.user
     console.log(currentManager);
 
-    pool.query("SELECT branchArea FROM Restaurant.Manages WHERE managerEmail = '" + currentManager.email + "';", (err, result)=>{
+    pool.query("SELECT branchArea FROM Restaurant.Branch WHERE managerEmail = '" + currentManager.email + "';", (err, result)=>{
         console.log(result.rows);
         if(err){
             console.log("branchArea err: " + err.message);
@@ -35,7 +35,7 @@ router.get('/', function (req, res, next) {
 
     console.log("***Check 1 ");
 
-    pool.query("SELECT restaurantName FROM Restaurant.Manages WHERE managerEmail = '" + currentManager.email + "';", (err, result)=>{
+    pool.query("SELECT restaurantName FROM Restaurant.Branch WHERE managerEmail = '" + currentManager.email + "';", (err, result)=>{
         console.log(result.rows);
         if(err){
             console.log("restName err: " + err.message);

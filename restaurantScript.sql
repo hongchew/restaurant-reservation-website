@@ -233,7 +233,10 @@ Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('test1@gm
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('test2@gmail.com','GM2','password','GeneralManager');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('cust1@gmail.com','Cust1','password','Customer');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('manager1@gmail.com','Manager1','password','Manager');
-
+Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('manager2@gmail.com','Manager2','password','Manager');
+Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('manager3@gmail.com','Manager3','password','Manager');
+Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('manager4@gmail.com','Manager4','password','Manager');
+Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('manager5@gmail.com','Manager5','password','Manager');
 
 
 /*
@@ -258,21 +261,20 @@ Insert into RESTAURANT.Region(regionName) VALUES('Central');
 /*
 Insert into Branch
 */
-Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity) 
-VALUES('restaurant1','Bedok','East','S123456','0800','2200','100');
-Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity) 
-VALUES('restaurant1','Simei','East','S123457','0800','2200','80');
-Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity) 
-VALUES('restaurant2','Yishun','North','S123459','0800','2200','30');
-Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity) 
-VALUES('restaurant2','Woodlands','North','S123451','1200','2200','30');
-Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity) 
-VALUES('restaurant1','Jurong','West','S123456','1900','2200','100');
-
+Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity, managerEmail) 
+VALUES('restaurant1','Bedok','East','S123456','0800','2200','100', 'manager1@gmail.com');
+Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity, managerEmail) 
+VALUES('restaurant1','Simei','East','S123457','0800','2200','80', 'manager2@gmail.com');
+Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity, managerEmail) 
+VALUES('restaurant2','Yishun','North','S123459','0800','2200','30', 'manager3@gmail.com');
+Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity, managerEmail) 
+VALUES('restaurant2','Woodlands','North','S123451','1200','2200','30', 'manager4@gmail.com');
+Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity, managerEmail) 
+VALUES('restaurant1','Jurong','West','S123456','1900','2200','100', 'manager5@gmail.com');
 /*
 Insert into Manages
 */
-Insert into RESTAURANT.Manages (managerEmail, restaurantName, branchArea) VALUES ('manager1@gmail.com', 'restaurant1', 'Bedok');
+--Insert into RESTAURANT.Manages (managerEmail, restaurantName, branchArea) VALUES ('manager1@gmail.com', 'restaurant1', 'Bedok');
 
 /*
 Insert into Meal Type
