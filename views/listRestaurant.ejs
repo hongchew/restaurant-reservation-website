@@ -6,6 +6,7 @@
 	<title>List Restaurant</title>
 	<link rel='stylesheet' href='/stylesheets/style.css' />
 
+
 	<!-- CSS for Styling -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
 		integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -21,6 +22,8 @@
 		integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
 		crossorigin="anonymous"></script>
 
+	<link rel='stylesheet' href='/stylesheets/dropdown.css'/>
+
 	<!-- NAV BAR -->
 	<meta charset='utf-8'>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,23 +36,57 @@
 
 </head>
 
-<body>
+<body background="/image/background1.jpg">
 
 	<div id='cssmenu'>
 
-			<ul>
-					<li class='active'><a href='#'>Home</a></li>
-					<li><a href='/createReservation'>User Info</a></li>
-					<li><a href='#'>Company</a></li>
-					<li><a href='#'>Contact</a></li>
-				</ul>
+		<ul>
+			<li class='active'><a href='/listRestaurant'>Search Restaurant</a></li>
+			<li><a href='/userInfo'>Reservation Record</a></li>
+			<li><a href='/bookmark'>Bookmark</a></li>
+			<li><a href='/login'>logout</a></li>
+		</ul>
 
-		
+
 	</div>
 
-	<a href="login">Login</a>
-
 	<h1><%= title%></h1>
+	<form class="d-inline-block" action="" id="searchValueInput" method="POST">
+		<div class="input-group">
+			<input id="searchValueInput" type="text" class="form-control" placeholder="Search Restaurant Name ..." name="searchValueInput">
+			<div class="input-group-append">
+				<button class="btn btn-primary" type="submit">
+					Search
+				</button>
+			</div>
+		</div>
+	</form>
+
+	<div class="dropdown">
+			<button class="btn btn-info">Filter by Region</button>
+			<div class="dropdown-content">
+			<a href="/listRestaurant">No Filter</a>
+			<a href="/listRestaurant?regionName=Central">Central</a>
+			<a href="/listRestaurant?regionName=North">North</a>
+			<a href="/listRestaurant?regionName=East">East</a>
+			<a href="/listRestaurant?regionName=South">South</a>
+			<a href="/listRestaurant?regionName=West">West</a>
+			</div>
+		  </div>
+
+		  <div class="dropdown">
+				<button class="btn btn-info">Filter by Meals Available</button>
+				<div class="dropdown-content">
+				<a href="/listRestaurant">No Filter</a>
+				<a href="/listRestaurant?openingHour=Breakfast">Breakfast</a>
+				<a href="/listRestaurant?closingHour=Lunch">Lunch</a>
+				<a href="/listRestaurant?closingHour=Dinner">Dinner</a>
+				</div>
+			  </div>
+
+
+
+	<br></br>
 	<table class="table">
 		<thead>
 			<tr>
@@ -60,8 +97,11 @@
 				<th scope="col">Opening Hour</th>
 				<th scope="col">Closing Hour</th>
 				<th scope="col">Max Capacity</th>
+				<th scope="col">Average Price</th>
+				<th scope="col">Rating</th>
 				<th scope="col">Add to Bookmark</th>
 				<th scope="col">Make Booking</th>
+				<th scope="col">Restaurant Details</th>
 
 			</tr>
 		</thead>
@@ -77,9 +117,16 @@
 						<% if(data[i].regionid===4) {%>	North <%}%> -->
 				</td>
 				<td id="address"><%= data[i].address%></td>
-				<td id="openinghour"><%= data[i].openinghour%></td>
+				<td id="openinghour"><% if(data[i].openinghour <999){ %>
+						0<%=data[i].openinghour%>
+						<%} else{ %>
+						<%=data[i].openinghour%>
+						<%}%>
+					</td>
 				<td id="closinghour"><%= data[i].closinghour%></td>
 				<td id="capactiy"><%= data[i].capacity%></td>
+				<td id="capactiy"><%= data[i].avgprice%></td>
+				<td id="capactiy"><%= data[i].rating%></td>
 				<td>
 					<form id="bookmark" action="" method="POST">
 						<input type="hidden" name=bookmarkIndex value="<%=i%>">
@@ -89,13 +136,22 @@
 				</td>
 
 				<td>
-					<form id="bookmark" action="" method="POST">
+					<form id="reservation" action="" method="POST">
 						<input type="hidden" name=reservationIndex value="<%=i%>">
-						<button id="button" class="btn btn-lg btn-primary" value="Bookmark" type="submit">Book</button>
+						<button id="button" class="btn btn-lg btn-primary" value="Bookmark"
+							type="submit">Reserve</button>
 					</form>
 				</td>
 
+				<td>
+					<form id="viewDetails" action="" method="POST">
+						<input type="hidden" name=viewDetails value="<%=i%>">
+						<button id="button" class="btn btn-lg btn-secondary" value="Bookmark"
+							type="submit">Details</button>
+					</form>
+				</td>
 			</tr>
+
 			<% } %>
 		</tbody>
 	</table>

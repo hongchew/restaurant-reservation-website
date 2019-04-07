@@ -38,8 +38,16 @@ var customerSignupRouter = require('./routes/customersignup');
 var createGeneralManager = require('./routes/createGeneralManager');
 var listRestaurantRouter = require('./routes/listRestaurant');
 var createReservationRouter = require('./routes/createReservation');
-var listBookingsRouter =  require('./routes/listBookings');
 
+var userInfo = require('./routes/userInfo');
+var createManager = require('./routes/createManager');
+
+var listBookingsRouter =  require('./routes/listBookings');
+var bookmarkRouter = require('./routes/bookmark');
+
+var listDishes = require('./routes/listdishes');
+var restaurantDetailsRouter = require('./routes/restaurantDetails');
+var createFeedbackRouter = require('./routes/createFeedback');
 var app = express();
 
 // view engine setup
@@ -88,6 +96,13 @@ app.use('/createGeneralManager', createGeneralManager);
 app.use('/listRestaurant', listRestaurantRouter);
 app.use('/createReservation', createReservationRouter);
 app.use('/listBookings', listBookingsRouter);
+
+app.use('/userInfo', userInfo);
+app.use('/createManager', createManager);
+app.use('/bookmark', bookmarkRouter);
+app.use('/listDishes', listDishes);
+app.use('/restaurantDetails', restaurantDetailsRouter);
+app.use('/createFeedback', createFeedbackRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

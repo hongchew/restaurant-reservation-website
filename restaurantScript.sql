@@ -29,7 +29,8 @@ CREATE TABLE RESTAURANT.Customer (
 CREATE TABLE RESTAURANT.Restaurant
 (
     restaurantName varchar(50) primary key,
-    generalManagerEmail varchar(50) REFERENCES RESTAURANT.GeneralManager(generalManagerEmail) 
+    generalManagerEmail varchar(50) REFERENCES RESTAURANT.GeneralManager(generalManagerEmail),
+    avgPrice NUMERIC(7,2) DEFAULT '0'   
 );
 
 CREATE TABLE RESTAURANT.Cuisine
@@ -39,7 +40,7 @@ CREATE TABLE RESTAURANT.Cuisine
 
 CREATE TABLE RESTAURANT.MenuItem
 (
-    restaurantName varchar(50) references RESTAURANT.Restaurant(RestaurantName) ON DELETE CASCADE,
+    restaurantName varchar(50) references RESTAURANT.Restaurant(restaurantName) ON DELETE CASCADE,
     menuName varchar(50),
     price NUMERIC(7,2) NOT NULL,
     cuisineName varchar(50) references RESTAURANT.Cuisine(cuisineName),
@@ -55,19 +56,13 @@ CREATE TABLE RESTAURANT.Branch
     restaurantName varchar(50) references RESTAURANT.Restaurant ON DELETE CASCADE,
     branchArea varchar(50),
     regionName varchar(50) references RESTAURANT.Region(regionName) on delete cascade, 
+    managerEmail varchar(50) references RESTAURANT.Manager(managerEmail),
     address varchar(50),
     openingHour integer,
     closingHour integer,
     capacity integer,
+    rating NUMERIC(2,1) default '0',
     PRIMARY KEY(restaurantName, branchArea)
-);
-
-CREATE TABLE RESTAURANT.Manages(
-    managerEmail varchar(50) references RESTAURANT.Manager(managerEmail) on delete cascade,
-    restaurantName varchar(50),
-    branchArea varchar(50),
-    PRIMARY KEY(managerEmail, restaurantName, branchArea),
-    FOREIGN KEY (restaurantName, branchArea) references RESTAURANT.Branch(restaurantName, branchArea) on DELETE CASCADE
 );
 
 CREATE TABLE RESTAURANT.Bookmark
@@ -114,7 +109,7 @@ CREATE TABLE RESTAURANT.Feedback
 (
     feedbackId SERIAL PRIMARY KEY,
     reservationId integer NOT NULL,
-    rating NUMERIC(2,1) default 0,
+    rating NUMERIC(2,1) default '0',
     comments varchar(50),
     foreign key(reservationId) references RESTAURANT.Reservation(reservationId) ON DELETE CASCADE,
     CHECK(rating >= 0.0 and rating <= 5.0)
@@ -134,7 +129,7 @@ if new.accountType = 'Customer' THEN
         insert into RESTAURANT.Manager VALUES (new.email);
 end if;
 return new;
-end;
+END;
 $$
 language plpgsql;
 
@@ -144,20 +139,71 @@ CREATE OR REPLACE FUNCTION new_reservation_OTD()
 $$
 DECLARE bArea varchar;
         capacity1 integer;
+        branchCapacity integer;
 BEGIN
 SELECT branchArea into bArea
 FROM RESTAURANT.Vacancy v
 WHERE v.restaurantName = NEW.restaurantName and v.branchArea = NEW.branchArea and v.mealTypeName = NEW.mealTypeName and v.vacancyDate = NEW.vacancyDate;--check if vacancy instance created--
-SELECT capacity into capacity1
-FROM RESTAURANT.Branch
-WHERE NEW.restaurantName = restaurantName and NEW.branchArea = branchArea; --get capacity of branch--
-IF (bArea IS NULL) THEN
-    Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancyDate, vacancy) VALUES (NEW.restaurantName, NEW.branchArea, NEW.mealTypeName, NEW.vacancyDate, capacity1 );
+SELECT v.vacancy into capacity1
+FROM RESTAURANT.Vacancy v
+WHERE v.restaurantName = NEW.restaurantName and v.branchArea = NEW.branchArea and v.mealTypeName = NEW.mealTypeName and v.vacancyDate = NEW.vacancyDate; --get capacity of branch--
+SELECT capacity into branchCapacity
+FROM RESTAURANT.Branch b
+WHERE b.restaurantName = NEW.restaurantName and b.branchArea = NEW.branchArea;
+IF ((bArea IS NULL)) THEN
+    Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancyDate, vacancy) VALUES (NEW.restaurantName, NEW.branchArea, NEW.mealTypeName, NEW.vacancyDate, branchCapacity-NEW.numDiner);
+    elsif (capacity1 >= NEW.numDiner) THEN
+    update RESTAURANT.Vacancy SET vacancy = vacancy - new.numdiner 
+    WHERE restaurantName = NEW.restaurantName and branchArea = NEW.branchArea and mealTypeName = NEW.mealTypeName and vacancyDate = NEW.vacancyDate;--check if vacancy instance created--
+    elsif (capacity1 < NEW.numDiner) THEN
+    RETURN NULL;
 END IF;
 RETURN NEW;
-end;
+END;
 $$
 language plpgsql;
+
+
+CREATE OR REPLACE FUNCTION calAvgPrice()
+RETURNS TRIGGER AS
+$$
+DECLARE initialTotalPrice NUMERIC(7,2);
+BEGIN
+SELECT coalesce(sum(price),0) INTO initialTotalPrice
+FROM RESTAURANT.MenuItem m
+WHERE m.restaurantName = new.restaurantName;
+UPDATE RESTAURANT.Restaurant
+SET avgPrice = (initialTotalPrice+new.price)/
+(SELECT count(*)+1 
+FROM RESTAURANT.MenuItem m 
+WHERE m.restaurantName = new.restaurantName)
+WHERE restaurantname = new.restaurantName;
+
+RETURN NEW;
+END;    
+$$
+language plpgsql;
+
+CREATE OR REPLACE FUNCTION calculateNewRating()
+RETURNS trigger AS
+$$
+DECLARE newRating NUMERIC(2,1);
+        bArea varchar;
+        rName varchar;
+BEGIN
+SELECT r.restaurantName, r.branchArea, COALESCE(AVG(f.rating),0) INTO rName, bArea, newRating
+FROM RESTAURANT.Reservation r 
+JOIN RESTAURANT.Feedback f 
+ON f.reservationId = r.reservationId
+GROUP BY (r.restaurantName, r.branchArea);
+UPDATE RESTAURANT.Branch 
+SET rating = newRating
+WHERE branchArea = bArea and restaurantName = rName;
+RETURN NEW;
+END;
+$$
+language plpgsql;
+
 
 --TRIGGERS--
 CREATE TRIGGER newUserInsertedTrigger
@@ -170,7 +216,15 @@ BEFORE INSERT ON RESTAURANT.Reservation
 for each row
 EXECUTE PROCEDURE new_reservation_OTD();
 
+CREATE TRIGGER avgPrice
+BEFORE INSERT OR UPDATE ON RESTAURANT.MenuItem
+for each row
+EXECUTE PROCEDURE calAvgPrice();
 
+CREATE TRIGGER updateAverageRating
+AFTER INSERT OR UPDATE ON RESTAURANT.Feedback
+for each row
+EXECUTE PROCEDURE calculateNewRating();
 
 /*
 Insert into User
@@ -191,8 +245,14 @@ Insert into RESTAURANT.Restaurant (restaurantName, generalManagerEmail) VALUES('
 /*
 Insert into Region
 */
-Insert into RESTAURANT.Region(regionName) VALUES('East');
+
+
 Insert into RESTAURANT.Region(regionName) VALUES('North');
+Insert into RESTAURANT.Region(regionName) VALUES('South');
+Insert into RESTAURANT.Region(regionName) VALUES('East');
+Insert into RESTAURANT.Region(regionName) VALUES('West');
+Insert into RESTAURANT.Region(regionName) VALUES('Central');
+
 
 
 /*
@@ -204,6 +264,10 @@ Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, 
 VALUES('restaurant1','Simei','East','S123457','0800','2200','80');
 Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity) 
 VALUES('restaurant2','Yishun','North','S123459','0800','2200','30');
+Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity) 
+VALUES('restaurant2','Woodlands','North','S123451','1200','2200','30');
+Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity) 
+VALUES('restaurant1','Jurong','West','S123456','1900','2200','100');
 
 /*
 Insert into Manages
@@ -221,9 +285,34 @@ Insert into RESTAURANT.MealType (mealTypeName) VALUES ('dinner');
 Insert into Vacancy
 */
 Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-04-05', '200');
+Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-03-05', '200');
 Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'lunch', '2019-04-05', '200');
 
 /*
 Insert into Reservation
 */
-INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-03-05', 'cust1@gmail.com', '2', 'FALSE');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-04-05', 'cust1@gmail.com', '2', 'TRUE');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-03-05', 'cust1@gmail.com', '2', 'TRUE');
+
+INSERT INTO RESTAURANT.Cuisine values('Chinese'), ('Western'), ('Peranakan'), ('Indian'),('Drinks');
+
+/*
+Insert into Menu Item
+*/
+
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Bandung', '1.00', 'Drinks');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Chicken Rice', '4.00', 'Chinese');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Ice Milo', '1.50', 'Drinks');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Hot Coffee', '0.90', 'Drinks');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Maggi Goreng', '5.00', 'Indian');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Laksa', '3.40', 'Chinese');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Chicken Chop', '9.80', 'Western');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Roti Prata (Plain)', '1.00', 'Indian');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Roti Prata (Egg)', '1.50', 'Indian');
+
+/*
+Insert into Feedback
+*/
+
+INSERT INTO RESTAURANT.Feedback(reservationId,rating,comments) VALUES('1','2','nice');
+INSERT INTO RESTAURANT.Feedback(reservationId,rating,comments) VALUES('2','3','nicer');

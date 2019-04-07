@@ -1,95 +1,136 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title><%=title=></title>
+  <head>
+    <title><%=title%></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
 
-	<!-- CSS for Styling -->
-	<link rel='stylesheet' href='/stylesheets/style.css' />
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-		integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- CSS for Styling -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
 
-	<!-- JavaScript for Interactivity -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-		integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-		crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-		integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-		crossorigin="anonymous"></script>
+    <!-- JavaScript for Interactivity -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+      integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+      integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+      crossorigin="anonymous"
+    ></script>
 
-	<!--Font Awesome (added because you use icons in your prepend/append)-->
-	<link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
-    </head>
-    <body>
+    <!-- Font Awesome (added because you use icons in your prepend/append) -->
+    <link
+      rel="stylesheet"
+      href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css"
+    />
 
-        <table>
-            <h3>User Information</h3>
-            <table>
-                <thead>
-                    <th scope="col">Customer Email</th>
-                    <th scope="col">Customer Name</th>
-                </thead>
-                <tbody>
-                    <tr><%=user.email %></tr>
-                    <tr><%=user.name %></tr>
-                </tbody>
-            </table>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <h3>User Information</h3>
+      <table>
+        <thead>
+          <th scope="col">Customer Email</th>
+          <th scope="col">Customer Name</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%=user.email %></td>
+            <td><%=user.name%></td>
+          </tr>
+        </tbody>
+      </table>
+    </table>
 
-        </table>>
+    <div>
+      <h3>Past Reservations</h3>
+      <table>
+        <thead>
+          <th scope="col">Reservation Id</th>
+          <th scope="col">Restaurant Name</th>
+          <th scope="col">Branch Area</th>
+          <th scope="col">Meal Type</th>
+          <th scope="col">Date</th>
+          <th scope="col">Number diners</th>
+          <th scope="col">Feedback</th>
+        </thead>
+        <% if(data1.length > 0){ %>
+        <tbody>
+          <% for(var i = 0; i < data1.length ; i++) {%>
+          <tr>
+            <td><%=data1[i].reservationid%></td>
+            <td><%=data1[i].restaurantname%></td>
+            <td><%=data1[i].brancharea%></td>
+            <td><%=data1[i].mealtypename%></td>
+            <td><%=data1[i].vacancydate%></td>
+            <td><%=data1[i].numdiner%></td>
+            <!-- TO CHANGE THIS -->
+            <% if(data1[i].feedback != 0){ %>
+            <td>
+                <form id="feedback" action="" method="POST">
+                    <input type="hidden" name=feedbackIndex value="<%=i%>">
+                    <button id="button" class="btn btn-lg btn-primary" value="Feedback"
+                      type="submit">Feedback</button>
+                  </form>
+            </td>
+            <% } %>
+          </tr>
+          <% } %>
+        </tbody>
+        <% } %>
+      </table>
+    </div>
 
-        
-        <div style="float:left; width:50%;">
-            <h3>Past Reservations</h3>
-            <table>
-                <thead>
-                    <th scope="col">Reservation Id</th>
-                    <th scope="col">Restaurant Name</th>
-                    <th scope="col">Branch Area</th>
-                    <th scope="col">Meal Type</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Number diners</th>
-                </thead>
-                <tbody>
-                    <% for(var i = 0; i < data1.length ; i++) {%> 
-                        <tr><%=data1[i].reservationId%></tr>
-                        <tr><%=data1[i].restaurantName%></tr>
-                        <tr><%=data1[i].branchArea%></tr>
-                        <tr><%=data1[i].mealTypeName%></tr>
-                        <tr><%=data1[i].vacancyDate%></tr>
-                        <tr><%=data1[i].numDiner%></tr>
-                    <% } %>
-                </tbody>
-            </table>
-        </div>
-
-        <div style="float:right; width:50%">
-                <h3>Upcoming Reservations</h3>
-                <table>
-                    <thead>
-                        <th scope="col">Reservation Id</th>
-                        <th scope="col">Restaurant Name</th>
-                        <th scope="col">Branch Area</th>
-                        <th scope="col">Meal Type</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Number diners</th>
-                    </thead>
-                    <tbody>
-                        <% for(var i = 0; i < data1.length ; i++) {%> 
-                            <tr><%=data2[i].reservationId%></tr>
-                            <tr><%=data2[i].restaurantName%></tr>
-                            <tr><%=data2[i].branchArea%></tr>
-                            <tr><%=data2[i].mealTypeName%></tr>
-                            <tr><%=data2[i].vacancyDate%></tr>
-                            <tr><%=data2[i].numDiner%></tr>
-                        <% } %>
-                    </tbody>
-                </table>
-            </div>
-        
-        
-
-    </body>
-
+    <div>
+      <h3>Upcoming Reservations</h3>
+      <table>
+        <thead>
+          <th scope="col">Reservation Id</th>
+          <th scope="col">Restaurant Name</th>
+          <th scope="col">Branch Area</th>
+          <th scope="col">Meal Type</th>
+          <th scope="col">Date</th>
+          <th scope="col">Number diners</th>
+        </thead>
+        <% if(data2.length > 0){ %>
+        <tbody>
+          <% for(var i = 0; i < data2.length ; i++) {%>
+          <tr>
+            <td><%=data2[i].reservationid%></td>
+            <td><%=data2[i].restaurantname%></td>
+            <td><%=data2[i].brancharea%></td>
+            <td><%=data2[i].mealtypename%></td>
+            <td><%=data2[i].vacancydate%></td>
+            <td><%=data2[i].numdiner%></td>
+          </tr>
+          <% } %>
+        </tbody>
+        <% } %>
+      </table>
+    </div>
+  </body>
 </html>

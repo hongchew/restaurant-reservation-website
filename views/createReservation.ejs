@@ -6,6 +6,7 @@
     <title>Make Reservation</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 
+
     <!-- CSS for Styling -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -23,34 +24,62 @@
 
     <!-- ADDED JavaScript -->
     <script src="javascripts/insertScript.js"></script>
+    <!-- nav bar -->
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/stylesheets/navbar.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+
 </head>
 
 <body>
+
+    <div id='cssmenu'>
+
+        <ul>
+            <li class='active'><a>Create Reservation</a></li>
+            <li><a href='/listRestaurant'>Search Restaurant</a></li>
+            <li><a href='/userInfo'>Reservation Record</a></li>
+            <li><a href='/bookmark'>Bookmark</a></li>
+            <li><a href='/login'>logout</a></li>
+        </ul>
+
+
+    </div>
+
+
     <h1>CS2102: <%= title%></h1>
     <form id="html_form" action="" role="form" method="post">
         <div class="form-group">
-            <label for="matric">Restaurant Name : <%= data.restaurantName%></label>
+            <label for="matric">Restaurant Name : <%= data[0].restaurantname%></label>
             <!-- <input type="text" class="form-control" id="matric" name="matric" aria-describedby="matricHelp" placeholder="Enter your matric number">
 				<small id="matricHelp" class="form-text text-muted">Do not share your matric number with anyone else.</small> -->
         </div>
         <div class="form-group">
-            <label for="name">Branch Area : <%= data.branchArea%></label>
+            <label for="name">Branch Area : <%= data[0].brancharea%></label>
             <!-- <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name"> -->
         </div>
         <div class="form-group">
-                <label for="mealType"> Meal Type :</label>
-                <select id="mealType" name="mealType" style="min-width: 100px;" >
-                    <option value="" disabled selected> Select a meal type</option>
-                    <option value="breakfast">Breakfast</option>
-                    <option value="lunch">Lunch</option>
-                    <option value="dinner">Dinner</option>
-                </select>
+            <label for="mealType"> Meal Type :</label>
+            <select id="mealType" name="mealType" style="min-width: 100px;">
+                <option value="" disabled selected> Select a meal type</option>
+                <% if(data[0].openinghour <1000){ %>
+                <option value="breakfast">Breakfast</option>
+                <%} %>
+                <% if(data[0].closinghour > 1200){ %>
+                <option value="lunch">Lunch</option>
+                <%} %>
+                <% if(data[0].closinghour > 1900){ %>
+                <option value="dinner">Dinner</option>
+                <%} %>
+            </select>
         </div>
         <div class="form-group">
             <input type="number" class="form-control" id="pax" name="pax" placeholder="Number of pax ..."
                 style="max-width: 250px;" min="0">
         </div>
-        
+
         <div class="form-group">
             <label for="faculty">Date (Pick a date) :</label>
             <input type="date" class="form-control" id="date" name="date" placeholder="Enter a number ..."

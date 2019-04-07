@@ -11,14 +11,23 @@ const pool = new Pool({
 });
 var restaurantName;
 var branchArea;
-var rubbish;
+var user;
 
 // GET
 router.get('/', function (req, res, next) {
-    rubbsh = "test";
     restaurantName = req.query.restaurantName;
     branchArea = req.query.branchArea;
-    res.render('createReservation', { title: 'Create Reservation', data: req.query, rubbish: rubbish });
+    user = req.app.locals.user;
+    var sql_query = "SELECT * FROM Restaurant.Branch WHERE restaurantName = '" + restaurantName + "' and branchArea = '" + branchArea + "';";
+    if (user.isLogin == true) {
+		pool.query(sql_query, (err, data) => {
+            table = data.rows;
+			res.render('createReservation', { title: 'Create Reservation', data: data.rows,});
+		});
+	} else {
+		res.redirect('login');
+	}
+    
 });
 
 
@@ -31,7 +40,7 @@ console.log(req.body);
 console.log(req.body.mealType);
 console.log("*****Document*******");
 
-var customerEmail = "cust1@gmail.com"; //***************need to change***********************
+var customerEmail = req.app.locals.user.email; //***************need to change***********************
 var mealType = req.body.mealType;
 var pax = req.body.pax;
 var vacancyDate = req.body.date;
