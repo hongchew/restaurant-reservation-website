@@ -127,5 +127,8 @@ app.locals.user = {
   accountType: null,
   isLogIn: false
 }
+app.locals.reservationStatus = {
+  error: false
+}
 
 module.exports = app;
