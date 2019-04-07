@@ -139,6 +139,7 @@ CREATE OR REPLACE FUNCTION new_reservation_OTD()
 $$
 DECLARE bArea varchar;
         capacity1 integer;
+        branchCapacity integer;
 BEGIN
 SELECT branchArea into bArea
 FROM RESTAURANT.Vacancy v
@@ -146,14 +147,18 @@ WHERE v.restaurantName = NEW.restaurantName and v.branchArea = NEW.branchArea an
 SELECT v.vacancy into capacity1
 FROM RESTAURANT.Vacancy v
 WHERE v.restaurantName = NEW.restaurantName and v.branchArea = NEW.branchArea and v.mealTypeName = NEW.mealTypeName and v.vacancyDate = NEW.vacancyDate; --get capacity of branch--
+SELECT capacity into branchCapacity
+FROM RESTAURANT.Branch b
+WHERE b.restaurantName = NEW.restaurantName and b.branchArea = NEW.branchArea;
 IF ((bArea IS NULL)) THEN
-    Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancyDate, vacancy) VALUES (NEW.restaurantName, NEW.branchArea, NEW.mealTypeName, NEW.vacancyDate, capacity1-NEW.numDiner);
+    Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancyDate, vacancy) VALUES (NEW.restaurantName, NEW.branchArea, NEW.mealTypeName, NEW.vacancyDate, branchCapacity-NEW.numDiner);
     elsif (capacity1 >= NEW.numDiner) THEN
     update RESTAURANT.Vacancy SET vacancy = vacancy - new.numdiner 
     WHERE restaurantName = NEW.restaurantName and branchArea = NEW.branchArea and mealTypeName = NEW.mealTypeName and vacancyDate = NEW.vacancyDate;--check if vacancy instance created--
-RETURN NEW;   
+    elsif (capacity1 < NEW.numDiner) THEN
+    RETURN NULL;
 END IF;
-return null;
+RETURN NEW;
 END;
 $$
 language plpgsql;
