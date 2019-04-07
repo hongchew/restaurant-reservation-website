@@ -47,6 +47,10 @@ router.post('/', function(req, res, next) {
         res.redirect('/listrestaurant');
       }
 
+      if (user.accountType == 'Manager') {
+        res.redirect('/listBookings');
+      }
+
       if (user.accountType == 'GeneralManager') {
         res.redirect('/create');
       }

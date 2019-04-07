@@ -178,6 +178,7 @@ Insert into User
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('test1@gmail.com','GM1','password','GeneralManager');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('test2@gmail.com','GM2','password','GeneralManager');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('cust1@gmail.com','Cust1','password','Customer');
+Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('manager1@gmail.com','Manager1','password','Manager');
 
 
 
@@ -205,6 +206,11 @@ Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, 
 VALUES('restaurant2','Yishun','North','S123459','0800','2200','30');
 
 /*
+Insert into Manages
+*/
+Insert into RESTAURANT.Manages (managerEmail, restaurantName, branchArea) VALUES ('manager1@gmail.com', 'restaurant1', 'Bedok');
+
+/*
 Insert into Meal Type
 */
 Insert into RESTAURANT.MealType (mealTypeName) VALUES ('breakfast');
@@ -220,3 +226,4 @@ Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacanc
 /*
 Insert into Reservation
 */
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-03-05', 'cust1@gmail.com', '2', 'FALSE');
