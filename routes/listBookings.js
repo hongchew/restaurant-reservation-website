@@ -10,10 +10,9 @@ const pool = new Pool({
 
 
 var table;
-var branchArea;
-var restName;
 var currentManager;
-var msg = null;
+var currentBranch;
+var msg;
 
 module.exports = router;
 
@@ -21,43 +20,34 @@ module.exports = router;
 router.get('/', function (req, res, next) {
     console.log("***GET listBooking.js ");
 
-    currentManager = req.app.locals.user
+    currentManager = req.app.locals.user;
     console.log(currentManager);
-
-    pool.query("SELECT branchArea FROM Restaurant.Branch WHERE managerEmail = '" + currentManager.email + "';", (err, result)=>{
-        console.log(result.rows);
+    if(!currentManager.email){
+        res.redirect("/login");
+    }
+    
+    pool.query("select * from Restaurant.Branch where manageremail = '" + currentManager.email + "';" , (err, data) => {
         if(err){
-            console.log("branchArea err: " + err.message);
+            console.log("currentBranch query err: " + err.message);
         }else{
-            branchArea = result.rows[0].branchArea;
+            console.log(data.rows[0]);
+            currentBranch = data.rows[0];
+            console.log("***Check currentBranch query ");
+
         }
     });
 
-    console.log("***Check 1 ");
+    query = "select reservationid, customeremail, numdiner, mealtypename, vacancydate from (restaurant.reservation natural join restaurant.branch) rb where rb.status = 0 and rb.manageremail = '" + currentManager.email + "' order by rb.vacancydate asc;";
 
-    pool.query("SELECT restaurantName FROM Restaurant.Branch WHERE managerEmail = '" + currentManager.email + "';", (err, result)=>{
-        console.log(result.rows);
-        if(err){
-            console.log("restName err: " + err.message);
-        }else{
-            restName = result.rows[0].restaurantName;
-        }
-    });
-    
-    console.log("***Check 2 ");  
-    
-    console.log("***Check 3 ");
-    
-    var query = "SELECT * FROM Restaurant.Reservation WHERE status = FALSE AND restaurantName = '" + restName + "' AND branchArea = '" + branchArea + "';";
-    
     pool.query(query, (err, data) => {
         if(err){
-            console.log("final err: " + err.message);
+            console.log("GET query err: " + err.message);
         }else{
-            //console.log(data);
             console.log(data.rows);
             table = data.rows;
-            res.render('listBookings', { title: 'Pending Bookings', data: data.rows, msg:msg });
+            console.log("***Check main query ");
+            res.render('listBookings', { title: 'Pending Bookings', currentBranch:currentBranch, data: data.rows, msg:msg});
+            msg = null;
         }
     });
 
@@ -65,11 +55,38 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-    var updateStatement = "UPDATE Reservation SET status = TRUE WHERE reservationId = " + req.body.resId;
-    pool.query(updateStatement, (err, results)=>{'SELECT * FROM Restaurant.Reservation WHERE status = FALSE AND'
-        console.log(req.body.resId + " is updated");
-        msg = "Reservation status of resId " + req.body.resId + " had been updated";
-
-        res.render('listBookings', { title: 'Pending Bookings', data: data.rows, msg:msg });
-    });
+    console.log(req.body.resId);
+    flag = req.body.flag;
+    console.log(req.body.resId);
+    var updateStatement;
+    if(flag == "fulfilled"){
+        updateStatement = "UPDATE Restaurant.Reservation SET status = 1 WHERE reservationId = " + req.body.resId;
+        console.log(updateStatement);
+        pool.query(updateStatement, (err, results)=>{
+            
+            if(err){
+                console.log("POST query err: " + err.message);
+            }else{
+                console.log(req.body.resId + " is updated");
+                msg = "Reservation status of resId " + req.body.resId + " had been marked as fulfilled";
+                res.redirect("/listBookings");
+            }
+        });
+    }else if(flag == "noshow"){ 
+        updateStatement = "UPDATE Restaurant.Reservation SET status = -1 WHERE reservationId = " + req.body.resId;
+        console.log(updateStatement);
+        pool.query(updateStatement, (err, results)=>{
+            
+            if(err){
+                console.log("POST query err: " + err.message);
+            }else{
+                console.log(req.body.resId + " is updated");
+                msg = "Reservation status of resId " + req.body.resId + " had been marked as no show";
+                res.redirect("/listBookings");
+            }
+        });
+    }else{ //logout
+        req.app.locals.user = null;
+        res.redirect("/login");
+    }
 });
