@@ -23,13 +23,13 @@ var restaurantName;
 
   var name = req.body.name;
   var email = req.body.email;
-  var branchArea = req.body.branchArea;
+  var branchArea = req.body.brancharea;
   var password = req.body.password;
   var accountType = 'Manager';
-  var regionName = req.body.regionName;
+  var regionName = req.body.regionname;
   var address = req.body.address;
-  var openingHour = req.body.openingHour;
-  var closingHour = req.body.closingHour;
+  var openingHour = req.body.openinghour;
+  var closingHour = req.body.closinghour;
   var capacity = req.body.capacity;
 
   var retrieve_query =
