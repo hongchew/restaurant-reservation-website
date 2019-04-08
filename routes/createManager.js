@@ -20,6 +20,7 @@ var restaurantName;
         restaurantName = data.rows[0].restaurantName;
     }
   });
+
   var name = req.body.name;
   var email = req.body.email;
   var branchArea = req.body.branchArea;
@@ -30,6 +31,9 @@ var restaurantName;
   var openingHour = req.body.openingHour;
   var closingHour = req.body.closingHour;
   var capacity = req.body.capacity;
+
+  var retrieve_query =
+  "select * from RESTAURANT.Users WHERE email = '" + email + "'";
 
 
   var insertManagerQuery =
@@ -60,14 +64,20 @@ var restaurantName;
     "','" +
     capacity +
     "','" +
-    0 +
+    0.0 +
     "')";
 
-  pool.query(insertManagerQuery, (err, data) => {
-    pool.query(insertBranchQuery, (err,data)=> {
-      res.render('createManager');
+    pool.query(retrieve_query, (err, data) => {
+      if (data.rows.length == 0) {
+        pool.query(insertManagerQuery, (err, data) => {
+        });
+        pool.query(insertBranchQuery, (err, data) => {
+          res.redirect('/listrestaurant');
+        });
+      } else{
+        res.render('createManager');
+      }
     });
-  });
   
   
 });
