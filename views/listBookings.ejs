@@ -22,21 +22,47 @@
         crossorigin="anonymous"></script>
 
     <!-- ADDED JavaScript -->
-    <script src="javascripts/rSignupScript.js"></script>
 </head>
 
 <body>
 
-    <h1><%= title%></h1>
+    <h1><%= title %></h1>
 
+    <%if(msg){ %>
+    <p style="color: tomato" ><%= msg %></p>
+    <%}%>
+
+    <% if(data.length > 0){%>
     <thead>
         <tr>
-            <th>Reservation ID</th>
             <th>Customer Email</th>
             <th>Number of Diners</th>
+            <th>Meal Reservation</th>
             <th>Reservation Date</th>
         </tr>
     </thead>    
+    <tbody>
+        <%for(var i=0; i<data.length; i++) { %>
+            <tr id="listBookingRows">
+                <td id="ResId"><%= data[i].reservationId%></td>
+                <td id="custEmail"><%= data[i].customerEmail%></td>
+                <td id="numDiners"><%= data[i].numDiner%></td>
+                <td id="mealRes"><%= data[i].mealTypeName%></td>
+                <td id="resDate"><%= data[i].vacancyDate%></td>
+
+                <td>
+                    <form id="bookmark" action="" method="POST">
+                        <input type="hidden" name=resId value="<%= data[i].reservationId %>">
+                        <button id="button" class="btn btn-lg btn-primary" value="Mark as Fulfilled" type="submit">Fulfilled</button>
+                    </form>
+                </td>
+            </tr>
+        <%}%>
+    </tbody>
+
+    <%}else{%>
+        <p>No Reservations Made</p>
+    <%}%>
 </body>
 
 </html>
