@@ -19,7 +19,7 @@ var branchArea
 
 router.get('/', function (req, res, next) {
 	user = req.app.locals.user;
-	sql_query = " SELECT * FROM RESTAURANT.Bookmark NATURAL JOIN Restaurant.Branch WHERE customeremail ='" + user.email + "';";
+	sql_query = " SELECT * FROM RESTAURANT.Bookmark NATURAL JOIN Restaurant.Branch NATURAL JOIN Restaurant.restaurant WHERE customeremail ='" + user.email + "';";
 	console.log("hello");
 	user = req.app.locals.user;
 	if (user.isLogin == true) {

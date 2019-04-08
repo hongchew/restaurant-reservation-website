@@ -56,6 +56,8 @@
 					<th scope="col">Opening Hour</th>
 					<th scope="col">Closing Hour</th>
 					<th scope="col">Max Capacity</th>
+					<th scope="col">Average Price</th>
+					<th scope="col">Rating</th>
 					<th scope="col">Remove Bookmark</th>
 					<th scope="col">Make Booking</th>
 					<th scope="col">Restaurant Details</th>
@@ -67,16 +69,13 @@
 				<tr id="tableBody">
 					<td id="restaurantName"><%= data[i].restaurantname%></td>
 					<td id="brancharea"><%= data[i].brancharea%></td>
-					<td id="regionname"><%= data[i].regionname%>
-						<!-- <% if(data[i].regionid===1) {%>	East <%}%>
-						<% if(data[i].regionid===2) {%>	South <%}%>
-						<% if(data[i].regionid===3) {%>	West <%}%>
-						<% if(data[i].regionid===4) {%>	North <%}%> -->
-					</td>
+					<td id="regionname"><%= data[i].regionname%></td>
 					<td id="address"><%= data[i].address%></td>
 					<td id="openinghour"><%= data[i].openinghour%></td>
 					<td id="closinghour"><%= data[i].closinghour%></td>
 					<td id="capactiy"><%= data[i].capacity%></td>
+					<td id="capactiy"><%= data[i].avgprice%></td>
+					<td id="capactiy"><%= data[i].rating%></td>
 					<td>
 						<form id="removeBookmark" action="" method="POST">
 							<input type="hidden" name=bookmarkIndex value="<%=i%>">
@@ -96,7 +95,8 @@
 					<td>
 						<form id="viewDetails" action="" method="POST">
 							<input type="hidden" name=viewDetails value="<%=i%>">
-							<button id="button" class="btn btn-lg btn-secondary" value="Bookmark" type="submit">Details</button>
+							<button id="button" class="btn btn-lg btn-secondary" value="Bookmark"
+								type="submit">Details</button>
 						</form>
 					</td>
 				</tr>
