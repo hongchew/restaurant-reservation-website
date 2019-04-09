@@ -83,6 +83,18 @@ router.get('/', function (req, res, next) {
         pathname: "/viewFeedback",
         query: {viewFeedbackId: viewFeedbackId}
       }))
+
+    }else if(flag == 'remove'){
+      var query = "delete from restaurant.reservation where reservationid =  " ;
+      var deleteId = req.body.reservationToDeleteId;
+      query = query + deleteId + ";";
+      console.log(query);
+      pool.query(query, (err, data)=>{
+        if(err){
+          console.log("***DELETE Err: " + err.message);
+        }
+        res.redirect("/userInfo");
+      })
     }
 });
 

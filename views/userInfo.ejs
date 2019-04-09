@@ -148,6 +148,7 @@
           <th scope="col">Meal Type</th>
           <th scope="col">Date</th>
           <th scope="col">Number of Diners</th>
+          <th scope="col" colspan="2">Action</th>
         </thead>
         <% if(data2.length > 0){ %>
         <tbody>
@@ -159,6 +160,14 @@
             <td><%=data2[i].mealtypename%></td>
             <td><%=data2[i].vacancydate%></td>
             <td><%=data2[i].numdiner%></td>
+            <td>
+              <form id="removeReservation" action="" method="POST">
+                <input type="hidden" name=reservationToDeleteId value="<%=data2[i].reservationid%>">
+                <input type="hidden" name=flag value="remove">
+                <button id="button" class="btn btn-lg btn-danger" value="Bookmark"
+                  type="submit">Delete</button>
+						  </form>
+            </td>
           </tr>
           <% } %>
         </tbody>
