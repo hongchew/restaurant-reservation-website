@@ -29,14 +29,16 @@
       integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
       crossorigin="anonymous"
     ></script>
+
+
   </head>
+  <header>
+    <h1>CS2102 Group 27: Restaurant Reservations</h1>
+  </header>
   <body>
     <div class="container py-5">
       <div class="row">
           <div class="col-md-12">
-             <h1><% if(error == true){ %>
-              Invalid Login Credentials.
-              <% } %></h1>
               <h2 class="text-center text-white mb-4">Restaurant Login</h2>
               <div class="row">
                   <div class="col-md-6 mx-auto">
@@ -61,6 +63,11 @@
                                   </div>
                                   <button type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Login</button>
                               </form>
+                              <p style="color: tomato">
+                                  <% if(error == true){ %>
+                                    Invalid Login Credentials.
+                                  <% } %>
+                              </p>
                           </div>
                       </div>
                   </div>
@@ -68,4 +75,8 @@
           </div>
       </div>
   </div>
+  </body>
+  <footer>
+      <h6>&copy;CS2102, AY18/19 Group 27 Restaurant Reservation</h6>
+  </footer>
 </html>

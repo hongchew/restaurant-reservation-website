@@ -22,61 +22,106 @@
         crossorigin="anonymous"></script>
 
     <!-- ADDED JavaScript -->
+
+    	<!-- NAV BAR -->
+	<meta charset='utf-8'>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/stylesheets/navbar.css">
+	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+	<script src="script.js"></script>
+
+	<style>
+		.alert {
+			padding: 20px;
+			background-color: #f44336;
+			color: white;
+		}
+
+		.closebtn {
+			margin-left: 15px;
+			color: white;
+			font-weight: bold;
+			float: right;
+			font-size: 22px;
+			line-height: 20px;
+			cursor: pointer;
+			transition: 0.3s;
+		}
+
+		.closebtn:hover {
+			color: black;
+		}
+	</style>
 </head>
 
-<header>
+<header>    
+    <div id='cssmenu'>
+        <ul>
+            <li class='active'><a href='/listBookings'>Pending Reservations</a></li>
+            <li><a href='/login'>Logout</a></li>
+        </ul>       
+    </div>
     <h1><%= title %></h1>
     <p>Restaurant: <%= currentBranch.restaurantname %></p>
-    <p>Branch: <%= currentBranch.brancharea %></p>
+    <p>Branch: <%= currentBranch.brancharea %></p>   
 </header>
 
+
+
 <body>
-    <%if(msg){ %>
-    <p style="color: tomato" ><%= msg %></p>
-    <%}%>
 
-    <% if(data.length > 0){%>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Reservation ID</th>
-                <th scope="col">Customer Email</th>
-                <th scope="col">Number of Diners</th>
-                <th scope="col">Meal Reservation</th>
-                <th scope="col">Reservation Date</th>
-                <th scope="col" colspan="2">Actions</th>
-            </tr>
-        </thead>    
-        <tbody>
-            <%for(var i=0; i<data.length; i++) { %>
-                <tr id="listBookingRows">
-                    <td id="ResId"><%= data[i].reservationid %></td>
-                    <td id="custEmail"><%= data[i].customeremail %></td>
-                    <td id="numDiners"><%= data[i].numdiner %></td>
-                    <td id="mealRes"><%= data[i].mealtypename %></td>
-                    <td id="resDate"><%= data[i].vacancydate %></td>
+    <div id='cssmenu'>
+        <%if(msg){ %>
+        <p style="color: tomato" ><%= msg %></p>
+        <%}%>
 
-                    <td>
-                        <form id="markFulfilled" action="" method="POST">
-                            <input type="hidden" name=resId value="<%= data[i].reservationid %>">
-                            <input type="hidden" name=flag value="fulfilled">
-                            <button id="button" class="btn btn-lg btn-primary" value="Fulfilled" type="submit">Fulfilled</button>
-                        </form>
-                    </td>
-                    <td>
-                        <form id="markFulfilled" action="" method="POST">
-                            <input type="hidden" name=resId value="<%= data[i].reservationid %>">
-                            <input type="hidden" name=flag value="noshow">
-                            <button id="button" class="btn btn-lg btn-primary" value="No Show" type="submit">No Show</button>
-                        </form>
-                    </td>
+        <% if(data.length > 0){%>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Reservation ID</th>
+                    <th scope="col">Customer Email</th>
+                    <th scope="col">Number of Diners</th>
+                    <th scope="col">Meal Reservation</th>
+                    <th scope="col">Reservation Date</th>
+                    <th scope="col" colspan="2">Actions</th>
                 </tr>
-            <%}%>
-        </tbody>
-    </table>
-    <%}else{%>
-        <h3>***No Pending Reservations***</h3>
-    <%}%>
+            </thead>    
+            <tbody>
+                <%for(var i=0; i<data.length; i++) { %>
+                    <tr id="listBookingRows">
+                        <td id="ResId"><%= data[i].reservationid %></td>
+                        <td id="custEmail"><%= data[i].customeremail %></td>
+                        <td id="numDiners"><%= data[i].numdiner %></td>
+                        <td id="mealRes"><%= data[i].mealtypename %></td>
+                        <td id="resDate"><%= data[i].vacancydate %></td>
+
+                        <td>
+                            <form id="markFulfilled" action="" method="POST">
+                                <input type="hidden" name=resId value="<%= data[i].reservationid %>">
+                                <input type="hidden" name=flag value="fulfilled">
+                                <button id="button" class="btn btn-lg btn-primary" value="Fulfilled" type="submit">Fulfilled</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form id="markFulfilled" action="" method="POST">
+                                <input type="hidden" name=resId value="<%= data[i].reservationid %>">
+                                <input type="hidden" name=flag value="noshow">
+                                <button id="button" class="btn btn-lg btn-primary" value="No Show" type="submit">No Show</button>
+                            </form>
+                        </td>
+                    </tr>
+                <%}%>
+            </tbody>
+        </table>
+        <%}else{%>
+            <h3>***No Pending Reservations***</h3>
+        <%}%>
+    </div>
 </body>
+<footer>
+        <h6>&copy;CS2102, AY18/19 Group 27 Restaurant Reservation</h6>
+</footer>
 
 </html>
