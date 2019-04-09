@@ -53,7 +53,7 @@ router.post('/', function(req, res, next) {
       }
 
       if (user.accountType == 'GeneralManager') {
-        res.redirect('/create');
+        res.redirect('/createManager');
       }
     }
   });
