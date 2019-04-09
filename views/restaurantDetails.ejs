@@ -82,10 +82,10 @@
 
                         <td bgcolor="#9ff2c7">
                             <% if(data[0].openinghour <1000){ %>
-                            Breakfast
+                            Breakfast  
                             <%} %>
                             <% if(data[0].closinghour > 1200){ %>
-                            Lunch
+                            Lunch  
                             <%} %>
                             <% if(data[0].closinghour > 1900){ %>
                             Dinner
@@ -150,7 +150,7 @@
 
     <div class="split right">
         <div class="centered1">
-            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <div class="my-custom-scrollbar">
 
                 <table class="table table-bordered table-striped mb-0">
                     <thead>
@@ -172,6 +172,29 @@
                     </tbody>
                 </table>
             </div>
+            <br>
+            <div class="my-custom-scrollbar2">
+            <table class="table table-bordered table-striped mb-0">
+                <thead>
+                <tr>
+                    <th scope="col">User</th>
+                    <th scope="col">Feedback</th>
+                    <th scope="col">Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(var i=0; i<feedbacks.length; i++) { %>
+                <tr id="tableBody">
+                    <td id="restaurantName"><%= feedbacks[i].customeremail%></td>
+                    <td id="brancharea"><%= feedbacks[i].comments%></td>
+                    <td id="regionname"><%= feedbacks[i].rating%>
+                </tr>
+                <% } %>
+            </tbody>
+
+            </table>
+        </div>
+            
         </div>
     </div>
     </div>

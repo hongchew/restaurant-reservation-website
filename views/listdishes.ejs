@@ -2,90 +2,106 @@
 <html>
 
 <head>
-	<!-- Page Title -->
-	<title>List Dishes</title>
-	<link rel='stylesheet' href='/stylesheets/style.css' />
+    <!-- Page Title -->
+    <title>List Dishes</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
 
+    <!-- CSS for Styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-	<!-- CSS for Styling -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-		integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- JavaScript for Interactivity -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
 
-	<!-- JavaScript for Interactivity -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-		integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-		crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-		integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-		crossorigin="anonymous"></script>
-
-
+    <!-- ADDED JavaScript -->
+    <script src="javascripts/rSignupScript.js"></script>
 
 </head>
 
-<body>
+<body  background="/image/background1.jpg">
 
-	<h3>Dishes</h3>
-	<table class="table">
-		<thead>
-			<tr>
-				<th scope="col">Dish</th>
-				<th scope="col">Restaurant Name</th>
-				<th scope="col">Price</th>
-				<th scope="col">Cuisine Name</th>
-			</tr>
+    <h3>Dishes</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Dish</th>
+                <th scope="col">Restaurant Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Cuisine Name</th>
+            </tr>
         </thead>
         <% if(dish.length > 0){ %>
-		<tbody>
-			<% for(var i=0; i<dish.length; i++) { %>
-			<tr>
-				<td id="menuName"><%= dish[i].menuName%></td>
-				<td id="restaurantName"><%= dish[i].restaurantName%></td>
-				<td id="price"><%= dish[i].price%></td>
-				<td id="cuisineName"><%= dish[i].cuisineName%></td>
-			</tr>
-			<% } %>
+        <tbody>
+            <% for(var i=0; i<dish.length; i++) { %>
+            <tr>
+                <td id="menuName"><%= dish[i].menuname%></td>
+                <td id="restaurantName"><%= dish[i].restaurantname%></td>
+                <td id="price"><%= dish[i].price%></td>
+                <td id="cuisineName"><%= dish[i].cuisinename%></td>
+            </tr>
+            <% } %>
         </tbody>
         <% } %>
     </table>
-    
-    <form id="createDish" action="" role="form" method="post">
 
-        <div class="form-group">
-                <label for="restaurantName">Restaurant Name</label>
-                <select id="restaurantName" name="restaurantName" style="min-width: 100px;">
-                    <% for(var i = 0 ; i < restaurantName.length ; i++) { %>
-                    <option value="<%=restaurantName[i].restaurantName%>"><%=restaurantName[i].restaurantName%></option>
-                </select>
-                
-        </div>
-        <div class="form-group">
-                <label for="menuName">Dish Name</label>
-                <input type="text" class="form-control" id="menuName" name="menuName" required="true"
-                    placeholder="Enter Menu Name">
-        </div>
 
-        <div class="form-group">
-                <label for="price">Price</label>
-                <input type="number" value="1000" min="0" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="price" name="price" required="true"/>
+    <div class="container py-3">
+        <div class="row">
+            <div class="mx-auto col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">Create New Dish</h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="signupInfo" action="" role="form" method="post">
+                            <div class="form-group">
+                                <label for="restaurantName">Restaurant Name</label>
+                                <select id="restaurantName" name="restaurantName" style="min-width: 100px;">
+                                    <% for(var i = 0 ; i < restaurantName.length ; i++) { %>
+                                    <option value="<%=restaurantName[i].restaurantname%>">
+                                        <%=restaurantName[i].restaurantname%></option>
+                                    <% } %>
+                                </select>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="menuName">Dish Name</label>
+                                <input type="text" class="form-control" id="menuName" name="menuName" required="true"
+                                    placeholder="Enter Menu Name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input type="number" value="1000" min="0" step="0.01" data-number-to-fixed="2"
+                                    data-number-stepfactor="100" class="form-control currency" id="price" name="price"
+                                    required="true" />
+                            </div>
+                            <div class="form-group">
+                                <label for="cuisineName">Cuisine Name</label>
+                                <select id="cuisineName" name="cuisineName" style="min-width: 100px;">
+                                    <option value="Chinese">Chinese</option>
+                                    <option value="Western">Western</option>
+                                    <option value="Peranakan">Peranakan</option>
+                                    <option value="Indian">Indian</option>
+                                </select>
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary">Create Dish</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-                <label for="cuisineName">Cuisine Name</label>
-                <select id="cuisineName" name="cuisineName" style="min-width: 100px;">
-                        <option value="North">Chinese</option>
-                        <option value="South">Western</option>
-                        <option value="East">Peranakan</option>
-                        <option value="West">Indian</option>
-                    </select>
-        </div>
-        
-        
-        <div type="button" class="btn btn-light"><a href="/">Cancel</a></div>
-        <button type="submit" class="btn btn-primary">Create Dish</button>
-    </form>
+    </div>
 
 </body>
 
