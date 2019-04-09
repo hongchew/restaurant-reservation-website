@@ -64,7 +64,6 @@
         </style> -->
 
   </head>
-<<<<<<< HEAD
 
   <header>
     <div id='cssmenu'>
@@ -78,12 +77,10 @@
     <h1>Reservation Records</h1>
   </header>
 
-  <body>
-      <div id="cssmenu">      
-=======
+           
   <body background="/image/background1.jpg">
+    <div id="cssmenu"> 
     <table>
->>>>>>> 45c2633dd3485dac69676df0e727bb2233867748
       <h3>User Information</h3>
       <table class="table">
         <tr>
@@ -100,7 +97,7 @@
     <br/>
     
     <div>
-      <h3>Past Reservations</h3>
+      <h3>Leave Feedback</h3>
       <br/>
       <table class="table">
         <thead>
@@ -109,27 +106,28 @@
           <th scope="col">Branch Area</th>
           <th scope="col">Meal Type</th>
           <th scope="col">Date</th>
-          <th scope="col">Number diners</th>
-          <th scope="col">Feedback</th>
+          <th scope="col">Number of Diners</th>
+          <th scope="col">Leave Feedback</th>
         </thead>
-        <% if(data1.length > 0){ %>
+        <% if(data3.length > 0){ %>
         <tbody>
-          <% for(var i = 0; i < data1.length ; i++) {%>
+          <% for(var i = 0; i < data3.length ; i++) {%>
           <tr>
-            <td><%=data1[i].reservationid%></td>
-            <td><%=data1[i].restaurantname%></td>
-            <td><%=data1[i].brancharea%></td>
-            <td><%=data1[i].mealtypename%></td>
-            <td><%=data1[i].vacancydate%></td>
-            <td><%=data1[i].numdiner%></td>
+            <td><%=data3[i].reservationid%></td>
+            <td><%=data3[i].restaurantname%></td>
+            <td><%=data3[i].brancharea%></td>
+            <td><%=data3[i].mealtypename%></td>
+            <td><%=data3[i].vacancydate%></td>
+            <td><%=data3[i].numdiner%></td>
             <!-- TO CHANGE THIS -->
-            <% if(data1[i].feedback != 0){ %>
+            <% if(data3[i].feedback != 0){ %>
             <td>
                 <form id="feedback" action="" method="POST">
                     <input type="hidden" name=feedbackIndex value="<%=i%>">
+                    <input type="hidden" name=flag value="submit">
                     <button id="button" class="btn btn-lg btn-primary" value="Feedback"
                       type="submit">Feedback</button>
-                  </form>
+                </form>
             </td>
             <% } %>
           </tr>
@@ -149,7 +147,7 @@
           <th scope="col">Branch Area</th>
           <th scope="col">Meal Type</th>
           <th scope="col">Date</th>
-          <th scope="col">Number diners</th>
+          <th scope="col">Number of Diners</th>
         </thead>
         <% if(data2.length > 0){ %>
         <tbody>
@@ -164,6 +162,48 @@
           </tr>
           <% } %>
         </tbody>
+        <% } %>
+      </table>
+    </div>
+    <br/>
+    <br/>
+    <div>
+      <h3>View Past Reservations</h3>
+      <table class='table'>
+        <thead>
+            <th scope="col">Reservation Id</th>
+            <th scope="col">Restaurant Name</th>
+            <th scope="col">Branch Area</th>
+            <th scope="col">Meal Type</th>
+            <th scope="col">Date</th>
+            <th scope="col">Number of Diners</th>
+            <th scope="col">Status</th>
+            <th scope="col">View Feedback</th>
+        </thead>
+        <% if(data1.length > 0){ %>
+          <tbody>
+            <% for(var i = 0; i < data1.length ; i++) {%>
+            <tr>
+              <td><%=data1[i].reservationid%></td>
+              <td><%=data1[i].restaurantname%></td>
+              <td><%=data1[i].brancharea%></td>
+              <td><%=data1[i].mealtypename%></td>
+              <td><%=data1[i].vacancydate%></td>
+              <td><%=data1[i].numdiner%></td>
+              <td><%=data1[i].status%></td>
+              <%if (data1[i].checkfeedback == 1){ %>
+              <td>
+                <form id="viewfeedback" action="" method="POST">
+                    <input type="hidden" name=viewFeedbackId value="<%=data1[i].reservationid%>">
+                    <input type="hidden" name=flag value="view">
+                    <button id="button" class="btn btn-lg btn-primary" value="View"
+                      type="submit">View</button>
+                </form>
+              </td>
+              <%}%>
+            </tr>
+            <% } %>
+          </tbody>
         <% } %>
       </table>
     </div>

@@ -22,7 +22,7 @@ router.get('/', function (req, res, next) {
 
     currentManager = req.app.locals.user;
     console.log(currentManager);
-    if(!currentManager.email){
+    if(!currentManager.email || currentManager.accountType != 'Manager'){
         res.redirect("/login");
     }
     
@@ -37,7 +37,7 @@ router.get('/', function (req, res, next) {
         }
     });
 
-    query = "select reservationid, customeremail, numdiner, mealtypename, vacancydate from (restaurant.reservation natural join restaurant.branch) rb where rb.status = 0 and rb.manageremail = '" + currentManager.email + "' order by rb.vacancydate asc;";
+    query = "select reservationid, customeremail, numdiner, mealtypename, to_char(vacancydate, 'Day DD-Mon-YYYY') as vacancydate from (restaurant.reservation natural join restaurant.branch) rb where rb.status = 0 and rb.manageremail = '" + currentManager.email + "' order by rb.vacancydate asc;";
 
     pool.query(query, (err, data) => {
         if(err){
