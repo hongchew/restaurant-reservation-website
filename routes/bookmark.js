@@ -53,7 +53,7 @@ router.post('/', function (req, res, next) {
 		pool.query(delete_query, (err, data) => {
 			console.log(err);
 			
-			res.redirect('/listRestaurant');
+			res.redirect('/Bookmark');
 		})
 	} else if (req.body.reservationIndex != null) //making reservation.
 	{
