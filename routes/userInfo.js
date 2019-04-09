@@ -15,12 +15,12 @@ router.get('/', function(req, res, next) {
   email = req.app.locals.user.email;
   var customer = req.app.locals.user;
   var pastReservationsQuery =
-    "SELECT r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, r.vacancyDate, r.numDiner, COALESCE(f.feedbackid,0) as feedback FROM RESTAURANT.Reservation r join RESTAURANT.Customer c on r.customerEmail = c.customerEmail LEFT JOIN RESTAURANT.Feedback f on f.reservationId=r.reservationId WHERE c.customerEmail = '" +
+    "SELECT r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, to_char(r.vacancyDate, ' Day DD-Mon-YYYY') as vacancyDate, r.numDiner, COALESCE(f.feedbackid,0) as feedback FROM RESTAURANT.Reservation r join RESTAURANT.Customer c on r.customerEmail = c.customerEmail LEFT JOIN RESTAURANT.Feedback f on f.reservationId=r.reservationId WHERE c.customerEmail = '" +
     email +
     "' AND r.vacancyDate < NOW() ORDER BY r.vacancyDate";
 
   var upcomingReservationsQuery =
-    "SELECT r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, r.vacancyDate, r.numDiner FROM RESTAURANT.Reservation r join RESTAURANT.Customer c on r.customerEmail = c.customerEmail WHERE c.customerEmail = '" +
+    "SELECT r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, to_char(r.vacancyDate, 'Day DD-Mon-YYYY') as vacancyDate, r.numDiner FROM RESTAURANT.Reservation r join RESTAURANT.Customer c on r.customerEmail = c.customerEmail WHERE c.customerEmail = '" +
     email +
     "' AND r.vacancyDate >= NOW() ORDER BY r.vacancyDate";
 
