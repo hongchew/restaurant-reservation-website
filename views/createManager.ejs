@@ -70,12 +70,12 @@
 
                             <div class="form-group">
                                     <label for="openinghour">Opening Hour</label>
-                                    <input type="text" class="form-control" id="openinghour" name="openinghour" required="true"
+                                    <input type="number" min="0" max="2359" class="form-control" id="openinghour" name="openinghour" required="true"
                                         placeholder="Enter Opening Hour">
                             </div>
                             <div class="form-group">
                                     <label for="closinghour">Closing Hour</label>
-                                    <input type="text" class="form-control" id="closinghour" name="closinghour" required="true"
+                                    <input type="number" min="0" max="2359" class="form-control" id="closinghour" name="closinghour" required="true"
                                         placeholder="Enter Closing Hour">
                             </div>
                             <div class="form-group">
@@ -91,13 +91,7 @@
                                     placeholder="Enter your password">
 
                             </div>
-                            <div class="form-group">
-                                <label for="repassword">Retype Password</label>
-                                <input type="password" class="form-control" id="repassword" required="true"
-                                    placeholder="Enter your password">
-                            </div>
                             
-                            <div type="button" class="btn btn-light"><a href="/">Cancel</a></div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
