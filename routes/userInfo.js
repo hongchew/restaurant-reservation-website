@@ -12,24 +12,24 @@ var email
 var pastReservations = null;
 var upcomingReservation = null;
 var submitFeedbackReservation = null;
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   email = req.app.locals.user.email;
   var customer = req.app.locals.user;
-  if(!customer.email ){
+  if (!customer.email) {
     res.redirect("/login");
   }
-  var pastReservationsQuery = "select r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, to_char(r.vacancyDate, ' Day DD-Mon-YYYY') as vacancydate, case when status = 1 then 'Fulfilled' when status = -1 then 'No Show' end as status, r.numdiner, (select 1 from restaurant.feedback where reservationid = r.reservationid) as checkfeedback from restaurant.reservation r where status <> 0 and r.customeremail = '" + email + "';" ;
-/*   var pastReservationsQuery =
-    "SELECT r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, to_char(r.vacancyDate, ' Day DD-Mon-YYYY') as vacancyDate, r.numDiner, COALESCE(f.feedbackid,0) as feedback FROM RESTAURANT.Reservation r join RESTAURANT.Customer c on r.customerEmail = c.customerEmail LEFT JOIN RESTAURANT.Feedback f on f.reservationId=r.reservationId WHERE c.customerEmail = '" +
-    email +
-    "' AND r.vacancyDate < NOW() ORDER BY r.vacancyDate"; */
+  var pastReservationsQuery = "select r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, to_char(r.vacancyDate, ' Day DD-Mon-YYYY') as vacancydate, case when status = 1 then 'Fulfilled' when status = -1 then 'No Show' end as status, r.numdiner, (select 1 from restaurant.feedback where reservationid = r.reservationid) as checkfeedback from restaurant.reservation r where status <> 0 and r.customeremail = '" + email + "';";
+  /*   var pastReservationsQuery =
+      "SELECT r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, to_char(r.vacancyDate, ' Day DD-Mon-YYYY') as vacancyDate, r.numDiner, COALESCE(f.feedbackid,0) as feedback FROM RESTAURANT.Reservation r join RESTAURANT.Customer c on r.customerEmail = c.customerEmail LEFT JOIN RESTAURANT.Feedback f on f.reservationId=r.reservationId WHERE c.customerEmail = '" +
+      email +
+      "' AND r.vacancyDate < NOW() ORDER BY r.vacancyDate"; */
 
-/*   var upcomingReservationsQuery =
-    "SELECT r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, to_char(r.vacancyDate, 'Day DD-Mon-YYYY') as vacancyDate, r.numDiner FROM RESTAURANT.Reservation r join RESTAURANT.Customer c on r.customerEmail = c.customerEmail WHERE c.customerEmail = '" +
-    email +
-    "' AND r.vacancyDate >= NOW() ORDER BY r.vacancyDate"; */
+  /*   var upcomingReservationsQuery =
+      "SELECT r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, to_char(r.vacancyDate, 'Day DD-Mon-YYYY') as vacancyDate, r.numDiner FROM RESTAURANT.Reservation r join RESTAURANT.Customer c on r.customerEmail = c.customerEmail WHERE c.customerEmail = '" +
+      email +
+      "' AND r.vacancyDate >= NOW() ORDER BY r.vacancyDate"; */
 
-  var upcomingReservationsQuery = "SELECT r.reservationid, r.restaurantname, r.brancharea, r.mealtypename, to_char(r.vacancydate, 'Day DD-Mon-YYYY') as vacancydate, r.numdiner FROM restaurant.reservation r where r.status = 0 and r.customeremail = '" + email +"';";
+  var upcomingReservationsQuery = "SELECT r.reservationid, r.restaurantname, r.brancharea, r.mealtypename, to_char(r.vacancydate, 'Day DD-Mon-YYYY') as vacancydate, r.numdiner FROM restaurant.reservation r where r.status = 0 and r.customeremail = '" + email + "';";
 
   var submitFeedbackQuery = "select r.reservationid, r.restaurantname, r.brancharea, r.mealtypename, to_char(r.vacancydate, 'Day DD-Mon-YYYY') as vacancydate, r.numdiner from restaurant.reservation r where not exists (select 1 from restaurant.feedback f where  f.reservationid = r.reservationid) and r.status = 1 and r.customeremail = '" + email + "';";
   pool.query(pastReservationsQuery, (err, data) => {
@@ -40,7 +40,7 @@ router.get('/', function(req, res, next) {
       console.log(data.rows);
       upcomingReservation = data;
 
-      pool.query(submitFeedbackQuery, (err, data) =>{
+      pool.query(submitFeedbackQuery, (err, data) => {
         submitFeedbackReservation = data;
         console.log(data.rows);
 
@@ -54,6 +54,9 @@ router.get('/', function(req, res, next) {
       });
     });
   });
+});
+
+
 
   router.post('/', function(req, res, next) {
     flag = req.body.flag;
@@ -81,7 +84,6 @@ router.get('/', function(req, res, next) {
         query: {viewFeedbackId: viewFeedbackId}
       }))
     }
-  });
 });
 
 module.exports = router;
