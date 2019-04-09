@@ -31,7 +31,7 @@ router.post('/', function(req, res, next) {
     var updatedNumDiner = parseInt(req.body.updatedNumDiner);
     var editReservationId = req.body.id;
 
-    var query = "update restaurant.reservation set vacancydate = " + updatedDate + ", mealtypename = '" + updatedMealType + "', numdiner = " + updatedNumDiner + " where reservationid = " + editReservationId + ";";
+    var query = "update restaurant.reservation set vacancydate = '" + updatedDate + "', mealtypename = '" + updatedMealType + "', numdiner = " + updatedNumDiner + " where reservationid = " + editReservationId + ";";
     console.log(query);
     pool.query(query, (err, data)=>{
         if(err){
