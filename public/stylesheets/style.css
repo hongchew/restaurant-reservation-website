@@ -49,10 +49,20 @@ a {
 .my-custom-scrollbar {
   /* position: relative; */
   /* position: aboslute; */
-  height: 460px;
+  height: 235px;
   width: 500px;
   overflow: auto;
 }
-.table-wrapper-scroll-y {
-  display: block;
+
+.my-custom-scrollbar2 {
+  /* position: relative; */
+  /* position: aboslute; */
+  height: 200px;
+  width: 600px;
+  overflow: scroll;
+  position: relative;
 }
+
+/* .table-wrapper-scroll-y {
+  display: block;
+} */
