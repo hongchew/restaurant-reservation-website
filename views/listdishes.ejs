@@ -58,16 +58,15 @@
             <div class="mx-auto col-sm-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="mb-0">Create Manager</h4>
+                        <h4 class="mb-0">Create New Dish</h4>
                     </div>
                     <div class="card-body">
                         <form id="signupInfo" action="" role="form" method="post">
-                            <h3>Create New Dish</h3>
                             <div class="form-group">
                                 <label for="restaurantName">Restaurant Name</label>
                                 <select id="restaurantName" name="restaurantName" style="min-width: 100px;">
                                     <% for(var i = 0 ; i < restaurantName.length ; i++) { %>
-                                    <option value="<%=restaurantName[i].restaurantName%>">
+                                    <option value="<%=restaurantName[i].restaurantname%>">
                                         <%=restaurantName[i].restaurantname%></option>
                                     <% } %>
                                 </select>
@@ -88,15 +87,14 @@
                             <div class="form-group">
                                 <label for="cuisineName">Cuisine Name</label>
                                 <select id="cuisineName" name="cuisineName" style="min-width: 100px;">
-                                    <option value="North">Chinese</option>
-                                    <option value="South">Western</option>
-                                    <option value="East">Peranakan</option>
-                                    <option value="West">Indian</option>
+                                    <option value="Chinese">Chinese</option>
+                                    <option value="Western">Western</option>
+                                    <option value="Peranakan">Peranakan</option>
+                                    <option value="Indian">Indian</option>
                                 </select>
                             </div>
 
 
-                            <div type="button" class="btn btn-light"><a href="/">Cancel</a></div>
                             <button type="submit" class="btn btn-primary">Create Dish</button>
                         </form>
                     </div>

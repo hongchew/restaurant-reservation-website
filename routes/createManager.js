@@ -21,12 +21,8 @@ router.post('/', function(req, res, next) {
     if(data.rows.length ==0) {
         console.log("General Manager is not associated with any Restaurants")
     } else{
-      console.log("Suppose to be restaurant name here ******");
-        restaurantName = data.rows[0].restaurantname;
-        console.log(data.rows);
-        console.log(data.rows[0].restaurantname);
+        restaurantName = data.rows[0].restaurantname; 
         console.log(restaurantName);
-        console.log("*****printing body******");
 
         var name = req.body.name;
         var email = req.body.email;
@@ -77,23 +73,18 @@ router.post('/', function(req, res, next) {
 
           console.log("before entering insert query");
           pool.query(retrieve_query, (err, data) => {
-            console.log("****inside insert****");
             console.log(data.rows);
             if (data.rows[0] == null) {
               pool.query(insertManagerQuery, (err, data) => {
               });
             }
               pool.query(insertBranchQuery, (err, data) => {
-                console.log("****trying to insert****");
-                res.redirect('/listrestaurant'); // it should not be here, link to GM's homepage
+                res.redirect('/listdishes'); 
               });
-            // } else{
-            //   res.render('createManager');
-            // }
           });
     }
   });
-  console.log("*****printing body******");
+
 
  
   

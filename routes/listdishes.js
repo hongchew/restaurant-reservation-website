@@ -10,8 +10,8 @@ const pool = new Pool({
 
 
 /* SQL Query */
-var allDishesQuery = 'SELECT * FROM Restaurant.MenuItem ORDER BY restaurantName, menuName';
-var allRestaurantsQuery = 'SELECT restaurantName FROM RESTAURANT.Restaurant';
+var allDishesQuery = 'SELECT * FROM Restaurant.MenuItem ORDER BY restaurantname, menuname;';
+var allRestaurantsQuery = 'SELECT restaurantname FROM RESTAURANT.Restaurant;';
 
 router.get('/', function (req, res, next) {
     pool.query(allDishesQuery, (err, data1) => {
@@ -31,17 +31,23 @@ router.post('/', function (req, res, next) {
     var menuName = req.body.menuName;
     var price = req.body.price;
     var cuisineName = req.body.cuisineName;
+    console.log(restaurantName);
+    console.log(menuName);
+    console.log(price);
+    console.log(cuisineName);
 
-    var insertQuery = "INSERT INTO RESTAURANT.MenuItem values ('" +
+    var insertQuery = "INSERT INTO RESTAURANT.MenuItem VALUES('" +
         restaurantName +
-        "','"
+        "','" +
     menuName +
         "','" +
         price +
         "','" +
         cuisineName +
-        "')";
+        "');";
     pool.query(insertQuery, (err, data) => {
+        console.log(data);
+        console.log(err);
     });
     pool.query(allDishesQuery, (err, data1) => {
         pool.query(allRestaurantsQuery, (err, data2) => {
