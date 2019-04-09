@@ -3,7 +3,7 @@
 
 <head>
     <!-- Page Title -->
-    <title>Restaurant Sign up Page</title>
+    <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 
     <!-- CSS for Styling -->
@@ -24,44 +24,58 @@
     <!-- ADDED JavaScript -->
 </head>
 
-<body>
-
+<header>
     <h1><%= title %></h1>
+    <p>Restaurant: <%= currentBranch.restaurantname %></p>
+    <p>Branch: <%= currentBranch.brancharea %></p>
+</header>
 
+<body>
     <%if(msg){ %>
     <p style="color: tomato" ><%= msg %></p>
     <%}%>
 
     <% if(data.length > 0){%>
-    <thead>
-        <tr>
-            <th>Customer Email</th>
-            <th>Number of Diners</th>
-            <th>Meal Reservation</th>
-            <th>Reservation Date</th>
-        </tr>
-    </thead>    
-    <tbody>
-        <%for(var i=0; i<data.length; i++) { %>
-            <tr id="listBookingRows">
-                <td id="ResId"><%= data[i].reservationId%></td>
-                <td id="custEmail"><%= data[i].customerEmail%></td>
-                <td id="numDiners"><%= data[i].numDiner%></td>
-                <td id="mealRes"><%= data[i].mealTypeName%></td>
-                <td id="resDate"><%= data[i].vacancyDate%></td>
-
-                <td>
-                    <form id="bookmark" action="" method="POST">
-                        <input type="hidden" name=resId value="<%= data[i].reservationId %>">
-                        <button id="button" class="btn btn-lg btn-primary" value="Mark as Fulfilled" type="submit">Fulfilled</button>
-                    </form>
-                </td>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Reservation ID</th>
+                <th scope="col">Customer Email</th>
+                <th scope="col">Number of Diners</th>
+                <th scope="col">Meal Reservation</th>
+                <th scope="col">Reservation Date</th>
+                <th scope="col" colspan="2">Actions</th>
             </tr>
-        <%}%>
-    </tbody>
+        </thead>    
+        <tbody>
+            <%for(var i=0; i<data.length; i++) { %>
+                <tr id="listBookingRows">
+                    <td id="ResId"><%= data[i].reservationid %></td>
+                    <td id="custEmail"><%= data[i].customeremail %></td>
+                    <td id="numDiners"><%= data[i].numdiner %></td>
+                    <td id="mealRes"><%= data[i].mealtypename %></td>
+                    <td id="resDate"><%= data[i].vacancydate %></td>
 
+                    <td>
+                        <form id="markFulfilled" action="" method="POST">
+                            <input type="hidden" name=resId value="<%= data[i].reservationid %>">
+                            <input type="hidden" name=flag value="fulfilled">
+                            <button id="button" class="btn btn-lg btn-primary" value="Fulfilled" type="submit">Fulfilled</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form id="markFulfilled" action="" method="POST">
+                            <input type="hidden" name=resId value="<%= data[i].reservationid %>">
+                            <input type="hidden" name=flag value="noshow">
+                            <button id="button" class="btn btn-lg btn-primary" value="No Show" type="submit">No Show</button>
+                        </form>
+                    </td>
+                </tr>
+            <%}%>
+        </tbody>
+    </table>
     <%}else{%>
-        <p>No Reservations Made</p>
+        <h3>***No Pending Reservations***</h3>
     <%}%>
 </body>
 

@@ -98,7 +98,7 @@ CREATE TABLE RESTAURANT.Reservation
     vacancyDate date,
     customerEmail varchar(50) NOT NULL references RESTAURANT.Customer(customerEmail) on delete cascade,
     numDiner integer NOT NULL,
-    status boolean, --true means come already, false means haven't come
+    status integer, --(-1 = no show, 0 = not fulfilled, 1 = fulfilled)
     check(numDiner > 0),
     -- check(mealType = 'Breakfast' OR mealType = 'Lunch' OR mealType = 'Dinner'),
     FOREIGN KEY(restaurantName, branchArea, mealTypeName, vacancyDate) references RESTAURANT.Vacancy(restaurantName, branchArea, mealTypeName, vacancyDate)
@@ -293,8 +293,8 @@ Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacanc
 /*
 Insert into Reservation
 */
-INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-04-05', 'cust1@gmail.com', '2', 'TRUE');
-INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-03-05', 'cust1@gmail.com', '2', 'TRUE');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-04-05', 'cust1@gmail.com', '2', '0');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-03-05', 'cust1@gmail.com', '2', '0');
 
 INSERT INTO RESTAURANT.Cuisine values('Chinese'), ('Western'), ('Peranakan'), ('Indian'),('Drinks');
 
