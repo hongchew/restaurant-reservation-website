@@ -32,6 +32,7 @@ var insertRouter = require('./routes/insert');
 /* ---------------------------- */
 var loginRouter = require('./routes/login');
 var adminRouter = require('./routes/admin');
+var viewFeedbackRouter = require('./routes/viewFeedback');
 
 var customerSignupRouter = require('./routes/customersignup');
 
@@ -103,6 +104,7 @@ app.use('/bookmark', bookmarkRouter);
 app.use('/listDishes', listDishes);
 app.use('/restaurantDetails', restaurantDetailsRouter);
 app.use('/createFeedback', createFeedbackRouter);
+app.use('/viewFeedback', viewFeedbackRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

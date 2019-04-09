@@ -60,9 +60,9 @@ router.get('/', function(req, res, next) {
     if(flag == 'submit'){
       if (req.body.feedbackIndex != null) {
         var index = parseInt(req.body.feedbackIndex);
-        var restaurantName = pastReservations.rows[index].restaurantname;
-        var reservationId = pastReservations.rows[index].reservationid;
-        var branchArea  = pastReservations.rows[index].brancharea;
+        var restaurantName = submitFeedbackReservation.rows[index].restaurantname;
+        var reservationId = submitFeedbackReservation.rows[index].reservationid;
+        var branchArea  = submitFeedbackReservation.rows[index].brancharea;
         var passInfo = {
           restaurantName: restaurantName,
           reservationId: reservationId,
@@ -75,7 +75,11 @@ router.get('/', function(req, res, next) {
         }));
       }
     }else if(flag == 'view'){
-      var 
+      var viewFeedbackId = parseInt(req.body.viewFeedbackId);
+      res.redirect(url.format({
+        pathname: "/viewFeedback",
+        query: {viewFeedbackId: viewFeedbackId}
+      }))
     }
   });
 });
