@@ -45,7 +45,7 @@ var mealType = req.body.mealType;
 var pax = req.body.pax;
 var vacancyDate = req.body.date;
 
-var insert_query = "INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('" + restaurantName +"', '" + branchArea +"', '" + mealType + "', '" + vacancyDate + "', '" + customerEmail +"', '"+ pax + "', 'FALSE')"; 
+var insert_query = "INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('" + restaurantName +"', '" + branchArea +"', '" + mealType + "', '" + vacancyDate + "', '" + customerEmail +"', '"+ pax + "', '0')"; 
 var check_query ="SELECT * FROM RESTAURANT.Vacancy WHERE bArea = 'Nothing';";
 pool.query(insert_query, (err, data) => {
     if(err)
