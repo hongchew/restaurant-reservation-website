@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%=title%></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+
+    <!-- CSS for Styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+		integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <!-- JavaScript for Interactivity -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+      integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+      integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Font Awesome (added because you use icons in your prepend/append) -->
+    <link
+      rel="stylesheet"
+      href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css"
+    />
+
+  <!-- NAV BAR -->
+	    	<!-- NAV BAR -->
+        <meta charset='utf-8'>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/stylesheets/navbar.css">
+        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+        <script src="script.js"></script>
+    </head>
+
+    <header>
+      <div id='cssmenu'>
+          <ul>
+            <li><a href='/listRestaurant'>Search Restaurant</a></li>
+            <li class='active'><a href='/userInfo'>Reservation Record</a></li>
+            <li><a href='/bookmark'>Bookmark</a></li>
+            <li><a href='/login'>Logout</a></li>
+          </ul>
+      </div>
+      <h1><%=title%></h1>
+    </header>
+    
+    <body>
+    
+    <div id='cssmenu'>
+        <form method="POST">
+        <table class='table' >
+            <tr>
+                <th>Reservation ID</th>
+                <td><%=editReservation[0].reservationid%></td>
+            </tr>
+            <tr>
+                <th>Restaurant Name</th>
+                <td><%=editReservation[0].restaurantname%></td>
+            </tr>
+            <tr>
+                <th>Branch</th>
+                <td><%=editReservation[0].brancharea%></td>
+            </tr>
+            <tr>
+                <th>Meal</th>
+                <td>
+                    <% if(editReservation[0].openinghour <1000){ %>
+                        <input type="radio" name="updatedMealType" value="breakfast"/> Breakfast<br>
+                    <%} %>
+                    <% if(editReservation[0].closinghour > 1200){ %>
+                        <input type="radio" name="updatedMealType" value="lunch"/> Lunch<br>
+                    <%} %>
+                    <% if(editReservation[0].closinghour > 1900){ %>
+                        <input type="radio" name="updatedMealType" value="dinner"/> Dinner<br>
+                    <%} %>
+                </td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>
+                    <input type="date" name="updatedDate" placeholder="<%=editReservation[0].vacancydate%>"/>
+                </td>
+            </tr>
+            <tr>
+                <th>Number of Diners</th>
+                <td>
+                    <input type="number" name="updatedNumDiner" placeholder="<%=editReservation[0].numdiner%>"/>
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <input type="hidden" name="id" value="<%= editReservation[0].reservationid %>" />
+                    <button id="button" class="btn btn-primary" value="View" type="submit">Confirm Edit</button>
+                </td>
+            </tr>
+        </table>
+        </form>
+    </div>
+    
+    </body>
+</html>

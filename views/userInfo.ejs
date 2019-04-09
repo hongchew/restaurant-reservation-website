@@ -98,6 +98,7 @@
     
     <div>
       <h3>Leave Feedback</h3>
+      <% if(data3.length > 0){ %>
       <br/>
       <table class="table">
         <thead>
@@ -109,7 +110,6 @@
           <th scope="col">Number of Diners</th>
           <th scope="col">Leave Feedback</th>
         </thead>
-        <% if(data3.length > 0){ %>
         <tbody>
           <% for(var i = 0; i < data3.length ; i++) {%>
           <tr>
@@ -132,14 +132,17 @@
             <% } %>
           </tr>
           <% } %>
-        </tbody>
-        <% } %>
+        </tbody>       
       </table>
+      <% }else{ %>
+        <p style="color: tomato">No Pending Feedbacks</p>  
+      <%}%>
     </div>
     <br/>
     <br/>
     <div>
       <h3>Upcoming Reservations</h3>
+      <% if(data2.length > 0){ %>
       <table class="table">
         <thead>
           <th scope="col">Reservation Id</th>
@@ -148,9 +151,9 @@
           <th scope="col">Meal Type</th>
           <th scope="col">Date</th>
           <th scope="col">Number of Diners</th>
-          <th scope="col" colspan="2">Action</th>
-        </thead>
-        <% if(data2.length > 0){ %>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </thead>     
         <tbody>
           <% for(var i = 0; i < data2.length ; i++) {%>
           <tr>
@@ -160,24 +163,35 @@
             <td><%=data2[i].mealtypename%></td>
             <td><%=data2[i].vacancydate%></td>
             <td><%=data2[i].numdiner%></td>
+            <td>  
+              <form id="editReservation" action="" method="POST">
+                <input type="hidden" name=reservationToEditId value="<%=data2[i].reservationid%>">
+                <input type="hidden" name=flag value="edit">
+                <button id="button" class="btn btn-lg btn-primary" value="edit"
+                  type="submit">Edit</button>
+              </form>
+            </td>
             <td>
               <form id="removeReservation" action="" method="POST">
                 <input type="hidden" name=reservationToDeleteId value="<%=data2[i].reservationid%>">
                 <input type="hidden" name=flag value="remove">
-                <button id="button" class="btn btn-lg btn-danger" value="Bookmark"
+                <button id="button" class="btn btn-lg btn-danger" value="remove"
                   type="submit">Delete</button>
-						  </form>
+              </form>
             </td>
           </tr>
           <% } %>
         </tbody>
-        <% } %>
+        <% }else{ %>
+          <p style="color: tomato">No Upcoming Reservations</p>  
+        <%}%>
       </table>
     </div>
     <br/>
     <br/>
     <div>
       <h3>View Past Reservations</h3>
+      <% if(data1.length > 0){ %>
       <table class='table'>
         <thead>
             <th scope="col">Reservation Id</th>
@@ -189,7 +203,7 @@
             <th scope="col">Status</th>
             <th scope="col">View Feedback</th>
         </thead>
-        <% if(data1.length > 0){ %>
+        
           <tbody>
             <% for(var i = 0; i < data1.length ; i++) {%>
             <tr>
@@ -212,9 +226,11 @@
               <%}%>
             </tr>
             <% } %>
-          </tbody>
-        <% } %>
+          </tbody>        
       </table>
+      <% }else{ %>
+        <p style="color: tomato">No Past Reservations</p>
+      <%}%>
     </div>
     </div>
   </body>
