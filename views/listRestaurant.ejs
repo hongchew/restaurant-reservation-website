@@ -59,21 +59,21 @@
 
 </head>
 
-<body background="/image/background1.jpg">
-
+<header>
 	<div id='cssmenu'>
-
 		<ul>
 			<li class='active'><a href='/listRestaurant'>Search Restaurant</a></li>
 			<li><a href='/userInfo'>Reservation Record</a></li>
 			<li><a href='/bookmark'>Bookmark</a></li>
-			<li><a href='/login'>logout</a></li>
+			<li><a href='/login'>Logout</a></li>
 		</ul>
-
-
 	</div>
-	<h1><%= title%></h1>
+	<h1><%= title%></h1>	
+</header>
 
+<body background="/image/background1.jpg">
+
+	<div id='cssmenu'>
 	<% if(reservationStatus.error){ %>
 		<div class="alert">
 			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
@@ -186,7 +186,11 @@
 			<% } %>
 		</tbody>
 	</table>
-
+	</div>
 </body>
+
+<footer>
+		<h6>&copy;CS2102, AY18/19 Group 27 Restaurant Reservation</h6>
+</footer>
 
 </html>

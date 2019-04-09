@@ -34,18 +34,21 @@
 
 </head>
 
-<body>
-
+<header>
 	<div id='cssmenu'>
-
 		<ul>
 			<li><a href='/listRestaurant'>Search Restaurant</a></li>
 			<li><a href='/userInfo'>Reservation Record</a></li>
 			<li class='active'><a href='/bookmark'>Bookmarks</a></li>
-			<li><a href='/login'>logout</a></li>
+			<li><a href='/login'>Logout</a></li>
 		</ul>
+	</div>
+	<h1><%= title%></h1>
+</header>
 
-		<h1><%= title%></h1>
+<body>
+
+	<div id='cssmenu'>
 		<table class="table">
 			<thead>
 				<tr>
@@ -110,5 +113,9 @@
 
 
 </body>
+
+<footer>
+	<h6>&copy;CS2102, AY18/19 Group 27 Restaurant Reservation</h6>
+</footer>
 
 </html>

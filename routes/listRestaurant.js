@@ -75,6 +75,7 @@ router.get('/', function (req, res, next) {
 			table = data.rows;
 			// console.log(table);
 			res.render('listRestaurant', { title: 'Restaurants Available', data: data.rows,error: booleanError, restaurant: failRestaurant, branch: failBranch, date: failDate, vacancy: failVacancy});
+			
 		});
 	} else {
 		res.redirect('login');

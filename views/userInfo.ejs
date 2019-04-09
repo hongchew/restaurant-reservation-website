@@ -5,12 +5,8 @@
     <link rel="stylesheet" href="/stylesheets/style.css" />
 
     <!-- CSS for Styling -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-      crossorigin="anonymous"
-    />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+		integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <!-- JavaScript for Interactivity -->
     <script
@@ -35,67 +31,103 @@
       href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css"
     />
 
-    <style>
-      table,
-      th,
-      td {
-        border: 1px solid black;
-        border-collapse: collapse;
-      }
-      th,
-      td {
-        padding: 15px;
-        text-align: left;
-      }
-    </style>
+  <!-- NAV BAR -->
+	    	<!-- NAV BAR -->
+        <meta charset='utf-8'>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/stylesheets/navbar.css">
+        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+        <script src="script.js"></script>
+      
+<!--         <style>
+          .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+          }
+      
+          .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+          }
+      
+          .closebtn:hover {
+            color: black;
+          }
+        </style> -->
+
   </head>
+
+  <header>
+    <div id='cssmenu'>
+        <ul>
+          <li><a href='/listRestaurant'>Search Restaurant</a></li>
+          <li class='active'><a href='/userInfo'>Reservation Record</a></li>
+          <li><a href='/bookmark'>Bookmark</a></li>
+          <li><a href='/login'>Logout</a></li>
+        </ul>
+    </div>
+    <h1>Reservation Records</h1>
+  </header>
+
+           
   <body background="/image/background1.jpg">
+    <div id="cssmenu"> 
     <table>
       <h3>User Information</h3>
-      <table>
-        <thead>
-          <th scope="col">Customer Email</th>
-          <th scope="col">Customer Name</th>
-        </thead>
-        <tbody>
-          <tr>
-            <td><%=user.email %></td>
-            <td><%=user.name%></td>
-          </tr>
-        </tbody>
+      <table class="table">
+        <tr>
+          <th>Customer Email</th>
+          <td><%=user.email %></td>
+        </tr>
+        <tr>
+          <th>Customer Name</th>
+          <td><%=user.name%></td>
+        </tr>
       </table>
-    </table>
-
+    
+    <br/>
+    <br/>
+    
     <div>
-      <h3>Past Reservations</h3>
-      <table>
+      <h3>Leave Feedback</h3>
+      <br/>
+      <table class="table">
         <thead>
           <th scope="col">Reservation Id</th>
           <th scope="col">Restaurant Name</th>
           <th scope="col">Branch Area</th>
           <th scope="col">Meal Type</th>
           <th scope="col">Date</th>
-          <th scope="col">Number diners</th>
-          <th scope="col">Feedback</th>
+          <th scope="col">Number of Diners</th>
+          <th scope="col">Leave Feedback</th>
         </thead>
-        <% if(data1.length > 0){ %>
+        <% if(data3.length > 0){ %>
         <tbody>
-          <% for(var i = 0; i < data1.length ; i++) {%>
+          <% for(var i = 0; i < data3.length ; i++) {%>
           <tr>
-            <td><%=data1[i].reservationid%></td>
-            <td><%=data1[i].restaurantname%></td>
-            <td><%=data1[i].brancharea%></td>
-            <td><%=data1[i].mealtypename%></td>
-            <td><%=data1[i].vacancydate%></td>
-            <td><%=data1[i].numdiner%></td>
+            <td><%=data3[i].reservationid%></td>
+            <td><%=data3[i].restaurantname%></td>
+            <td><%=data3[i].brancharea%></td>
+            <td><%=data3[i].mealtypename%></td>
+            <td><%=data3[i].vacancydate%></td>
+            <td><%=data3[i].numdiner%></td>
             <!-- TO CHANGE THIS -->
-            <% if(data1[i].feedback != 0){ %>
+            <% if(data3[i].feedback != 0){ %>
             <td>
                 <form id="feedback" action="" method="POST">
                     <input type="hidden" name=feedbackIndex value="<%=i%>">
+                    <input type="hidden" name=flag value="submit">
                     <button id="button" class="btn btn-lg btn-primary" value="Feedback"
                       type="submit">Feedback</button>
-                  </form>
+                </form>
             </td>
             <% } %>
           </tr>
@@ -104,17 +136,18 @@
         <% } %>
       </table>
     </div>
-
+    <br/>
+    <br/>
     <div>
       <h3>Upcoming Reservations</h3>
-      <table>
+      <table class="table">
         <thead>
           <th scope="col">Reservation Id</th>
           <th scope="col">Restaurant Name</th>
           <th scope="col">Branch Area</th>
           <th scope="col">Meal Type</th>
           <th scope="col">Date</th>
-          <th scope="col">Number diners</th>
+          <th scope="col">Number of Diners</th>
         </thead>
         <% if(data2.length > 0){ %>
         <tbody>
@@ -132,5 +165,51 @@
         <% } %>
       </table>
     </div>
+    <br/>
+    <br/>
+    <div>
+      <h3>View Past Reservations</h3>
+      <table class='table'>
+        <thead>
+            <th scope="col">Reservation Id</th>
+            <th scope="col">Restaurant Name</th>
+            <th scope="col">Branch Area</th>
+            <th scope="col">Meal Type</th>
+            <th scope="col">Date</th>
+            <th scope="col">Number of Diners</th>
+            <th scope="col">Status</th>
+            <th scope="col">View Feedback</th>
+        </thead>
+        <% if(data1.length > 0){ %>
+          <tbody>
+            <% for(var i = 0; i < data1.length ; i++) {%>
+            <tr>
+              <td><%=data1[i].reservationid%></td>
+              <td><%=data1[i].restaurantname%></td>
+              <td><%=data1[i].brancharea%></td>
+              <td><%=data1[i].mealtypename%></td>
+              <td><%=data1[i].vacancydate%></td>
+              <td><%=data1[i].numdiner%></td>
+              <td><%=data1[i].status%></td>
+              <%if (data1[i].checkfeedback == 1){ %>
+              <td>
+                <form id="viewfeedback" action="" method="POST">
+                    <input type="hidden" name=viewFeedbackId value="<%=data1[i].reservationid%>">
+                    <input type="hidden" name=flag value="view">
+                    <button id="button" class="btn btn-lg btn-primary" value="View"
+                      type="submit">View</button>
+                </form>
+              </td>
+              <%}%>
+            </tr>
+            <% } %>
+          </tbody>
+        <% } %>
+      </table>
+    </div>
+    </div>
   </body>
+  <footer>
+      <h6>&copy;CS2102, AY18/19 Group 27 Restaurant Reservation</h6>
+  </footer>
 </html>
