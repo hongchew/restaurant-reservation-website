@@ -95,6 +95,12 @@ router.get('/', function (req, res, next) {
         }
         res.redirect("/userInfo");
       })
+    }else if(flag == 'edit'){
+      var editReservationId = req.body.reservationToEditId;
+      res.redirect(url.format({
+        pathname: "/editReservation",
+        query: {editReservationId: editReservationId}
+      }))
     }
 });
 
