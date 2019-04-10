@@ -72,23 +72,11 @@
             </tr>
             <tr>
                 <th>Meal</th>
-                <td>
-                    <% if(editReservation[0].openinghour <1000){ %>
-                        <input type="radio" name="updatedMealType" value="breakfast"/> Breakfast<br>
-                    <%} %>
-                    <% if(editReservation[0].closinghour > 1200){ %>
-                        <input type="radio" name="updatedMealType" value="lunch"/> Lunch<br>
-                    <%} %>
-                    <% if(editReservation[0].closinghour > 1900){ %>
-                        <input type="radio" name="updatedMealType" value="dinner"/> Dinner<br>
-                    <%} %>
-                </td>
+                <td><%=editReservation[0].mealtypename %></td>
             </tr>
             <tr>
                 <th>Date</th>
-                <td>
-                    <input type="date" name="updatedDate" placeholder="<%=editReservation[0].vacancydate%>"/>
-                </td>
+                <td><%=editReservation[0].vacancydate%></td>
             </tr>
             <tr>
                 <th>Number of Diners</th>

@@ -12,7 +12,7 @@ const pool = new Pool({
 router.get('/', function(req, res, next) {
     var editReservationId = req.query.editReservationId;
 
-    var query = "select * from restaurant.reservation natural join restaurant.branch where reservationid = " + editReservationId +";";
+    var query = "select  r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, to_char(r.vacancyDate, ' Day DD-Mon-YYYY') as vacancyDate, r.numDiner from (restaurant.reservation natural join restaurant.branch) r where r.reservationId = " + editReservationId +";";
     console.log(query);
     pool.query(query, (err, data)=>{
         if(err){
@@ -30,8 +30,8 @@ router.post('/', function(req, res, next) {
     var updatedDate = req.body.updatedDate;
     var updatedNumDiner = parseInt(req.body.updatedNumDiner);
     var editReservationId = req.body.id;
-
-    var query = "update restaurant.reservation set vacancydate = '" + updatedDate + "', mealtypename = '" + updatedMealType + "', numdiner = " + updatedNumDiner + " where reservationid = " + editReservationId + ";";
+ 
+    var query = "update restaurant.reservation set numdiner = " + updatedNumDiner + " where reservationid = " + editReservationId + ";";
     console.log(query);
     pool.query(query, (err, data)=>{
         if(err){
