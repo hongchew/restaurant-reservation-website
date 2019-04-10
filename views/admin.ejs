@@ -44,7 +44,8 @@
       <header>
         <div id='cssmenu'>
             <ul>
-              <li class='active'><a href='/admin'>Admin Panel</a></li>
+              <li><a href='/createRestaurant'>Create Restaurant</a></li>
+              <li class='active'><a href='/admin'>View All Reservations</a></li>
               <li><a href='/login'>Logout</a></li>
             </ul>
         </div>
@@ -53,7 +54,6 @@
       
       <body>
           <div id='cssmenu'>
-              <h3>View All Past Bookings</h3>
               <% if(allReservations.length > 0){ %>
               <table class = 'table'>
                 <thead>

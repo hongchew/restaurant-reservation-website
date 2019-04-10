@@ -57,7 +57,7 @@ router.post('/', function(req, res, next) {
       }
 
       if (user.accountType == 'Admin') {
-        res.redirect('/admin');
+        res.redirect('/createRestaurant');
       }
     }
   });
