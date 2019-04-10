@@ -65,13 +65,13 @@
             <select id="mealType" name="mealType" style="min-width: 100px;">
                 <option value="" disabled selected> Select a meal type</option>
                 <% if(data[0].openinghour <1000){ %>
-                <option value="breakfast">Breakfast</option>
+                <option value="Breakfast">Breakfast</option>
                 <%} %>
                 <% if(data[0].closinghour > 1200){ %>
-                <option value="lunch">Lunch</option>
+                <option value="Lunch">Lunch</option>
                 <%} %>
                 <% if(data[0].closinghour > 1900){ %>
-                <option value="dinner">Dinner</option>
+                <option value="Dinner">Dinner</option>
                 <%} %>
             </select>
         </div>
