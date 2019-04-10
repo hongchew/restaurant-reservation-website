@@ -10,16 +10,17 @@ const pool = new Pool({
 
 
 router.get('/', function(req, res, next) {
-    var editReservationId = req.query.editReservationId;
+    var menuname = req.query.menuname;
+    var restaurantname = req.query.restaurantname;
 
-    var query = "select  r.reservationId, r.restaurantName, r.branchArea, r.mealTypeName, to_char(r.vacancyDate, ' Day DD-Mon-YYYY') as vacancyDate, r.numDiner from (restaurant.reservation natural join restaurant.branch) r where r.reservationId = " + editReservationId +";";
+    var query = "select restaurantname, menuname, price, cuisinename from restaurant.menuitem where restaurantname = '" + restaurantname + "' and menuname = '" + menuname + "';";
     console.log(query);
     pool.query(query, (err, data)=>{
         if(err){
             console.log("***Err EDIT :" + err.message);
         }
         console.log(data.rows);
-        res.render('editReservation', {title: "Edit Reservation", editReservation: data.rows });
+        res.render('editDish', {title: "Edit Dish", editDish: data.rows });
     })
     
 
@@ -27,16 +28,17 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
 
-    var updatedNumDiner = parseInt(req.body.updatedNumDiner);
-    var editReservationId = req.body.id;
+    var updatedprice = req.body.updatedprice;
+    var menuname = req.body.menuname;
+    var restaurantname = req.body.restaurantname;
  
-    var query = "update restaurant.reservation set numdiner = " + updatedNumDiner + " where reservationid = " + editReservationId + ";";
+    var updateQurey = "UPDATE RESTAURANT.MenuItem set price = '" + updatedprice + "' where menuname = '" + menuname + "' and restaurantname = '" + restaurantname+ "';";
     console.log(query);
     pool.query(query, (err, data)=>{
         if(err){
             console.log("***Err EDIT: " + err.message);
         }
-        res.redirect("/userinfo");
+        res.redirect("/listDishes");
     })
 
 });

@@ -25,15 +25,28 @@ router.get('/', function (req, res, next) {
 
 router.post('/', function (req, res, next) {
     var flag = req.body.flag;
-    if (flag = "edit") {
+    if (flag == "edit") {
         var menuname = req.body.menuname;
         var restaurantname = req.body.restaurantname;
         res.redirect(url.format({
           pathname: "/editDish",
           query: {menuname: menuname , restaurantname: restaurantname}
-        }))
-    } else if (flag = "remove") {
-
+        }));
+    } else if (flag == "remove") {
+        var menuname = req.body.menuname;
+        var restaurantname = req.body.restaurantname;
+        var deleteQuery = "DELETE FROM RESTAURANT.MenuItem WHERE menuname = '" + menuname + "' AND restaurantname ='" + restaurantname + "';";
+        pool.query(deleteQuery, (err,data) => {
+            console.log(data);
+            console.log(err);
+            pool.query(allDishesQuery, (err, data1) => {
+                pool.query(allRestaurantsQuery, (err, data2) => {
+                    res.render('listDishes', { title: 'List Dishes', dish: data1.rows, restaurantName: data2.rows });
+                    console.log(data1.rows);
+                    console.log(data2.rows);
+                });
+            });
+        });
     } else {
         var restaurantName = req.body.restaurantName;
         var menuName = req.body.menuName;

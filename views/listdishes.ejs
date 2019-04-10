@@ -26,7 +26,7 @@
 
 </head>
 
-<body  background="/image/background1.jpg">
+<body background="/image/background1.jpg">
 
     <h3>Dishes</h3>
     <table class="table">
@@ -46,6 +46,22 @@
                 <td id="restaurantName"><%= dish[i].restaurantname%></td>
                 <td id="price"><%= dish[i].price%></td>
                 <td id="cuisineName"><%= dish[i].cuisinename%></td>
+                <td>
+                    <form id="editDish" action="" method="POST">
+                        <input type="hidden" name="menuname" value="<%=dish[i].menuname%>" />
+                        <input type="hidden" name="restaurantname" value="<%=dish[i].restaurantname%>" />
+                        <input type="hidden" name=flag value="edit">
+                        <button id="button" class="btn btn-lg btn-primary" value="edit" type="submit">Edit</button>
+                    </form>
+                </td>
+                <td>
+                    <form id="removeDish" action="" method="POST">
+                        <input type="hidden" name="menuname" value="<%=dish[i].menuname%>" />
+                        <input type="hidden" name="restaurantname" value="<%=dish[i].restaurantname%>" />
+                        <input type="hidden" name=flag value="remove">
+                        <button id="button" class="btn btn-lg btn-danger" value="remove" type="submit">Delete</button>
+                    </form>
+                </td>
             </tr>
             <% } %>
         </tbody>

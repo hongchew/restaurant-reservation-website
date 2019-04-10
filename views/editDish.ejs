@@ -40,55 +40,33 @@
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
         <script src="script.js"></script>
     </head>
-
-    <header>
-      <div id='cssmenu'>
-          <ul>
-            <li><a href='/listRestaurant'>Search Restaurant</a></li>
-            <li class='active'><a href='/userInfo'>Reservation Record</a></li>
-            <li><a href='/bookmark'>Bookmark</a></li>
-            <li><a href='/login'>Logout</a></li>
-          </ul>
-      </div>
-      <h1><%=title%></h1>
-    </header>
-    
     <body>
     
     <div id='cssmenu'>
         <form method="POST">
         <table class='table' >
             <tr>
-                <th>Reservation ID</th>
-                <td><%=editReservation[0].reservationid%></td>
+                <td>Restaurant Name</td>
+                <td><%=editDish[0].restaurantname%></td>
             </tr>
             <tr>
-                <th>Restaurant Name</th>
-                <td><%=editReservation[0].restaurantname%></td>
+                <td>Menu Name</td>
+                <td><%=editDish[0].menuname%></td>
             </tr>
             <tr>
-                <th>Branch</th>
-                <td><%=editReservation[0].brancharea%></td>
+                <td>Cuisine Name</td>
+                <td><%=editDish[0].cuisinename%></td>
             </tr>
             <tr>
-                <th>Meal</th>
-                <td><%=editReservation[0].mealtypename %></td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td><%=editReservation[0].vacancydate%></td>
-            </tr>
-            <tr>
-                <th>Number of Diners</th>
+                <td>Price</td>
                 <td>
-                    <input type="number" name="updatedNumDiner" placeholder="<%=editReservation[0].numdiner%>"/>
+                    <input type="number"  name="updatedprice" placeholder="<%=editDish[0].price%>"/>
                 </td>
             </tr>
             <tr>
-                <th></th>
+                <td></td>
                 <td>
-                    <input type="hidden" name="id" value="<%= editReservation[0].reservationid %>" />
-                    <button id="button" class="btn btn-primary" value="View" type="submit">Confirm Edit</button>
+                    <button id="button" class="btn btn-primary" value="View" type="submit">Confirm</button>
                 </td>
             </tr>
         </table>
