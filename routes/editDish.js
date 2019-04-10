@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
 
-    var updatedprice = Number(req.body.updatedprice);
+    var updatedprice = req.body.updateprice;
     var menuname = req.body.menuname;
     var restaurantname = req.body.restaurantname;
     console.log(updatedprice);
