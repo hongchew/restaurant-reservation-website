@@ -55,6 +55,10 @@ router.post('/', function(req, res, next) {
       if (user.accountType == 'GeneralManager') {
         res.redirect('/createManager');
       }
+
+      if (user.accountType == 'Admin') {
+        res.redirect('/admin');
+      }
     }
   });
 });

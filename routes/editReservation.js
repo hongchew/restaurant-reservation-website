@@ -26,8 +26,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-    var updatedMealType = req.body.updatedMealType;
-    var updatedDate = req.body.updatedDate;
+
     var updatedNumDiner = parseInt(req.body.updatedNumDiner);
     var editReservationId = req.body.id;
  

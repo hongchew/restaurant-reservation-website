@@ -49,6 +49,7 @@
 <body>
 
 	<div id='cssmenu'>
+		<%if(data.length > 0){%>
 		<table class="table">
 			<thead>
 				<tr>
@@ -107,7 +108,9 @@
 				<% } %>
 			</tbody>
 		</table>
-
+		<%}else{%>
+			<p style="color: tomato">No Bookmarked Restaurants</p>	
+		<%}%>
 
 	</div>
 
