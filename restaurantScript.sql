@@ -163,7 +163,7 @@ END;
 $$
 language plpgsql;
 
-
+--Calculates the new Average Price--
 CREATE OR REPLACE FUNCTION calAvgPrice()
 RETURNS TRIGGER AS
 $$

@@ -37,6 +37,7 @@ var editReservationRouter = require('./routes/editReservation');
 
 var customerSignupRouter = require('./routes/customersignup');
 
+var mainGeneralManager = require('./routes/mainGeneralManager');
 var createGeneralManager = require('./routes/createGeneralManager');
 var listRestaurantRouter = require('./routes/listRestaurant');
 var createReservationRouter = require('./routes/createReservation');
@@ -95,6 +96,7 @@ app.use('/insert', insertRouter);
 
 app.use('/customersignup', customerSignupRouter);
 
+app.use('/mainGeneralManager', mainGeneralManager);
 app.use('/createGeneralManager', createGeneralManager);
 
 app.use('/listRestaurant', listRestaurantRouter);
