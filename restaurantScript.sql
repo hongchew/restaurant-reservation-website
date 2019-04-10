@@ -110,7 +110,7 @@ CREATE TABLE RESTAURANT.Feedback
     feedbackId SERIAL PRIMARY KEY,
     reservationId integer NOT NULL,
     rating NUMERIC(2,1) default '0',
-    comments varchar(50),
+    comments varchar(250),
     foreign key(reservationId) references RESTAURANT.Reservation(reservationId) ON DELETE CASCADE,
     CHECK(rating >= 0.0 and rating <= 5.0)
 );
@@ -229,21 +229,28 @@ EXECUTE PROCEDURE calculateNewRating();
 /*
 Insert into User
 */
-Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('test1@gmail.com','GM1','password','GeneralManager');
-Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('test2@gmail.com','GM2','password','GeneralManager');
+Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('generalmanager1@gmail.com','GM1','password','GeneralManager');
+Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('generalmanager2@gmail.com','GM2','password','GeneralManager');
+Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('generalmanager3@gmail.com','GM3','password','GeneralManager');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('cust1@gmail.com','Cust1','password','Customer');
+Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('cust2@gmail.com','Cust1','password','Customer');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('manager1@gmail.com','Manager1','password','Manager');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('manager2@gmail.com','Manager2','password','Manager');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('manager3@gmail.com','Manager3','password','Manager');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('manager4@gmail.com','Manager4','password','Manager');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('manager5@gmail.com','Manager5','password','Manager');
+Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('manager6@gmail.com','Manager3','password','Manager');
+Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('manager7@gmail.com','Manager4','password','Manager');
+Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('manager8@gmail.com','Manager5','password','Manager');
 
 
 /*
 Insert into Restaurant
 */
-Insert into RESTAURANT.Restaurant (restaurantName, generalManagerEmail) VALUES('restaurant1','test1@gmail.com');
-Insert into RESTAURANT.Restaurant (restaurantName, generalManagerEmail) VALUES('restaurant2','test2@gmail.com');
+Insert into RESTAURANT.Restaurant (restaurantName, generalManagerEmail) VALUES('Singapore Special','generalmanager1@gmail.com');
+Insert into RESTAURANT.Restaurant (restaurantName, generalManagerEmail) VALUES('Special23','generalmanager2@gmail.com');
+Insert into RESTAURANT.Restaurant (restaurantName, generalManagerEmail) VALUES('House Of Seafood','generalmanager3@gmail.com');
+
 
 /*
 Insert into Region
@@ -256,65 +263,119 @@ Insert into RESTAURANT.Region(regionName) VALUES('East');
 Insert into RESTAURANT.Region(regionName) VALUES('West');
 Insert into RESTAURANT.Region(regionName) VALUES('Central');
 
+/*
+Insert into Meal Type
+*/
+Insert into RESTAURANT.MealType (mealTypeName) VALUES ('Breakfast');
+Insert into RESTAURANT.MealType (mealTypeName) VALUES ('Lunch');
+Insert into RESTAURANT.MealType (mealTypeName) VALUES ('Dinner');
+
 
 
 /*
 Insert into Branch
 */
 Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity, managerEmail) 
-VALUES('restaurant1','Bedok','East','S123456','0800','2200','100', 'manager1@gmail.com');
+VALUES('Singapore Special','Bedok','East','S123456','0800','2200','100', 'manager1@gmail.com');
 Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity, managerEmail) 
-VALUES('restaurant1','Simei','East','S123457','0800','2200','80', 'manager2@gmail.com');
+VALUES('Singapore Special','Simei','East','S123457','0800','2130','80', 'manager2@gmail.com');
 Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity, managerEmail) 
-VALUES('restaurant2','Yishun','North','S123459','0800','2200','30', 'manager3@gmail.com');
-Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity, managerEmail) 
-VALUES('restaurant2','Woodlands','North','S123451','1200','2200','30', 'manager4@gmail.com');
-Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity, managerEmail) 
-VALUES('restaurant1','Jurong','West','S123456','1900','2200','100', 'manager5@gmail.com');
-/*
-Insert into Manages
-*/
---Insert into RESTAURANT.Manages (managerEmail, restaurantName, branchArea) VALUES ('manager1@gmail.com', 'restaurant1', 'Bedok');
+VALUES('Singapore Special','Jurong','West','S123456','1900','2200','100', 'manager5@gmail.com');
 
-/*
-Insert into Meal Type
-*/
-Insert into RESTAURANT.MealType (mealTypeName) VALUES ('breakfast');
-Insert into RESTAURANT.MealType (mealTypeName) VALUES ('lunch');
-Insert into RESTAURANT.MealType (mealTypeName) VALUES ('dinner');
+Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity, managerEmail) 
+VALUES('Special23','Yishun','North','S123459','1100','2300','30', 'manager3@gmail.com');
+Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity, managerEmail) 
+VALUES('Special23','Woodlands','North','S123451','1200','2200','60', 'manager4@gmail.com');
+
+
+Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity, managerEmail) 
+VALUES('House Of Seafood','Harbourfront','South','S232010','1100','2300','120', 'manager6@gmail.com');
+Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity, managerEmail) 
+VALUES('House Of Seafood','Plaza Singapura','Central','S193021','1100','2300','60', 'manager7@gmail.com');
+Insert into RESTAURANT.Branch (restaurantName, branchArea, regionName, address, openingHour, closingHour, capacity, managerEmail) 
+VALUES('House Of Seafood','Novena','Central','S092140','1700','2300','70', 'manager8@gmail.com');
 
 /*
 Insert into Vacancy
 */
-Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-04-05', '200');
-Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-03-05', '200');
-Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('restaurant1', 'Bedok', 'lunch', '2019-04-05', '200');
+Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('Singapore Special', 'Bedok', 'Breakfast', '2019-04-20', '100');
+Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('Singapore Special', 'Bedok', 'Breakfast', '2019-03-21', '100');
+Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('Singapore Special', 'Simei', 'Lunch', '2019-04-20', '80');
+
+Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('Special23', 'Yishun', 'Lunch', '2019-04-22', '30');
+Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('Special23', 'Woodlands', 'Lunch', '2019-03-20', '60');
+Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('Special23', 'Yishun', 'Lunch', '2019-04-23', '30');
+
+Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('House Of Seafood', 'Harbourfront', 'Breakfast', '2019-04-05', '120');
+Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('House Of Seafood', 'Plaza Singapura', 'Breakfast', '2019-03-05', '60');
+Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancydate, vacancy) VALUES ('House Of Seafood', 'Novena', 'Lunch', '2019-04-05', '70');
 
 /*
 Insert into Reservation
 */
-INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-04-05', 'cust1@gmail.com', '2', '0');
-INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('restaurant1', 'Bedok', 'breakfast', '2019-03-05', 'cust1@gmail.com', '2', '0');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('Singapore Special', 'Bedok', 'Breakfast', '2019-04-20', 'cust1@gmail.com', '4', '0');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('House Of Seafood', 'Harbourfront', 'Lunch', '2019-03-21', 'cust1@gmail.com', '8', '1');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('House Of Seafood', 'Harbourfront', 'Dinner', '2019-03-11', 'cust1@gmail.com', '4', '1');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('Singapore Special', 'Jurong', 'Dinner', '2019-04-06', 'cust1@gmail.com', '7', '1');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('House Of Seafood', 'Harbourfront', 'Dinner', '2019-04-20', 'cust1@gmail.com', '10', '0');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('House Of Seafood', 'Novena', 'Dinner', '2019-04-22', 'cust1@gmail.com', '2', '0');
 
-INSERT INTO RESTAURANT.Cuisine values('Chinese'), ('Western'), ('Peranakan'), ('Indian'),('Drinks');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('Singapore Special', 'Simei', 'Lunch', '2019-04-25', 'cust2@gmail.com', '4', '0');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('Special23', 'Yishun', 'Dinner', '2019-03-17', 'cust2@gmail.com', '4', '1');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('Special23', 'Yishun', 'Lunch', '2019-03-24', 'cust2@gmail.com', '6', '1');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('Singapore Special', 'Bedok', 'Breakfast', '2019-03-27', 'cust2@gmail.com', '11', '1');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('Singapore Special', 'Bedok', 'Lunch', '2019-03-21', 'cust2@gmail.com', '9', '1');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('Singapore Special', 'Jurong', 'Dinner', '2019-03-10', 'cust2@gmail.com', '12', '-1');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('Special23', 'Woodlands', 'Dinner', '2019-04-27', 'cust2@gmail.com', '15', '0');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('Special23', 'Yishun', 'Dinner', '2019-04-28', 'cust2@gmail.com', '5', '0');
+
+
+
+INSERT INTO RESTAURANT.Cuisine values('Chinese'), ('Western'), ('Peranakan'), ('Indian'),('Drinks'),('Desserts');
 
 /*
 Insert into Menu Item
 */
 
-INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Bandung', '1.00', 'Drinks');
-INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Chicken Rice', '4.00', 'Chinese');
-INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Ice Milo', '1.50', 'Drinks');
-INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Hot Coffee', '0.90', 'Drinks');
-INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Maggi Goreng', '5.00', 'Indian');
-INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Laksa', '3.40', 'Chinese');
-INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Chicken Chop', '9.80', 'Western');
-INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Roti Prata (Plain)', '1.00', 'Indian');
-INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('restaurant1', 'Roti Prata (Egg)', '1.50', 'Indian');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Singapore Special', 'Bandung', '1.00', 'Drinks');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Singapore Special', 'Chicken Rice', '4.00', 'Chinese');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Singapore Special', 'Ice Milo', '1.50', 'Drinks');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Singapore Special', 'Hot Coffee', '0.90', 'Drinks');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Singapore Special', 'Maggi Goreng', '5.00', 'Indian');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Singapore Special', 'Laksa', '3.40', 'Chinese');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Singapore Special', 'Chicken Chop', '9.80', 'Western');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Singapore Special', 'Roti Prata (Plain)', '1.00', 'Indian');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Singapore Special', 'Roti Prata (Egg)', '1.50', 'Indian');
+
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Special23', 'Ice Lemon Tea', '1.80', 'Drinks');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Special23', 'Chicken Rice', '4.50', 'Chinese');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Special23', 'Ice Milo', '1.50', 'Drinks');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Special23', 'Hot Coffee', '1.10', 'Drinks');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Special23', 'Maggi Goreng', '4.80', 'Indian');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Special23', 'Laksa', '3.40', 'Chinese');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Special23', 'Chicken Cutlet', '9.20', 'Western');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Special23', 'Fishball Noodle', '3.80', 'Chinese');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('Special23', 'Murtabak', '7.00', 'Indian');
+
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('House Of Seafood', 'Ice Lemon Tea', '2.50', 'Drinks');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('House Of Seafood', 'Fish n Chips', '12.30', 'Western');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('House Of Seafood', 'Vanilla Milkshake', '4.80', 'Drinks');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('House Of Seafood', 'Chocolate Ice Blended', '4.50', 'Drinks');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('House Of Seafood', 'Chilli Crab (1kg)', '48.00', 'Chinese');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('House Of Seafood', 'Banana Split Ice-Cream', '10.50', 'Dessert');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('House Of Seafood', 'Grilled Crayish', '16.80', 'Western');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('House Of Seafood', 'Softshell Crab Spaghetti', '14.20', 'Western');
+INSERT INTO RESTAURANT.MenuItem (restaurantName, menuName, price, cuisineName) VALUES ('House Of Seafood', 'Seafood Aglio Olio', '13.00', 'Western');
+
 
 /*
 Insert into Feedback
 */
+INSERT INTO RESTAURANT.Feedback(reservationId,rating,comments) VALUES('2','3','Staffs are not very attentive.');
+INSERT INTO RESTAURANT.Feedback(reservationId,rating,comments) VALUES('3','4','Food is nice and pleasant ambience.');
+INSERT INTO RESTAURANT.Feedback(reservationId,rating,comments) VALUES('4','4','Dinner was actually not too bad.');
+INSERT INTO RESTAURANT.Feedback(reservationId,rating,comments) VALUES('8','3','Dinner was okay. Food a litter pricey.');
+INSERT INTO RESTAURANT.Feedback(reservationId,rating,comments) VALUES('9','2','Food does''t really suit my taste.');
+INSERT INTO RESTAURANT.Feedback(reservationId,rating,comments) VALUES('10','5','Very nice local food. Will bring my friend here in future to eat.');
+INSERT INTO RESTAURANT.Feedback(reservationId,rating,comments) VALUES('11','2','Staff aren''t very attentive and not clear of what is on the menu. Maybe just a temporary staff but manager could have trained them better.');
 
-INSERT INTO RESTAURANT.Feedback(reservationId,rating,comments) VALUES('1','2','nice');
-INSERT INTO RESTAURANT.Feedback(reservationId,rating,comments) VALUES('2','3','nicer');

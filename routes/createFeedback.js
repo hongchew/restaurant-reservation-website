@@ -32,7 +32,8 @@ router.post('/', function(req, res, next) {
   console.log('*****Document*******');
   var rating = req.body.rating;
   reservationId = parseInt(reservationId);
-  var comments = req.body.comments;
+  var rawComments = req.body.comments;
+  var comments = rawComments.replaceAll("'","''");
   console.log(rating);
   var insert_query =
     "INSERT INTO RESTAURANT.Feedback (reservationId, rating, comments) VALUES ('" +
