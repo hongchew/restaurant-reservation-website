@@ -191,10 +191,14 @@ DECLARE newRating NUMERIC(2,1);
         bArea varchar;
         rName varchar;
 BEGIN
-SELECT r.restaurantName, r.branchArea, COALESCE(AVG(f.rating),0) INTO rName, bArea, newRating
+SELECT r.restaurantName, r.branchArea INTO rName, bArea
+FROM RESTAURANT.Reservation r
+WHERE r.reservationId = NEW.reservationId;
+SELECT COALESCE(AVG(f.rating),0) INTO newRating
 FROM RESTAURANT.Reservation r 
 JOIN RESTAURANT.Feedback f 
 ON f.reservationId = r.reservationId
+WHERE r.branchArea = bArea AND r.restaurantName = rName
 GROUP BY (r.restaurantName, r.branchArea);
 UPDATE RESTAURANT.Branch 
 SET rating = newRating
