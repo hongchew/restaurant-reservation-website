@@ -9,7 +9,6 @@ const pool = new Pool({
 });
 
 var user;
-var allReservations;
 
 router.get('/', function(req, res, next) {
   user = req.app.locals.user;
@@ -24,7 +23,7 @@ router.get('/', function(req, res, next) {
       console.log("Err ALL: " + err.message);      
     }
     allReservations = data.rows;
-    res.render('admin', { title: 'View All Past Bookings', allReservations: allReservations });
+    res.render('admin', { title: 'Admin Panel', allReservations: allReservations });
   });  
 });
 
