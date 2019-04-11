@@ -64,21 +64,22 @@ router.get('/', function (req, res, next) {
 		failBranch = req.query.failBranch;
 		failDate = req.query.failDate;
 		failVacancy = req.query.failVacancy;
-		
+
 	} else {
 		console.log("else")
 		sql_query = 'SELECT * FROM Restaurant.Branch natural join Restaurant.Restaurant ORDER BY restaurantName,branchArea ASC';
 	}
 
-	if (user.isLogin == true) {
+	if (req.app.locals.user == null || req.app.locals.user.accountType != 'Customer') {
+		res.redirect('login');
+	} else {
+
 		pool.query(sql_query, (err, data) => {
 			table = data.rows;
 			// console.log(table);
-			res.render('listRestaurant', { title: 'Restaurants Available', data: data.rows,error: booleanError, restaurant: failRestaurant, branch: failBranch, date: failDate, vacancy: failVacancy});
-			
+			res.render('listRestaurant', { title: 'Restaurants Available', data: data.rows, error: booleanError, restaurant: failRestaurant, branch: failBranch, date: failDate, vacancy: failVacancy });
+
 		});
-	} else {
-		res.redirect('login');
 	}
 });
 

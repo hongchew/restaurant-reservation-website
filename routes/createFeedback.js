@@ -18,10 +18,10 @@ router.get('/', function(req, res, next) {
   reservationId = req.query.reservationId;
   branchArea = req.query.branchArea;
   user = req.app.locals.user;
-  if (user.isLogin == true) {
-    res.render('createFeedback', { ...req.query });
-  } else {
+  if (req.app.locals.user == null || req.app.locals.user.accountType != 'Customer') {
     res.redirect('login');
+  } else {
+    res.render('createFeedback', { ...req.query });
   }
 });
 

@@ -13,7 +13,7 @@ var user;
 router.get('/', function(req, res, next) {
     user = req.app.locals.user;
     console.log(user);
-    if(user.accountType != 'Admin'){
+    if(req.app.locals.user == null || req.app.locals.user.accountType != 'Admin'){
       res.redirect("/login");
     }
     var query = "select  * from restaurant.restaurant";

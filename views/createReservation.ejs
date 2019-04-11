@@ -50,44 +50,62 @@
 
 
     <h1>CS2102: <%= title%></h1>
-    <form id="html_form" action="" role="form" method="post">
-        <div class="form-group">
+    <div id='cssmenu'>
+
+        <form method="post">
+            <table class='table'>
+
+                <tr>
+                    <th> Restaurant Name</th>
+                    <td> <%= data[0].restaurantname%></td>
+                </tr>
+
+                <tr>
+                    <th> Branch Area</th>
+                    <td> <%= data[0].brancharea%></td>
+                </tr>
+
+                <tr>
+                    <th> Meal Type</th>
+                    <td>
+                        <select id="mealType" name="mealType" style="min-width: 100px;">
+                            <option value="" disabled selected> Select a meal type</option>
+                            <% if(data[0].openinghour <1000){ %>
+                            <option value="Breakfast">Breakfast</option>
+                            <%} %>
+                            <% if(data[0].closinghour > 1200){ %>
+                            <option value="Lunch">Lunch</option>
+                            <%} %>
+                            <% if(data[0].closinghour > 1900){ %>
+                            <option value="Dinner">Dinner</option>
+                            <%} %>
+                        </select>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <th> Number of Pax</th>
+                    <td> <input type="number" id="pax" name="pax" min="1" style="max-width: 250px;"></td>
+                </tr>
+
+                <tr>
+                    <th> Date for Reservation</th>
+                    <td> <input type="date" id="date" name="date" style="max-width: 250px;" min="0"> </td>
+                </tr>
+
+                <tr>
+                    <th></th>
+                    <td><button type="submit" class="btn btn-primary">Submit</button></td>
+                </tr>
+
+
+
+            </table>
             <label for="matric">Restaurant Name : <%= data[0].restaurantname%></label>
             <!-- <input type="text" class="form-control" id="matric" name="matric" aria-describedby="matricHelp" placeholder="Enter your matric number">
 				<small id="matricHelp" class="form-text text-muted">Do not share your matric number with anyone else.</small> -->
-        </div>
-        <div class="form-group">
-            <label for="name">Branch Area : <%= data[0].brancharea%></label>
-            <!-- <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name"> -->
-        </div>
-        <div class="form-group">
-            <label for="mealType"> Meal Type :</label>
-            <select id="mealType" name="mealType" style="min-width: 100px;">
-                <option value="" disabled selected> Select a meal type</option>
-                <% if(data[0].openinghour <1000){ %>
-                <option value="Breakfast">Breakfast</option>
-                <%} %>
-                <% if(data[0].closinghour > 1200){ %>
-                <option value="Lunch">Lunch</option>
-                <%} %>
-                <% if(data[0].closinghour > 1900){ %>
-                <option value="Dinner">Dinner</option>
-                <%} %>
-            </select>
-        </div>
-        <div class="form-group">
-            <input type="number" class="form-control" id="pax" name="pax" placeholder="Number of pax ..."
-                style="max-width: 250px;" min="0">
-        </div>
-
-        <div class="form-group">
-            <label for="faculty">Date (Pick a date) :</label>
-            <input type="date" class="form-control" id="date" name="date" placeholder="Enter a number ..."
-                style="max-width: 250px;" min="0">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    </div>
 
 </body>
 

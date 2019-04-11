@@ -14,6 +14,11 @@ var allDishesQuery = 'SELECT * FROM Restaurant.MenuItem ORDER BY restaurantname,
 var allRestaurantsQuery = 'SELECT restaurantname FROM RESTAURANT.Restaurant;';
 
 router.get('/', function (req, res, next) {
+    if(req.app.locals.user == null || req.app.locals.user.accountType != 'GeneralManager'){
+        res.redirect("/login");
+    }
+
+
     pool.query(allDishesQuery, (err, data1) => {
         pool.query(allRestaurantsQuery, (err, data2) => {
             res.render('listDishes', { title: 'List Dishes', dish: data1.rows, restaurantName: data2.rows });

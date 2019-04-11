@@ -11,7 +11,7 @@ var sql_query_login = 'SELECT * FROM RESTAURANT.users';
 
 // GET
 router.get('/', function(req, res, next) {
-  req.app.locals.user.isLogin = false;
+  req.app.locals.user = null;
   res.render('login', { title: 'Login User', error: false });
 });
 

@@ -24,7 +24,50 @@
     <!-- ADDED JavaScript -->
     <script src="javascripts/rSignupScript.js"></script>
 
+    <!-- NAV BAR -->
+	<meta charset='utf-8'>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/stylesheets/navbar.css">
+	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+	<script src="script.js"></script>
+
+	<style>
+		.alert {
+			padding: 20px;
+			background-color: #f44336;
+			color: white;
+		}
+
+		.closebtn {
+			margin-left: 15px;
+			color: white;
+			font-weight: bold;
+			float: right;
+			font-size: 22px;
+			line-height: 20px;
+			cursor: pointer;
+			transition: 0.3s;
+		}
+
+		.closebtn:hover {
+			color: black;
+		}
+	</style>
+
 </head>
+<header>    
+    <div id='cssmenu'>
+        <ul>
+            <li><a href='mainGeneralManager'>Branch Details</a></li>
+            <li><a href='/createManager'>Create Branch with Manager</a></li>
+            <li class='active'><a href='/listdishes'>Restaurant Menu Item</a></li>
+            <li><a href='/login'>Logout</a></li>
+        </ul>       
+    </div>
+    <h1>Restaurant Menu Item</h1>
+    
+</header>
 
 <body background="/image/background1.jpg">
 

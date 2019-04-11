@@ -22,14 +22,14 @@ router.get('/', function (req, res, next) {
 	sql_query = " SELECT * FROM RESTAURANT.Bookmark NATURAL JOIN Restaurant.Branch NATURAL JOIN Restaurant.restaurant WHERE customeremail ='" + user.email + "';";
 	console.log("hello");
 	user = req.app.locals.user;
-	if (user.isLogin == true) {
+	if (req.app.locals.user == null || req.app.locals.user.accountType != 'Customer') {
+		res.redirect('login');
+	} else {
 		pool.query(sql_query, (err, data) => {
 			table = data.rows;
 			// console.log(table);
 			res.render('bookmark', { title: 'Bookmarked Restaurants', data: data.rows });
 		});
-	} else {
-		res.redirect('login');
 	}
 });
 

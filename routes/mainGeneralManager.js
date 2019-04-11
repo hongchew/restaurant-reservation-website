@@ -14,7 +14,7 @@ var currentGeneralManager;
 router.get('/', function(req, res, next) {
     currentGeneralManager = req.app.locals.user;
     console.log(currentGeneralManager)
-    if(!currentGeneralManager.email || currentGeneralManager.accountType != 'GeneralManager'){
+    if(req.app.locals.user == null || req.app.locals.user.accountType != 'GeneralManager'){
         res.redirect("/login");
     }
     var email = `${currentGeneralManager.email}`;

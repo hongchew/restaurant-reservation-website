@@ -8,7 +8,12 @@ const pool = new Pool({
 var restaurantName;
 
 router.get('/', function(req, res, next) {
-  res.render('createManager');
+  if(req.app.locals.user == null || req.app.locals.user.accountType != 'GeneralManager'){
+    res.redirect("/login");
+  } else {
+    res.render('createManager');
+  }
+  
 });
 
 // POST

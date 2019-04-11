@@ -13,6 +13,10 @@ var pastReservations = null;
 var upcomingReservation = null;
 var submitFeedbackReservation = null;
 router.get('/', function (req, res, next) {
+
+  if(req.app.locals.user == null || req.app.locals.user.accountType != 'Customer'){
+    res.redirect("/login");
+  }
   email = req.app.locals.user.email;
   var customer = req.app.locals.user;
   if (!customer.email) {

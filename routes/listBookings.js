@@ -22,7 +22,7 @@ router.get('/', function (req, res, next) {
 
     currentManager = req.app.locals.user;
     console.log(currentManager);
-    if(!currentManager.email || currentManager.accountType != 'Manager'){
+    if(req.app.locals.user == null || req.app.locals.user.accountType != 'Manager'){
         res.redirect("/login");
     }
     
