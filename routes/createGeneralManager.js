@@ -53,7 +53,7 @@ router.post('/', function(req, res, next) {
       pool.query(insert_query, (err, data) => {
       });
       pool.query(insert_restaurant, (err, data) => {
-        res.redirect('/listrestaurant');
+        res.redirect('/mainGeneralManager');
       });
     } else{
       res.render('createGeneralManager', {emailUsed: true});
