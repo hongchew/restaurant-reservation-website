@@ -229,6 +229,7 @@ EXECUTE PROCEDURE calculateNewRating();
 /*
 Insert into User
 */
+Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('admin@gmail.com','admin','password','Admin');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('generalmanager1@gmail.com','GM1','password','GeneralManager');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('generalmanager2@gmail.com','GM2','password','GeneralManager');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('generalmanager3@gmail.com','GM3','password','GeneralManager');
