@@ -7,46 +7,24 @@ var logger = require('morgan');
 /* --- V7: Using dotenv     --- */
 require('dotenv').load();
 
-var indexRouter = require('./routes/index');
+
+
+/ *--- Routers --- */
 var usersRouter = require('./routes/users');
-
-/* --- V2: Adding Web Pages --- */
-var aboutRouter = require('./routes/about');
-/* ---------------------------- */
-
-/* --- V3: Basic Template   --- */
-var tableRouter = require('./routes/table');
-var loopsRouter = require('./routes/loops');
-/* ---------------------------- */
-
-/* --- V4: Database Connect --- */
-var selectRouter = require('./routes/select');
-/* ---------------------------- */
-
-/* --- V5: Adding Forms     --- */
-var formsRouter = require('./routes/forms');
-/* ---------------------------- */
-
-/* --- V6: Modify Database  --- */
-var insertRouter = require('./routes/insert');
-/* ---------------------------- */
+var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var adminRouter = require('./routes/admin');
 var viewFeedbackRouter = require('./routes/viewFeedback');
 var editReservationRouter = require('./routes/editReservation');
-
 var customerSignupRouter = require('./routes/customersignup');
-
+var mainGeneralManager = require('./routes/mainGeneralManager');
 var createGeneralManager = require('./routes/createGeneralManager');
 var listRestaurantRouter = require('./routes/listRestaurant');
 var createReservationRouter = require('./routes/createReservation');
-
 var userInfo = require('./routes/userInfo');
 var createManager = require('./routes/createManager');
-
 var listBookingsRouter =  require('./routes/listBookings');
 var bookmarkRouter = require('./routes/bookmark');
-
 var listDishes = require('./routes/listdishes');
 var restaurantDetailsRouter = require('./routes/restaurantDetails');
 var createFeedbackRouter = require('./routes/createFeedback');
@@ -64,43 +42,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
-/* --- V2: Adding Web Pages --- */
-app.use('/about', aboutRouter);
-/* ---------------------------- */
-
-/* --- V3: Basic Template   --- */
-app.use('/table', tableRouter);
-app.use('/loops', loopsRouter);
-/* ---------------------------- */
-
-/* --- V4: Database Connect --- */
-app.use('/select', selectRouter);
-/* ---------------------------- */
-
-/* --- V5: Adding Forms     --- */
-app.use('/forms', formsRouter);
-/* ---------------------------- */
-app.use('/login', loginRouter);
-app.use('/admin', adminRouter);
 
 /* --- V6: Modify Database  --- */
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/insert', insertRouter);
 /* ---------------------------- */
-
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/login', loginRouter);
+app.use('/admin', adminRouter);
 app.use('/customersignup', customerSignupRouter);
-
+app.use('/mainGeneralManager', mainGeneralManager);
 app.use('/createGeneralManager', createGeneralManager);
-
 app.use('/listRestaurant', listRestaurantRouter);
 app.use('/createReservation', createReservationRouter);
 app.use('/listBookings', listBookingsRouter);
-
 app.use('/userInfo', userInfo);
 app.use('/createManager', createManager);
 app.use('/bookmark', bookmarkRouter);

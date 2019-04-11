@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 
 // POST
 router.post('/', function(req, res, next) {
-  var generalManagerEmail = "test1@gmail.com";
+  var generalManagerEmail =req.app.locals.user.email;
 
   var getRestaurantNameQuery = "SELECT restaurantName FROM RESTAURANT.Restaurant WHERE generalManagerEmail ='" + generalManagerEmail + "';";
   console.log("Before insert query for create manager");
@@ -26,7 +26,8 @@ router.post('/', function(req, res, next) {
 
         var name = req.body.name;
         var email = req.body.email;
-        var branchArea = req.body.brancharea;
+        var rawbranchArea = req.body.brancharea;
+        var branchArea = rawbranchArea.replace(/'/g,"''");
         var password = req.body.password;
         var accountType = 'Manager';
         var regionName = req.body.regionname;
