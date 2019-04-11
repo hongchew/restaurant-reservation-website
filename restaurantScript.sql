@@ -171,13 +171,14 @@ DECLARE initialTotalPrice NUMERIC(7,2);
 BEGIN
 SELECT coalesce(sum(price),0) INTO initialTotalPrice
 FROM RESTAURANT.MenuItem m
-WHERE m.restaurantName = new.restaurantName and m.menuName <> new.menuName;
+WHERE m.restaurantName = new.restaurantName;
 UPDATE RESTAURANT.Restaurant
 SET avgPrice = (initialTotalPrice+new.price)/
 (SELECT count(*)+1 
 FROM RESTAURANT.MenuItem m 
-WHERE m.restaurantName = new.restaurantName and m.menuName <> new.menuName)
+WHERE m.restaurantName = new.restaurantName)
 WHERE restaurantname = new.restaurantName;
+
 RETURN NEW;
 END;    
 $$
@@ -228,7 +229,6 @@ EXECUTE PROCEDURE calculateNewRating();
 /*
 Insert into User
 */
-Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('admin@gmail.com','admin','password','Admin');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('test1@gmail.com','GM1','password','GeneralManager');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('test2@gmail.com','GM2','password','GeneralManager');
 Insert into RESTAURANT.Users  (email,name,password,accountType) VALUES('cust1@gmail.com','Cust1','password','Customer');
