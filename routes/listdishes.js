@@ -51,7 +51,8 @@ router.post('/', function (req, res, next) {
         var restaurantName = req.body.restaurantName;
         var menuName = req.body.menuName;
         var price = req.body.price;
-        var cuisineName = req.body.cuisineName;
+        var rawCuisineName = req.body.cuisineName;
+        var cuisineName = rawCuisineName.replace(/'/g,"''");
         console.log(restaurantName);
         console.log(menuName);
         console.log(price);

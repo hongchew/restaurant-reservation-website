@@ -317,6 +317,7 @@ INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, va
 INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('House Of Seafood', 'Harbourfront', 'Lunch', '2019-03-21', 'cust1@gmail.com', '8', '1');
 INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('House Of Seafood', 'Harbourfront', 'Dinner', '2019-03-11', 'cust1@gmail.com', '4', '1');
 INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('Singapore Special', 'Jurong', 'Dinner', '2019-04-06', 'cust1@gmail.com', '7', '1');
+INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('Singapore Special', 'Jurong', 'Dinner', '2019-04-08', 'cust1@gmail.com', '2', '1');
 INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('House Of Seafood', 'Harbourfront', 'Dinner', '2019-04-20', 'cust1@gmail.com', '10', '0');
 INSERT INTO RESTAURANT.Reservation (restaurantName, branchArea, mealTypeName, vacancyDate, customerEmail, numDiner, status) VALUES ('House Of Seafood', 'Novena', 'Dinner', '2019-04-22', 'cust1@gmail.com', '2', '0');
 

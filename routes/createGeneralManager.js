@@ -18,7 +18,8 @@ router.post('/', function(req, res, next) {
 
   var name = req.body.name;
   var email = req.body.email;
-  var restaurantName = req.body.restaurantname;
+  var rawRestaurantName = req.body.restaurantname;
+  var restaurantName = rawRestaurantName.replace(/'/g,"''");
   var password = req.body.password;
   var accountType = 'GeneralManager';
   console.log(restaurantName);
