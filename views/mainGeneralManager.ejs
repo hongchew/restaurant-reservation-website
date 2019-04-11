@@ -58,11 +58,12 @@
 <header>    
     <div id='cssmenu'>
         <ul>
-            <li class='active'><a href='/createManager'>Create Manager With Branch</a></li>
+            <li class='active'><a href='mainGeneralManager'>Branch Details</a></li>
+            <li><a href='/createManager'>Create Branch with Manager</a></li>
             <li><a href='/login'>Logout</a></li>
         </ul>       
     </div>
-    <h1>Managers and Branch Details</h1>
+    <h1>Branch Details</h1>
     
 </header>
 
@@ -72,7 +73,7 @@
 
     <div id='cssmenu'>
         
-
+        
         <% if(data.length > 0){%>
         <table class="table">
             <thead>
@@ -93,7 +94,7 @@
             </tbody>
         </table>
         <%}else{%>
-            <h3>***No Managers with Branch Exist***</h3>
+            <p style="color: tomato">No Managers with Branch Exist</p>
         <%}%>
     </div>
 </body>
