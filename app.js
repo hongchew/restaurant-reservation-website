@@ -10,7 +10,6 @@ require('dotenv').load();
 
 
 / *--- Routers --- */
-var usersRouter = require('./routes/users');
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var adminRouter = require('./routes/admin');
@@ -49,7 +48,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 /* ---------------------------- */
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/admin', adminRouter);
 app.use('/customersignup', customerSignupRouter);
