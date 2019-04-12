@@ -150,7 +150,7 @@ WHERE v.restaurantName = NEW.restaurantName and v.branchArea = NEW.branchArea an
 SELECT capacity into branchCapacity
 FROM RESTAURANT.Branch b
 WHERE b.restaurantName = NEW.restaurantName and b.branchArea = NEW.branchArea;
-IF ((bArea IS NULL)) THEN
+IF ((bArea IS NULL and branchCapacity >= NEW.numDiner )) THEN
     Insert into RESTAURANT.Vacancy (restaurantName, branchArea, mealTypeName, vacancyDate, vacancy) VALUES (NEW.restaurantName, NEW.branchArea, NEW.mealTypeName, NEW.vacancyDate, branchCapacity-NEW.numDiner);
     elsif (capacity1 >= NEW.numDiner) THEN
     update RESTAURANT.Vacancy SET vacancy = vacancy - new.numdiner 
