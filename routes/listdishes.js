@@ -10,54 +10,48 @@ const pool = new Pool({
 
 
 /* SQL Query */
-var allDishesQuery = 'SELECT * FROM Restaurant.MenuItem ORDER BY restaurantname, menuname;';
-var allRestaurantsQuery = 'SELECT restaurantname FROM RESTAURANT.Restaurant;';
+var allDishesQuery;
+var allRestaurantsQuery;
+var restaurantName;
 
 router.get('/', function (req, res, next) {
-    if(req.app.locals.user == null || req.app.locals.user.accountType != 'GeneralManager'){
+    if (req.app.locals.user == null || req.app.locals.user.accountType != 'GeneralManager') {
         res.redirect("/login");
-    }
-
-
-    pool.query(allDishesQuery, (err, data1) => {
-        pool.query(allRestaurantsQuery, (err, data2) => {
-            res.render('listDishes', { title: 'List Dishes', dish: data1.rows, restaurantName: data2.rows });
-            console.log(data1.rows);
-            console.log(data2.rows);
+    } else {
+        email = req.app.locals.user.email;
+        allDishesQuery = "SELECT * FROM Restaurant.MenuItem NATURAL JOIN Restaurant.restaurant WHERE generalmanageremail='" + email + "' ORDER BY restaurantname, menuname;";
+        allRestaurantsQuery = "SELECT restaurantname FROM RESTAURANT.Restaurant WHERE generalmanageremail='" + email + "';";
+        pool.query(allDishesQuery, (err, data1) => {
+            pool.query(allRestaurantsQuery, (err, data2) => {
+                restaurantName = data2.rows[0].restaurantname;
+                res.render('listDishes', { title: 'List Dishes', dish: data1.rows, restaurantName: data2.rows });
+                console.log(data1.rows);
+            });
         });
-    });
+    }
 });
 
 router.post('/', function (req, res, next) {
     var flag = req.body.flag;
     if (flag == "edit") {
         var menuname = req.body.menuname;
-        var restaurantname = req.body.restaurantname;
         res.redirect(url.format({
-          pathname: "/editDish",
-          query: {menuname: menuname , restaurantname: restaurantname}
+            pathname: "/editDish",
+            query: { menuname: menuname, restaurantname: restaurantName }
         }));
     } else if (flag == "remove") {
         var menuname = req.body.menuname;
-        var restaurantname = req.body.restaurantname;
-        var deleteQuery = "DELETE FROM RESTAURANT.MenuItem WHERE menuname = '" + menuname + "' AND restaurantname ='" + restaurantname + "';";
-        pool.query(deleteQuery, (err,data) => {
+        var deleteQuery = "DELETE FROM RESTAURANT.MenuItem WHERE menuname = '" + menuname + "' AND restaurantname ='" + restaurantName + "';";
+        pool.query(deleteQuery, (err, data) => {
             console.log(data);
             console.log(err);
-            pool.query(allDishesQuery, (err, data1) => {
-                pool.query(allRestaurantsQuery, (err, data2) => {
-                    res.render('listDishes', { title: 'List Dishes', dish: data1.rows, restaurantName: data2.rows });
-                    console.log(data1.rows);
-                    console.log(data2.rows);
-                });
-            });
+            res.redirect("/listdishes");
         });
     } else {
-        var restaurantName = req.body.restaurantName;
         var menuName = req.body.menuName;
         var price = req.body.price;
         var rawCuisineName = req.body.cuisineName;
-        var cuisineName = rawCuisineName.replace(/'/g,"''");
+        var cuisineName = rawCuisineName.replace(/'/g, "''");
         console.log(restaurantName);
         console.log(menuName);
         console.log(price);
@@ -80,7 +74,7 @@ router.post('/', function (req, res, next) {
             pool.query(allRestaurantsQuery, (err, data2) => {
                 console.log(data1.rows);
                 console.log(data2.rows);
-                res.render('listDishes', { title: 'List Dishes', dish: data1.rows, restaurantName: data2.rows });
+                res.redirect("/listdishes");
             });
         });
     }
